@@ -1,5 +1,3 @@
-
-
 interface ColumItemProps {
   caption: string;
 }
@@ -37,8 +35,8 @@ export function Column({ caption, icon }: ColumnProps) {
 
 export function Table({ children, columns }: TableProps) {
   return (
-    <table className="w-full text-sm text-left text-gray-500  dark:text-gray-400">
-      <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+    <table className="w-full text-left text-sm text-gray-500  dark:text-gray-400">
+      <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
         <tr>
           {columns?.map((colum: ColumItemProps) => {
             return <TableCell key={colum.caption} caption={colum.caption} />;

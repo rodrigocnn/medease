@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
-import { Column, Table } from "../../components/table";
-import { Button } from "../../components/button";
-import { Modal } from "../../components/modal";
-import { RolesCreate } from "./create";
-import { RoleEdit } from "./edit";
-import IconButton from "../../components/buttonIcon";
-import api from "../../services/api";
-import { DeleteConfirm } from "../../components/DeleteConfirm";
-import { toast } from "react-toastify";
+import { Column, Table } from '../../components/table';
+import { Button } from '../../components/button';
+import { Modal } from '../../components/modal';
+import { RolesCreate } from './create';
+import { RoleEdit } from './edit';
+import IconButton from '../../components/buttonIcon';
+import api from '../../services/api';
+import { DeleteConfirm } from '../../components/DeleteConfirm';
+import { toast } from 'react-toastify';
 
 interface Role {
   id: string;
@@ -17,13 +17,13 @@ interface Role {
 
 const columns = [
   {
-    caption: "Nome",
+    caption: 'Nome',
   },
   {
-    caption: "Editar",
+    caption: 'Editar',
   },
   {
-    caption: "Excluir",
+    caption: 'Excluir',
   },
 ];
 
@@ -33,19 +33,19 @@ export function Roles() {
   const [showModal, setShowModal] = useState(false);
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-  const [rowIdSelected, setRowIdSelected] = useState("");
+  const [rowIdSelected, setRowIdSelected] = useState('');
 
   useEffect(() => {
     getRoles();
   }, [showDeleteConfirm, showModal]);
 
   async function getRoles() {
-    const response = await api.index("roles");
+    const response = await api.index('roles');
     setRoles(response.data);
   }
 
   async function editRole(id: string) {
-    const response = await api.show("roles", id);
+    const response = await api.show('roles', id);
     setShowModalEdit(true);
     setRole(response.data);
   }
@@ -56,11 +56,11 @@ export function Roles() {
   }
 
   async function deleteItem() {
-    const response = await api.delete("roles", rowIdSelected);
+    const response = await api.delete('roles', rowIdSelected);
     if (response.data) {
-      toast("Registro Excluído com Sucesso", { type: "success" });
+      toast('Registro Excluído com Sucesso', { type: 'success' });
     } else {
-      toast("Não foi possivel realizar operação", { type: "error" });
+      toast('Não foi possivel realizar operação', { type: 'error' });
     }
   }
 
@@ -73,29 +73,19 @@ export function Roles() {
         show={showDeleteConfirm}
       />
 
-      <Modal
-        title="Cadastrar Cargo"
-        setShowModal={setShowModal}
-        show={showModal}
-      >
+      <Modal title="Cadastrar Cargo" setShowModal={setShowModal} show={showModal}>
         <RolesCreate />
       </Modal>
 
-      <Modal
-        title="Editar Cargo"
-        setShowModal={setShowModalEdit}
-        show={showModalEdit}
-      >
+      <Modal title="Editar Cargo" setShowModal={setShowModalEdit} show={showModalEdit}>
         {role && <RoleEdit role={role} />}
       </Modal>
 
       <div className="h-24 bg-[#06afb1]">
-        <div className="h-24 min-h-full p-5 text-white font-semibold">
-          Cargos
-        </div>
+        <div className="h-24 min-h-full p-5 font-semibold text-white">Cargos</div>
       </div>
-      <div className="relative overflow-x-auto  h-full p-5  top-[-3rem] ">
-        <div className="bg-white p-5 rounded">
+      <div className="relative top-[-3rem]  h-full overflow-x-auto  p-5 ">
+        <div className="rounded bg-white p-5">
           <Button onClick={() => setShowModal(true)} type="button">
             Novo
           </Button>
@@ -103,27 +93,10 @@ export function Roles() {
           <Table columns={columns}>
             {roles?.map((role: Role) => {
               return (
-                <tr
-                  key={role.id}
-                  className="bg-white border-b  dark:bg-gray-800 dark:border-gray-700"
-                >
+                <tr key={role.id} className="border-b bg-white  dark:border-gray-700 dark:bg-gray-800">
                   <Column caption={role.name} />
-                  <Column
-                    icon={
-                      <IconButton
-                        icon="edit"
-                        onClick={() => editRole(role.id)}
-                      />
-                    }
-                  />
-                  <Column
-                    icon={
-                      <IconButton
-                        icon="delete"
-                        onClick={() => openDeleteConfirm(role.id)}
-                      />
-                    }
-                  />
+                  <Column icon={<IconButton icon="edit" onClick={() => editRole(role.id)} />} />
+                  <Column icon={<IconButton icon="delete" onClick={() => openDeleteConfirm(role.id)} />} />
                 </tr>
               );
             })}

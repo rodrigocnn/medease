@@ -1,5 +1,5 @@
-import React from "react";
-import { FaRegEdit, FaTrashAlt } from "react-icons/fa";
+import React from 'react';
+import { FaRegEdit, FaTrashAlt } from 'react-icons/fa';
 
 interface IButtonProps {
   onClick?: () => void;
@@ -8,9 +8,9 @@ interface IButtonProps {
 
 const IconButton: React.FC<IButtonProps> = ({ icon, onClick }) => {
   let iconChosen;
-  if (icon === "edit") {
+  if (icon === 'edit') {
     iconChosen = <FaRegEdit />;
-  } else if (icon === "delete") {
+  } else if (icon === 'delete') {
     iconChosen = <FaTrashAlt />;
   }
 

@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-import { FaRegEdit , FaTrashAlt} from 'react-icons/fa';
-import api from "../../services/api";
-import { Modal } from "../../components/modal";
-import { ServicesCreate } from "./create";
+import { useEffect, useState } from 'react';
+import { FaRegEdit, FaTrashAlt } from 'react-icons/fa';
+import api from '../../services/api';
+import { Modal } from '../../components/modal';
+import { ServicesCreate } from './create';
 
 interface Patient {
   name: string;
@@ -19,34 +19,31 @@ export function Services() {
   }, []);
 
   async function getProducts() {
-    const response = await api.index("professionals");
+    const response = await api.index('professionals');
     setPatients(response.data);
   }
 
   return (
     <>
-
-    <Modal title="Cadastrar Serviço" setShowModal={setShowModal} show={showModal}>
-        <ServicesCreate/>
-    </Modal>
+      <Modal title="Cadastrar Serviço" setShowModal={setShowModal} show={showModal}>
+        <ServicesCreate />
+      </Modal>
 
       <div className="h-24 bg-[#06afb1]">
-        <div className="h-24 min-h-full p-5 text-white font-semibold">
-         Serviços
-        </div>
+        <div className="h-24 min-h-full p-5 font-semibold text-white">Serviços</div>
       </div>
-      <div className="relative overflow-x-auto  h-full p-5  top-[-3rem] ">
-        <div className="bg-white p-5 rounded">
+      <div className="relative top-[-3rem]  h-full overflow-x-auto  p-5 ">
+        <div className="rounded bg-white p-5">
+          <button
+            onClick={() => setShowModal(true)}
+            type="button"
+            className="mb-2 mr-2 rounded-lg bg-[#01d8da] px-5 py-2.5 text-sm font-medium text-white hover:bg-[#06afb1] focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
+            Novo
+          </button>
 
-        <button   onClick={() => setShowModal(true)}
-              type="button"
-              className="text-white bg-[#01d8da] hover:bg-[#06afb1] focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-            >
-             Novo
-            </button>
-
-          <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
+            <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
               <tr>
                 <th scope="col" className="px-6 py-3">
                   Nome
@@ -65,17 +62,21 @@ export function Services() {
                 <th scope="col" className="px-6 py-3">
                   Excluir
                 </th>
-                </tr>
+              </tr>
             </thead>
             <tbody>
               {patients?.map((patient: Patient) => {
                 return (
-                  <tr key={patient.name} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                  <tr key={patient.name} className="border-b bg-white dark:border-gray-700 dark:bg-gray-800">
                     <td className="px-6 py-4">{patient.name}</td>
                     <td className="px-6 py-4">{patient.phone}</td>
                     <td className="px-6 py-4">{patient.role}</td>
-                    <td className="px-6 py-4 text-lg pl-10"><FaRegEdit/></td>
-                    <td className="px-6 py-4 text-lg pl-10"><FaTrashAlt/></td>
+                    <td className="px-6 py-4 pl-10 text-lg">
+                      <FaRegEdit />
+                    </td>
+                    <td className="px-6 py-4 pl-10 text-lg">
+                      <FaTrashAlt />
+                    </td>
                   </tr>
                 );
               })}

@@ -1,8 +1,8 @@
-import axios from "axios";
+import axios from 'axios';
 //import { getToken } from "./auth";
 
 const instance = axios.create({
-  baseURL: "http://localhost:3000/"
+  baseURL: 'http://localhost:3000/',
 });
 
 // instance.interceptors.request.use(async config => {
@@ -13,12 +13,12 @@ const instance = axios.create({
 //   return config;
 // });
 
-const apis ={
-  index:(endpoint:string)=>instance.get(endpoint),
-  store:(endpoint:string,data: any)=>instance.post(endpoint, data),
-  show:(endpoint:string, id:string)=>instance.get(`/${endpoint}/${id}`),
-  update:(endpoint:string,  id:string, data:object)=>instance.put(`/${endpoint}/${id}`, data),
-  delete:(endpoint:string, id:string)=>instance.delete(`/${endpoint}/${id}`),
-}
+const apis = {
+  index: (endpoint: string) => instance.get(endpoint),
+  store: (endpoint: string, data: any) => instance.post(endpoint, data),
+  show: (endpoint: string, id: string) => instance.get(`/${endpoint}/${id}`),
+  update: (endpoint: string, id: string, data: object) => instance.put(`/${endpoint}/${id}`, data),
+  delete: (endpoint: string, id: string) => instance.delete(`/${endpoint}/${id}`),
+};
 
-export default apis
+export default apis;
