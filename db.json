@@ -1,0 +1,72 @@
+{
+  "professionals": [
+    {
+      "id": 1,
+      "name": "Mauricio Santos",
+      "email": "mau@globo.com",
+      "phone": "(77) 69810-1616",
+      "role": "Fisioterapeuta"
+    },
+    {
+      "id": 2,
+      "name": "Mauricio Santos",
+      "email": "mau@globo.com",
+      "phone": "(77) 69810-1616",
+      "role": "Fisioterapeuta"
+    },
+    {
+      "id": 3,
+      "name": "Mauricio Santos",
+      "email": "mau@globo.com",
+      "phone": "(77) 69810-1616",
+      "role": "Fisioterapeuta"
+    }
+  ],
+  "roles": [
+    {
+      "name": "Manicure",
+      "id": 1
+    },
+    {
+      "name": "Fisio",
+      "id": 2
+    }
+  ],
+  "patients": [
+    {
+      "name": "Rodrigo César Nunes",
+      "email": "rodrigocnn@gmail.com",
+      "date_of_birth": "16/04/1980",
+      "phone": "(77) 99833-1616",
+      "rg": "0928901560",
+      "address": "Rua São Francisco, 233",
+      "district": "Sandra Regina",
+      "city": "Barreiras",
+      "id": 1
+    },
+    {
+      "name": "Carlos Manoel",
+      "email": "manoel@globo.com",
+      "date_of_birth": "16/04/1675",
+      "phone": "(77)9810-2020",
+      "cpf": "807.527.485-73",
+      "rg": "0928901560",
+      "address": "Rua das Flores",
+      "district": "Sandra Regina",
+      "city": "Barreiras",
+      "id": 2
+    },
+    {
+      "name": "Amanda Nunes",
+      "email": "amanda@globo.com",
+      "date_of_birth": "16/04/1980",
+      "phone": "(77) 99833-1616",
+      "cpf": "807.527.485-45",
+      "rg": "09258605",
+      "address": "Rua Macedo, 44",
+      "district": "Sandra Regina",
+      "city": "Barreiras",
+      "id": 3
+    }
+  ]
+}
