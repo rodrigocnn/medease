@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 import { Column, Table } from '../../components/table';
 import { Button } from '../../components/button';
-import { Modal } from '../../components/modal';
-import { RolesCreate } from './create';
-import { RoleEdit } from './edit';
+import { CreateRole } from './create';
+import { EditRole } from './edit';
+import { DeleteConfirm } from '../../components/DeleteConfirm';
 import IconButton from '../../components/buttonIcon';
 import api from '../../services/api';
-import { DeleteConfirm } from '../../components/DeleteConfirm';
-import { toast } from 'react-toastify';
+import { InsidePage } from '../../components/insidePage';
 
 interface Role {
   id: string;
@@ -73,36 +73,27 @@ export function Roles() {
         show={showDeleteConfirm}
       />
 
-      <Modal title="Cadastrar Cargo" setShowModal={setShowModal} show={showModal}>
-        <RolesCreate />
-      </Modal>
+      <CreateRole setShowModal={setShowModal} show={showModal} />
 
-      <Modal title="Editar Cargo" setShowModal={setShowModalEdit} show={showModalEdit}>
-        {role && <RoleEdit role={role} />}
-      </Modal>
+      {role && <EditRole role={role} setShowModal={setShowModalEdit} show={showModalEdit} />}
 
-      <div className="h-24 bg-[#06afb1]">
-        <div className="h-24 min-h-full p-5 font-semibold text-white">Cargos</div>
-      </div>
-      <div className="relative top-[-3rem]  h-full overflow-x-auto  p-5 ">
-        <div className="rounded bg-white p-5">
-          <Button onClick={() => setShowModal(true)} type="button">
-            Novo
-          </Button>
+      <InsidePage title="Cargos">
+        <Button onClick={() => setShowModal(true)} type="button">
+          Novo
+        </Button>
 
-          <Table columns={columns}>
-            {roles?.map((role: Role) => {
-              return (
-                <tr key={role.id} className="border-b bg-white  dark:border-gray-700 dark:bg-gray-800">
-                  <Column caption={role.name} />
-                  <Column icon={<IconButton icon="edit" onClick={() => editRole(role.id)} />} />
-                  <Column icon={<IconButton icon="delete" onClick={() => openDeleteConfirm(role.id)} />} />
-                </tr>
-              );
-            })}
-          </Table>
-        </div>
-      </div>
+        <Table columns={columns}>
+          {roles?.map((role: Role) => {
+            return (
+              <tr key={role.id} className="border-b bg-white  dark:border-gray-700 dark:bg-gray-800">
+                <Column caption={role.name} />
+                <Column icon={<IconButton icon="edit" onClick={() => editRole(role.id)} />} />
+                <Column icon={<IconButton icon="delete" onClick={() => openDeleteConfirm(role.id)} />} />
+              </tr>
+            );
+          })}
+        </Table>
+      </InsidePage>
     </>
   );
 }

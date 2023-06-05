@@ -1,5 +1,12 @@
-[ ] CRUD de cargos [x] CREATE [x] READ [x] UPDATE DELETE [ ] VALIDAÇÃO
-[ ] Crud Pacientes [x] Create [ ] Read [ ] Update [ ] Delete
+# CRUDS
+
+[ ] Cargos [x] CREATE [x] READ [x] UPDATE DELETE [x]
+[ ] Pacientes [x] Create [ ] Read [ ] Update [ ] Delete
+[ ] Serviços [x] Create [x] Read [x] Update [x] Delete
+[ ] Agenda [ ] Create [ ] Read [x] Update [ ] Delete
+
+# OUTROS
+
 [ ] Fechar Modal Apos Ação de Salvar/Editar
 [ ] Mascara CPF
 [ ] Datepicker
@@ -12,3 +19,5 @@
 [x] Logo na Sidebar
 [x] Busca no Pacientes
 [x] Cadastro de Serviços Layout
+[ ] Favicon
+[ ] Icones Sidebar

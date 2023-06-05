@@ -1,29 +1,36 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
-import { CreateService } from './create';
 import { Column, Table } from '../../components/table';
 import IconButton from '../../components/buttonIcon';
-import { EditService } from './edit';
 import { DeleteConfirm } from '../../components/DeleteConfirm';
+import { CreateAppointment } from './create';
 import { Button } from '../../components/button';
 import { InsidePage } from '../../components/insidePage';
 import api from '../../services/api';
 
-interface Service {
+interface Appointment {
   id: string;
-  name: string;
-  price: string;
-  role: string;
+  start: string;
+  end: string;
+  date: string;
+  patient: string;
+  professional: string;
 }
 
 const columns = [
   {
-    caption: 'Nome',
+    caption: 'Profissional',
   },
 
   {
-    caption: 'Preço',
+    caption: 'Data',
+  },
+  {
+    caption: 'Inicio',
+  },
+  {
+    caption: 'Término',
   },
   {
     caption: 'Editar',
@@ -33,27 +40,27 @@ const columns = [
   },
 ];
 
-export function Services() {
-  const [services, setServices] = useState<Service[]>();
-  const [service, setService] = useState<Service>();
+export function Appointments() {
+  const [appointments, setAppointments] = useState<Appointment[]>();
+  const [appointment, setAppointment] = useState<Appointment>();
   const [showModal, setShowModal] = useState(false);
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [rowIdSelected, setRowIdSelected] = useState('');
 
   useEffect(() => {
-    getServices();
+    getAppointments();
   }, []);
 
-  async function getServices() {
-    const response = await api.index('services');
-    setServices(response.data);
+  async function getAppointments() {
+    const response = await api.index('appointments');
+    setAppointments(response.data);
   }
 
   async function editData(id: string) {
-    const response = await api.show('services', id);
+    const response = await api.show('appointments', id);
     setShowModalEdit(true);
-    setService(response.data);
+    setAppointment(response.data);
   }
 
   async function openDeleteConfirm(id: string) {
@@ -62,7 +69,7 @@ export function Services() {
   }
 
   async function deleteItem() {
-    const response = await api.delete('services', rowIdSelected);
+    const response = await api.delete('appointments', rowIdSelected);
     if (response.data) {
       toast('Registro Excluído com Sucesso', { type: 'success' });
     } else {
@@ -73,28 +80,27 @@ export function Services() {
   return (
     <>
       <DeleteConfirm
-        title="Excluir Cargo"
+        title="Excluir Agenda"
         setShowDeleteConfirm={setShowDeleteConfirm}
         deleteItem={deleteItem}
         show={showDeleteConfirm}
       />
-      <CreateService setShowModal={setShowModal} show={showModal} />
-
-      {service && <EditService service={service} setShowModal={setShowModalEdit} show={showModalEdit} />}
-
-      <InsidePage title="Serviços">
+      <CreateAppointment setShowModal={setShowModal} show={showModal} />
+      <InsidePage title="Agenda">
         <Button onClick={() => setShowModal(true)} type="button">
           Novo
         </Button>
 
         <Table columns={columns}>
-          {services?.map((service: Service) => {
+          {appointments?.map((appointment: Appointment) => {
             return (
-              <tr key={service.id} className="border-b bg-white  dark:border-gray-700 dark:bg-gray-800">
-                <Column caption={service.name} />
-                <Column caption={service.price} />
-                <Column icon={<IconButton icon="edit" onClick={() => editData(service.id)} />} />
-                <Column icon={<IconButton icon="delete" onClick={() => openDeleteConfirm(service.id)} />} />
+              <tr key={appointment.id} className="border-b bg-white  dark:border-gray-700 dark:bg-gray-800">
+                <Column caption={appointment.professional} />
+                <Column caption={appointment?.date} />
+                <Column caption={appointment.start} />
+                <Column caption={appointment?.end} />
+                <Column icon={<IconButton icon="edit" onClick={() => editData(appointment.id)} />} />
+                <Column icon={<IconButton icon="delete" onClick={() => openDeleteConfirm(appointment.id)} />} />
               </tr>
             );
           })}

@@ -7,6 +7,7 @@ import { PatientsCreate } from '../pages/patients/create';
 import { Services } from '../pages/services';
 import { Roles } from '../pages/roles';
 import { PatientsEdit } from '../pages/patients/edit';
+import { Appointments } from '../pages/appointments';
 
 const router = [
   {
@@ -15,7 +16,7 @@ const router = [
   },
 
   {
-    path: '/serviços',
+    path: '/servicos',
     element: <Services />,
   },
   {
@@ -37,6 +38,10 @@ const router = [
   {
     path: '/pacientes/editar',
     element: <PatientsEdit />,
+  },
+  {
+    path: '/agenda',
+    element: <Appointments />,
   },
 ];
 

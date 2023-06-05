@@ -9,14 +9,14 @@
     },
     {
       "id": 2,
-      "name": "Mauricio Santos",
+      "name": "Caio Santos",
       "email": "mau@globo.com",
       "phone": "(77) 69810-1616",
       "role": "Fisioterapeuta"
     },
     {
       "id": 3,
-      "name": "Mauricio Santos",
+      "name": "João Amaral",
       "email": "mau@globo.com",
       "phone": "(77) 69810-1616",
       "role": "Fisioterapeuta"
@@ -67,6 +67,34 @@
       "district": "Sandra Regina",
       "city": "Barreiras",
       "id": 3
+    }
+  ],
+  "services": [
+    {
+      "name": "Massagem Relaxante",
+      "price": "79.90",
+      "id": 1
+    },
+    {
+      "name": "Limpeza de Pele",
+      "price": "89.90",
+      "id": 2
+    },
+    {
+      "name": "Criolipolise",
+      "price": "100.00",
+      "id": 3
+    }
+  ],
+
+  "appointments": [
+    {
+      "start": "09:00",
+      "end": "10:00",
+      "date": "2021-03-10",
+      "patient": "Rodrigo César Nunes",
+      "professional": "Mauricio Santos",
+      "id": 1
     }
   ]
 }
