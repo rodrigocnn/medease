@@ -90,7 +90,7 @@ export function Services() {
         <Table columns={columns}>
           {services?.map((service: Service) => {
             return (
-              <tr key={service.id} className="border-b bg-white  dark:border-gray-700 dark:bg-gray-800">
+              <tr key={service.id} className="table-row-default">
                 <Column caption={service.name} />
                 <Column caption={service.price} />
                 <Column icon={<IconButton icon="edit" onClick={() => editData(service.id)} />} />

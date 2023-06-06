@@ -86,15 +86,22 @@
       "id": 3
     }
   ],
-
   "appointments": [
     {
-      "start": "09:00",
-      "end": "10:00",
-      "date": "2021-03-10",
-      "patient": "Rodrigo César Nunes",
-      "professional": "Mauricio Santos",
-      "id": 1
+      "professional": "João Amaral",
+      "patient": "Caio Santos",
+      "start": "2023-06-06T12:00:00.624Z",
+      "end": "2023-06-06T13:00:00.968Z",
+      "date": "2023-06-07T14:00:33.000Z",
+      "id": 2
+    },
+    {
+      "professional": "João Amaral",
+      "patient": "Caio Santos",
+      "date": "2023-06-06T03:00:00.000Z",
+      "start": "2023-06-06T13:00:00.459Z",
+      "end": "2023-06-06T14:00:00.810Z",
+      "id": 3
     }
   ]
 }

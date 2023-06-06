@@ -7,15 +7,16 @@ import { DeleteConfirm } from '../../components/DeleteConfirm';
 import { CreateAppointment } from './create';
 import { Button } from '../../components/button';
 import { InsidePage } from '../../components/insidePage';
+import { EditAppointment } from './edit';
 import api from '../../services/api';
 
 interface Appointment {
   id: string;
-  start: string;
-  end: string;
-  date: string;
-  patient: string;
-  professional: string;
+  start?: Date | null;
+  end?: Date | null;
+  date?: Date | null;
+  patient?: string;
+  professional?: string;
 }
 
 const columns = [
@@ -59,8 +60,13 @@ export function Appointments() {
 
   async function editData(id: string) {
     const response = await api.show('appointments', id);
+    const editAppointment = { ...response.data };
+    editAppointment.date = new Date(response.data.date);
+    editAppointment.start = new Date(response.data.start);
+    editAppointment.end = new Date(response.data.end);
+
     setShowModalEdit(true);
-    setAppointment(response.data);
+    setAppointment(editAppointment);
   }
 
   async function openDeleteConfirm(id: string) {
@@ -85,7 +91,13 @@ export function Appointments() {
         deleteItem={deleteItem}
         show={showDeleteConfirm}
       />
+
       <CreateAppointment setShowModal={setShowModal} show={showModal} />
+
+      {appointment && (
+        <EditAppointment appointment={appointment} setShowModal={setShowModalEdit} show={showModalEdit} />
+      )}
+
       <InsidePage title="Agenda">
         <Button onClick={() => setShowModal(true)} type="button">
           Novo
@@ -94,11 +106,11 @@ export function Appointments() {
         <Table columns={columns}>
           {appointments?.map((appointment: Appointment) => {
             return (
-              <tr key={appointment.id} className="border-b bg-white  dark:border-gray-700 dark:bg-gray-800">
+              <tr key={appointment.id} className="table-row-default">
                 <Column caption={appointment.professional} />
-                <Column caption={appointment?.date} />
-                <Column caption={appointment.start} />
-                <Column caption={appointment?.end} />
+                <Column caption={appointment.date?.toString()} />
+                <Column caption={appointment.start?.toString()} />
+                <Column caption={appointment.end?.toString()} />
                 <Column icon={<IconButton icon="edit" onClick={() => editData(appointment.id)} />} />
                 <Column icon={<IconButton icon="delete" onClick={() => openDeleteConfirm(appointment.id)} />} />
               </tr>
