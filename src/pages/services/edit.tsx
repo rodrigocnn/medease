@@ -7,7 +7,7 @@ import api from '../../services/api';
 
 interface Service {
   id?: string;
-  name?: string;
+  description?: string;
   price?: string;
 }
 
@@ -45,7 +45,13 @@ export function EditService({ show, setShowModal, service }: CreateServiceProps)
     <>
       <Modal title="Editar Serviço" confirm={onConfirm} setShowModal={setShowModal} show={show}>
         <div className="mb-2 columns-1">
-          <Input value={updateService?.name} type="text" name="name" onChange={handleChange} placeholder="Nome" />
+          <Input
+            value={updateService?.description}
+            type="text"
+            name="description"
+            onChange={handleChange}
+            placeholder="Nome"
+          />
         </div>
         <div className="mb-2 columns-1">
           <Input value={updateService?.price} type="text" name="price" onChange={handleChange} placeholder="Valor" />

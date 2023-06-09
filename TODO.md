@@ -7,6 +7,7 @@
 
 # OUTROS
 
+[ ] Loading no carregamento
 [ ] Fechar Modal Apos Ação de Salvar/Editar
 [ ] Mascara CPF
 [ ] Datepicker

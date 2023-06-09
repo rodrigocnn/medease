@@ -4,10 +4,10 @@ import { useNavigate } from 'react-router-dom';
 
 import { Button } from '../../components/button';
 import { InsidePage } from '../../components/insidePage';
-import { Column, Table } from '../../components/table';
 import IconButton from '../../components/buttonIcon';
 import { DeleteConfirm } from '../../components/DeleteConfirm';
 import api from '../../services/api';
+import ReactDataGrid from '@inovua/reactdatagrid-community';
 
 interface Professional {
   id: string;
@@ -17,31 +17,48 @@ interface Professional {
   role: string;
 }
 
-const columns = [
-  {
-    caption: 'Nome',
-  },
-
-  {
-    caption: 'Email',
-  },
-
-  {
-    caption: 'Telefone',
-  },
-  {
-    caption: 'Editar',
-  },
-  {
-    caption: 'Excluir',
-  },
-];
-
 export function Professionals() {
-  const [professionals, setProfessionals] = useState<Professional[]>();
+  const [professionals, setProfessionals] = useState<Professional[]>([]);
   const [rowIdSelected, setRowIdSelected] = useState('');
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const navigate = useNavigate();
+
+  const filterValue = [{ name: 'description', operator: 'startsWith', type: 'string', value: '' }];
+  const columns = [
+    {
+      name: 'description',
+      header: 'Nome',
+      minWidth: 50,
+      defaultFlex: 2,
+    },
+    {
+      name: 'email',
+      header: 'Email',
+      minWidth: 50,
+      defaultFlex: 2,
+    },
+    {
+      name: 'phone',
+      header: 'Telefone',
+      minWidth: 50,
+      defaultFlex: 2,
+    },
+
+    {
+      name: 'edit',
+      header: 'Editar',
+      maxWidth: 1000,
+      defaultFlex: 1,
+      render: (row: any) => <IconButton icon="edit" onClick={() => {}} />,
+    },
+    {
+      name: 'delete',
+      header: 'Excluir',
+      maxWidth: 1000,
+      defaultFlex: 1,
+      render: (row: any) => <IconButton icon="delete" onClick={() => openDeleteConfirm(row.data.id)} />,
+    },
+  ];
 
   useEffect(() => {
     getProfessionals();
@@ -80,19 +97,7 @@ export function Professionals() {
           Novo
         </Button>
 
-        <Table columns={columns}>
-          {professionals?.map((professional: Professional) => {
-            return (
-              <tr key={professional.id} className="table-row-default">
-                <Column caption={professional.name} />
-                <Column caption={professional.email} />
-                <Column caption={professional.phone} />
-                <Column icon={<IconButton icon="edit" onClick={() => {}} />} />
-                <Column icon={<IconButton icon="delete" onClick={() => openDeleteConfirm(professional.id)} />} />
-              </tr>
-            );
-          })}
-        </Table>
+        <ReactDataGrid idProperty="id" dataSource={professionals} columns={columns} defaultFilterValue={filterValue} />
       </InsidePage>
     </>
   );

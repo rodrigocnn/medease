@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import api from '../../services/api';
 
 interface Service {
-  name?: string;
+  description?: string;
   price?: string;
 }
 
@@ -27,7 +27,7 @@ export function CreateService({ show, setShowModal }: CreateServiceProps) {
 
   const onConfirm = async (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
-    const response = await api.store('services', service);
+    const response = await api.store('services/', service);
     if (response.data) {
       toast('Registro Atualizado com Sucesso', { type: 'success' });
     } else {
@@ -39,7 +39,13 @@ export function CreateService({ show, setShowModal }: CreateServiceProps) {
     <>
       <Modal title="Cadastrar Serviço" confirm={onConfirm} setShowModal={setShowModal} show={show}>
         <div className="mb-2 columns-1">
-          <Input value={service?.name} type="text" name="name" onChange={handleChange} placeholder="Nome" />
+          <Input
+            value={service?.description}
+            type="text"
+            name="description"
+            onChange={handleChange}
+            placeholder="Nome"
+          />
         </div>
         <div className="mb-2 columns-1">
           <Input value={service?.price} type="text" name="price" onChange={handleChange} placeholder="Valor" />

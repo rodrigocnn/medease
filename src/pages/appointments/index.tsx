@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
-import { Column, Table } from '../../components/table';
 import IconButton from '../../components/buttonIcon';
 import { DeleteConfirm } from '../../components/DeleteConfirm';
 import { CreateAppointment } from './create';
@@ -9,6 +8,7 @@ import { Button } from '../../components/button';
 import { InsidePage } from '../../components/insidePage';
 import { EditAppointment } from './edit';
 import api from '../../services/api';
+import ReactDataGrid from '@inovua/reactdatagrid-community';
 
 interface Appointment {
   id: string;
@@ -19,35 +19,56 @@ interface Appointment {
   professional?: string;
 }
 
-const columns = [
-  {
-    caption: 'Profissional',
-  },
-
-  {
-    caption: 'Data',
-  },
-  {
-    caption: 'Inicio',
-  },
-  {
-    caption: 'Término',
-  },
-  {
-    caption: 'Editar',
-  },
-  {
-    caption: 'Excluir',
-  },
-];
-
 export function Appointments() {
-  const [appointments, setAppointments] = useState<Appointment[]>();
+  const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [appointment, setAppointment] = useState<Appointment>();
   const [showModal, setShowModal] = useState(false);
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [rowIdSelected, setRowIdSelected] = useState('');
+
+  const filterValue = [{ name: 'professional', operator: 'startsWith', type: 'string', value: '' }];
+
+  const columns = [
+    {
+      name: 'professional',
+      header: 'Profissional',
+      minWidth: 50,
+      defaultFlex: 2,
+    },
+    {
+      name: 'date',
+      header: 'Data',
+      minWidth: 50,
+      defaultFlex: 2,
+    },
+    {
+      name: 'start',
+      header: 'Início',
+      minWidth: 50,
+      defaultFlex: 2,
+    },
+    {
+      name: 'end',
+      header: 'Término',
+      minWidth: 50,
+      defaultFlex: 2,
+    },
+    {
+      name: 'edit',
+      header: 'Editar',
+      maxWidth: 1000,
+      defaultFlex: 1,
+      render: (row: any) => <IconButton icon="edit" onClick={() => editData(row.data.id)} />,
+    },
+    {
+      name: 'delete',
+      header: 'Excluir',
+      maxWidth: 1000,
+      defaultFlex: 1,
+      render: (row: any) => <IconButton icon="delete" onClick={() => openDeleteConfirm(row.data.id)} />,
+    },
+  ];
 
   useEffect(() => {
     getAppointments();
@@ -103,20 +124,7 @@ export function Appointments() {
           Novo
         </Button>
 
-        <Table columns={columns}>
-          {appointments?.map((appointment: Appointment) => {
-            return (
-              <tr key={appointment.id} className="table-row-default">
-                <Column caption={appointment.professional} />
-                <Column caption={appointment.date?.toString()} />
-                <Column caption={appointment.start?.toString()} />
-                <Column caption={appointment.end?.toString()} />
-                <Column icon={<IconButton icon="edit" onClick={() => editData(appointment.id)} />} />
-                <Column icon={<IconButton icon="delete" onClick={() => openDeleteConfirm(appointment.id)} />} />
-              </tr>
-            );
-          })}
-        </Table>
+        <ReactDataGrid idProperty="id" dataSource={appointments} columns={columns} defaultFilterValue={filterValue} />
       </InsidePage>
     </>
   );
