@@ -1,56 +1,99 @@
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+
+import { Button } from '../../components/button';
+import { InsidePage } from '../../components/insidePage';
+import { Column, Table } from '../../components/table';
+import IconButton from '../../components/buttonIcon';
+import { DeleteConfirm } from '../../components/DeleteConfirm';
+import api from '../../services/api';
+
+interface Professional {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  role: string;
+}
+
+const columns = [
+  {
+    caption: 'Nome',
+  },
+
+  {
+    caption: 'Email',
+  },
+
+  {
+    caption: 'Telefone',
+  },
+  {
+    caption: 'Editar',
+  },
+  {
+    caption: 'Excluir',
+  },
+];
+
 export function Professionals() {
+  const [professionals, setProfessionals] = useState<Professional[]>();
+  const [rowIdSelected, setRowIdSelected] = useState('');
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    getProfessionals();
+  }, []);
+
+  async function getProfessionals() {
+    const response = await api.index('professionals');
+    setProfessionals(response.data);
+  }
+
+  async function openDeleteConfirm(id: string) {
+    setShowDeleteConfirm(true);
+    setRowIdSelected(id);
+  }
+
+  async function deleteItem() {
+    const response = await api.delete('professionals', rowIdSelected);
+    if (response.data) {
+      toast('Registro Excluído com Sucesso', { type: 'success' });
+    } else {
+      toast('Não foi possivel realizar operação', { type: 'error' });
+    }
+  }
+
   return (
     <>
-      <div className="h-24 bg-[#06afb1]">
-        <div className="h-24 min-h-full p-5 font-semibold text-white">Profissionais</div>
-      </div>
+      <DeleteConfirm
+        title="Excluir Cargo"
+        setShowDeleteConfirm={setShowDeleteConfirm}
+        deleteItem={deleteItem}
+        show={showDeleteConfirm}
+      />
 
-      <div className="relative top-[-3rem]  h-full overflow-x-auto p-5">
-        <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
-          <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-              <th scope="col" className="px-6 py-3">
-                Product name
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Color
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Category
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Price
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr className="border-b bg-white dark:border-gray-700 dark:bg-gray-800">
-              <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                Apple MacBook Pro 17"
-              </th>
-              <td className="px-6 py-4">Silver</td>
-              <td className="px-6 py-4">Laptop</td>
-              <td className="px-6 py-4">$2999</td>
-            </tr>
-            <tr className="border-b bg-white dark:border-gray-700 dark:bg-gray-800">
-              <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                Microsoft Surface Pro
-              </th>
-              <td className="px-6 py-4">White</td>
-              <td className="px-6 py-4">Laptop PC</td>
-              <td className="px-6 py-4">$1999</td>
-            </tr>
-            <tr className="bg-white dark:bg-gray-800">
-              <th scope="row" className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">
-                Magic Mouse 2
-              </th>
-              <td className="px-6 py-4">Black</td>
-              <td className="px-6 py-4">Accessories</td>
-              <td className="px-6 py-4">$99</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <InsidePage title="Profissionais">
+        <Button onClick={() => navigate('/profissionais/novo')} type="button">
+          Novo
+        </Button>
+
+        <Table columns={columns}>
+          {professionals?.map((professional: Professional) => {
+            return (
+              <tr key={professional.id} className="table-row-default">
+                <Column caption={professional.name} />
+                <Column caption={professional.email} />
+                <Column caption={professional.phone} />
+                <Column icon={<IconButton icon="edit" onClick={() => {}} />} />
+                <Column icon={<IconButton icon="delete" onClick={() => openDeleteConfirm(professional.id)} />} />
+              </tr>
+            );
+          })}
+        </Table>
+      </InsidePage>
     </>
   );
 }

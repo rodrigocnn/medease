@@ -20,6 +20,19 @@
       "email": "mau@globo.com",
       "phone": "(77) 69810-1616",
       "role": "Fisioterapeuta"
+    },
+    {
+      "name": "Rodrigo César Nunes",
+      "email": "rodrigocnn@gmail.com",
+      "data_nascimento": "01/09/95",
+      "cpf": "807.527.485-73",
+      "rg": "0928901560",
+      "role": "1",
+      "endereco": "Rua Sao Francisco",
+      "bairro": "Sandra Regina",
+      "cidade": "Barreiras",
+      "estado": "BA",
+      "id": 4
     }
   ],
   "roles": [

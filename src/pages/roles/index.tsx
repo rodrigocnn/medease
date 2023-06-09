@@ -1,39 +1,53 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import ReactDataGrid from '@inovua/reactdatagrid-community';
 
-import { Column, Table } from '../../components/table';
 import { Button } from '../../components/button';
 import { CreateRole } from './create';
 import { EditRole } from './edit';
 import { DeleteConfirm } from '../../components/DeleteConfirm';
 import IconButton from '../../components/buttonIcon';
-import api from '../../services/api';
+
 import { InsidePage } from '../../components/insidePage';
+import api from '../../services/api';
 
 interface Role {
   id: string;
-  name: string;
+  description: string;
 }
 
-const columns = [
-  {
-    caption: 'Nome',
-  },
-  {
-    caption: 'Editar',
-  },
-  {
-    caption: 'Excluir',
-  },
-];
-
 export function Roles() {
-  const [roles, setRoles] = useState<Role[]>();
+  const [roles, setRoles] = useState<Role[]>([]);
   const [role, setRole] = useState<Role>();
   const [showModal, setShowModal] = useState(false);
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [rowIdSelected, setRowIdSelected] = useState('');
+
+  const filterValue = [{ name: 'description', operator: 'startsWith', type: 'string', value: '' }];
+
+  const columns = [
+    {
+      name: 'description',
+      header: 'Nome',
+      minWidth: 50,
+      defaultFlex: 2,
+    },
+    {
+      name: 'edit',
+      header: 'Editar',
+      maxWidth: 1000,
+      defaultFlex: 1,
+      render: (row: any) => <IconButton icon="edit" onClick={() => editRole(row.data.id)} />,
+    },
+    {
+      name: 'delete',
+      header: 'Excluir',
+      maxWidth: 1000,
+      defaultFlex: 1,
+      render: (row: any) => <IconButton icon="delete" onClick={() => openDeleteConfirm(row.data.id)} />,
+    },
+  ];
 
   useEffect(() => {
     getRoles();
@@ -45,7 +59,7 @@ export function Roles() {
   }
 
   async function editRole(id: string) {
-    const response = await api.show('roles', id);
+    const response = await api.show('roles/show', id);
     setShowModalEdit(true);
     setRole(response.data);
   }
@@ -57,7 +71,8 @@ export function Roles() {
 
   async function deleteItem() {
     const response = await api.delete('roles', rowIdSelected);
-    if (response.data) {
+    console.log(response);
+    if (response.status === 204) {
       toast('Registro Excluído com Sucesso', { type: 'success' });
     } else {
       toast('Não foi possivel realizar operação', { type: 'error' });
@@ -82,17 +97,7 @@ export function Roles() {
           Novo
         </Button>
 
-        <Table columns={columns}>
-          {roles?.map((role: Role) => {
-            return (
-              <tr key={role.id} className="border-b bg-white  dark:border-gray-700 dark:bg-gray-800">
-                <Column caption={role.name} />
-                <Column icon={<IconButton icon="edit" onClick={() => editRole(role.id)} />} />
-                <Column icon={<IconButton icon="delete" onClick={() => openDeleteConfirm(role.id)} />} />
-              </tr>
-            );
-          })}
-        </Table>
+        <ReactDataGrid idProperty="id" dataSource={roles} columns={columns} defaultFilterValue={filterValue} />
       </InsidePage>
     </>
   );

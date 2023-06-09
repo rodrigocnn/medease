@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 import { toast } from 'react-toastify';
 import api from '../../services/api';
@@ -6,7 +6,7 @@ import { Input } from '../../components/input';
 import { Modal } from '../../components/modal';
 
 interface Role {
-  name: string;
+  description: string;
 }
 
 interface CreateRoleProps {
@@ -17,14 +17,18 @@ interface CreateRoleProps {
 export const CreateRole = ({ show, setShowModal }: CreateRoleProps) => {
   const [role, setRole] = useState<Role>();
 
+  useEffect(() => {
+    setRole({ description: '' });
+  }, [show]);
+
   const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
-    const updatedState: Role = { ...role, name: event.currentTarget.value };
+    const updatedState: Role = { ...role, description: event.currentTarget.value };
     setRole(updatedState);
   };
 
   const onConfirm = async (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
-    const response = await api.store('roles', role);
+    const response = await api.store('roles/', role);
     if (response.data) {
       toast('Registro Atualizado com Sucesso', { type: 'success' });
     } else {
@@ -34,7 +38,7 @@ export const CreateRole = ({ show, setShowModal }: CreateRoleProps) => {
 
   return (
     <Modal title="Cadastrar Cargo" confirm={onConfirm} setShowModal={setShowModal} show={show}>
-      <Input value={role?.name} onChange={handleChange} type="text" placeholder="Nome" />
+      <Input value={role?.description} onChange={handleChange} type="text" placeholder="Nome" />
     </Modal>
   );
 };

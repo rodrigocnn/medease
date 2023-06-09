@@ -7,7 +7,7 @@ import api from '../../services/api';
 
 interface Role {
   id: string;
-  name: string;
+  description?: string;
 }
 
 interface ModalProps {
@@ -20,7 +20,7 @@ export const EditRole = ({ show, setShowModal, role }: ModalProps) => {
   const [updateRole, setUpdateRole] = useState<Role>(role);
 
   const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
-    const updatedRole: Role = { ...updateRole, name: event.currentTarget.value };
+    const updatedRole: Role = { ...updateRole, description: event.currentTarget.value };
     setUpdateRole(updatedRole);
   };
 
@@ -36,7 +36,7 @@ export const EditRole = ({ show, setShowModal, role }: ModalProps) => {
 
   return (
     <Modal title="Editar Cargo" confirm={onConfirm} setShowModal={setShowModal} show={show}>
-      <Input value={updateRole.name} onChange={handleChange} type="text" placeholder="Nome" />
+      <Input value={updateRole.description} onChange={handleChange} type="text" placeholder="Nome" />
     </Modal>
   );
 };

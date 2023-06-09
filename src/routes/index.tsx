@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 
 import { Professionals } from '../pages/professionals';
 import { Patients } from '../pages/patients';
-import { ProfessionalsCreate } from '../pages/professionals/create';
+import { CreateProfessional } from '../pages/professionals/create';
 import { PatientsCreate } from '../pages/patients/create';
 import { Services } from '../pages/services';
 import { Roles } from '../pages/roles';
@@ -25,7 +25,7 @@ const router = [
   },
   {
     path: '/profissionais/novo',
-    element: <ProfessionalsCreate />,
+    element: <CreateProfessional />,
   },
   {
     path: '/pacientes',
