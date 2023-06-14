@@ -1,15 +1,14 @@
 # CRUDS
 
-[ ] Cargos [x] CREATE [x] READ [x] UPDATE DELETE [x]
-[ ] Pacientes [x] Create [ ] Read [ ] Update [ ] Delete
-[ ] Serviços [x] Create [x] Read [x] Update [x] Delete
-[ ] Agenda [ ] Create [ ] Read [x] Update [ ] Delete
+Agenda
 
 # OUTROS
 
-[ ] Loading no carregamento
+[ ] Modal fechar no btn cancelar
+[ ] Label dos Form
+[ ] Loading nas ações remotas
 [ ] Fechar Modal Apos Ação de Salvar/Editar
-[ ] Mascara CPF
+[ ] Mascara CPF e Telefone
 [ ] Datepicker
 [ ] Refatorar Código Sidebar - remover icones svg
 [x] Implementar componente Tabela

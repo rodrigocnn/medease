@@ -23,11 +23,18 @@ export function Professionals() {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const navigate = useNavigate();
 
-  const filterValue = [{ name: 'description', operator: 'startsWith', type: 'string', value: '' }];
+  const filterValue = [{ name: 'name', operator: 'startsWith', type: 'string', value: '' }];
   const columns = [
     {
-      name: 'description',
+      name: 'name',
       header: 'Nome',
+      minWidth: 50,
+      defaultFlex: 2,
+    },
+
+    {
+      name: 'role_description',
+      header: 'Cargo',
       minWidth: 50,
       defaultFlex: 2,
     },
@@ -45,18 +52,18 @@ export function Professionals() {
     },
 
     {
-      name: 'edit',
+      name: 'id',
       header: 'Editar',
       maxWidth: 1000,
       defaultFlex: 1,
-      render: (row: any) => <IconButton icon="edit" onClick={() => {}} />,
+      render: ({ value }: any) => <IconButton icon="edit" onClick={() => navigate(`/profissionais/editar/${value}`)} />,
     },
     {
-      name: 'delete',
+      name: 'id',
       header: 'Excluir',
       maxWidth: 1000,
       defaultFlex: 1,
-      render: (row: any) => <IconButton icon="delete" onClick={() => openDeleteConfirm(row.data.id)} />,
+      render: ({ value }: any) => <IconButton icon="delete" onClick={() => openDeleteConfirm(value)} />,
     },
   ];
 
@@ -70,13 +77,14 @@ export function Professionals() {
   }
 
   async function openDeleteConfirm(id: string) {
+    console.log(id);
     setShowDeleteConfirm(true);
     setRowIdSelected(id);
   }
 
   async function deleteItem() {
     const response = await api.delete('professionals', rowIdSelected);
-    if (response.data) {
+    if (response.status === 204) {
       toast('Registro Excluído com Sucesso', { type: 'success' });
     } else {
       toast('Não foi possivel realizar operação', { type: 'error' });

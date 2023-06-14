@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ReactDataGrid from '@inovua/reactdatagrid-community';
+import { useNavigate } from 'react-router-dom';
 
 import { Button } from '../../components/button';
 import { InsidePage } from '../../components/insidePage';
@@ -18,12 +19,15 @@ interface Patient {
 export function Patients() {
   const [patients, setPatients] = useState<Patient[]>([]);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-  const filterValue = [{ name: 'description', operator: 'startsWith', type: 'string', value: '' }];
+  const filterValue = [{ name: 'name', operator: 'startsWith', type: 'string', value: '' }];
   const [rowIdSelected, setRowIdSelected] = useState('');
+  const navigate = useNavigate();
+
+  const gridStyle = { minHeight: 370 };
 
   const columns = [
     {
-      name: 'description',
+      name: 'name',
       header: 'Nome',
       minWidth: 50,
       defaultFlex: 2,
@@ -34,34 +38,29 @@ export function Patients() {
       minWidth: 50,
       defaultFlex: 2,
     },
+
     {
-      name: 'role',
-      header: 'Cargo',
-      minWidth: 50,
-      defaultFlex: 2,
-    },
-    {
-      name: 'edit',
+      name: 'id',
       header: 'Editar',
       maxWidth: 1000,
       defaultFlex: 1,
-      render: (row: any) => <IconButton icon="edit" onClick={() => {}} />,
+      render: ({ value }: any) => <IconButton icon="edit" onClick={() => navigate(`/pacientes/editar/${value}`)} />,
     },
     {
-      name: 'delete',
+      name: 'id',
       header: 'Excluir',
       maxWidth: 1000,
       defaultFlex: 1,
-      render: (row: any) => <IconButton icon="delete" onClick={() => openDeleteConfirm(row.data.id)} />,
+      render: ({ value }: any) => <IconButton icon="delete" onClick={() => openDeleteConfirm(value)} />,
     },
   ];
 
   useEffect(() => {
-    getProducts();
-  }, []);
+    getPatients();
+  }, [showDeleteConfirm]);
 
-  async function getProducts() {
-    const response = await api.index('professionals');
+  async function getPatients() {
+    const response = await api.index('patients');
     setPatients(response.data);
   }
 
@@ -71,7 +70,7 @@ export function Patients() {
   }
 
   async function deleteItem() {
-    const response = await api.delete('roles', rowIdSelected);
+    const response = await api.delete('patients', rowIdSelected);
     console.log(response);
     if (response.status === 204) {
       toast('Registro Excluído com Sucesso', { type: 'success' });
@@ -94,7 +93,16 @@ export function Patients() {
           show={showDeleteConfirm}
         />
 
-        <ReactDataGrid idProperty="id" dataSource={patients} columns={columns} defaultFilterValue={filterValue} />
+        <ReactDataGrid
+          idProperty="id"
+          style={gridStyle}
+          dataSource={patients}
+          columns={columns}
+          defaultFilterValue={filterValue}
+          activateRowOnFocus={false}
+          pagination={'local'}
+          pageSizes={[10]}
+        />
       </InsidePage>
     </>
   );

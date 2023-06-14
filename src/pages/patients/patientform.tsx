@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import api from '../../services/api';
 import { Input } from '../../components/input';
 import { Select } from '../../components/select';
 import { Button } from '../../components/button';
+import PatientMap from '../../mappers/ProfessionalMap';
 
-interface patient {
+interface Patient {
   name?: string;
   email?: string;
   date_of_birth?: string;
@@ -22,17 +23,29 @@ interface patient {
 }
 
 const statesOptions = [
-  { label: 'Masculino', value: 'M' },
-  { label: 'Feminino', value: 'F' },
+  { label: 'Acre', value: 'AC' },
+  { label: 'Bahia', value: 'BA' },
 ];
 
 interface PatientFormProps {
   action?: 'create' | 'edit';
 }
 
+interface Role {
+  id: string;
+  description: string;
+}
+
+interface Options {
+  label: string;
+  value: string;
+}
+
 export function PatientForm({ action = 'create' }: PatientFormProps) {
-  const [patient, setPatient] = useState<patient>();
+  const [patient, setPatient] = useState<Patient>();
+
   const navigate = useNavigate();
+  const { id } = useParams();
 
   useEffect(() => {
     if (action === 'edit') {
@@ -41,12 +54,11 @@ export function PatientForm({ action = 'create' }: PatientFormProps) {
   }, []);
 
   async function getPatient() {
-    const response = await api.show('professionals', '1');
-    console.log('resppons', response.data);
+    const response = await api.show('patients/show', id as string);
     setPatient(response.data);
   }
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const fieldName = event.target.name;
     const value = event.target.value;
     setPatient({ ...patient, [fieldName]: value });
@@ -54,12 +66,25 @@ export function PatientForm({ action = 'create' }: PatientFormProps) {
 
   const onSubmit = async (event: React.FormEvent<EventTarget | HTMLFormElement>) => {
     event.preventDefault();
-    const response = await api.store('patients', patient);
-    if (response.data) {
-      toast('Registro Inserido com Sucesso', { type: 'success' });
-      navigate('/pacientes');
-    } else {
-      toast('Não foi possivel realizar operação', { type: 'error' });
+    if (patient) {
+      if (action === 'edit') {
+        console.log('Aqui', PatientMap.toPersistent(patient));
+        const response = await api.update('patients', id as string, PatientMap.toPersistent(patient));
+        if (response.data) {
+          toast('Registro Atualizado com Sucesso', { type: 'success' });
+          navigate('/pacientes');
+        } else {
+          toast('Não foi possivel realizar operação', { type: 'error' });
+        }
+      } else {
+        const response = await api.store('patients', PatientMap.toPersistent(patient));
+        if (response.data) {
+          toast('Registro Inserido com Sucesso', { type: 'success' });
+          navigate('/pacientes');
+        } else {
+          toast('Não foi possivel realizar operação', { type: 'error' });
+        }
+      }
     }
   };
 
@@ -68,12 +93,15 @@ export function PatientForm({ action = 'create' }: PatientFormProps) {
       <div className="rounded bg-white p-5">
         <div className="mb-4 mt-4 p-1   font-bold text-[#06afb1] ">Geral</div>
         <form onSubmit={onSubmit}>
-          <div className="mb-2 columns-2">
+          <div className="mb-2 columns-1">
             <Input value={patient?.name} name="name" onChange={handleChange} type="text" placeholder="Nome" />
+          </div>
+          <div className="mb-2 columns-2">
             <Input value={patient?.email} name="email" onChange={handleChange} type="text" placeholder="Email" />
+            <Input value={patient?.phone} name="phone" onChange={handleChange} type="text" placeholder="Telefone" />
           </div>
 
-          <div className="mb-2 columns-2">
+          <div className="mb-2 columns-3">
             <Input
               value={patient?.date_of_birth}
               name="date_of_birth"
@@ -81,13 +109,8 @@ export function PatientForm({ action = 'create' }: PatientFormProps) {
               type="text"
               placeholder="Data de Nascimento"
             />
-            <Input value={patient?.phone} name="phone" onChange={handleChange} type="text" placeholder="Telefone" />
-          </div>
-
-          <div className="mb-2 columns-3">
             <Input value={patient?.cpf} name="cpf" onChange={handleChange} type="text" placeholder="CPF" />
             <Input value={patient?.rg} name="rg" onChange={handleChange} type="text" placeholder="RG" />
-            <Select options={statesOptions} />
           </div>
 
           <div className="mb-4 mt-4 p-1   font-bold text-[#06afb1] ">Endereço</div>
@@ -99,7 +122,7 @@ export function PatientForm({ action = 'create' }: PatientFormProps) {
           <div className="mb-2 columns-3">
             <Input value={patient?.district} name="district" onChange={handleChange} type="text" placeholder="Bairro" />
             <Input value={patient?.city} name="city" onChange={handleChange} type="text" placeholder="Cidade" />
-            <Select options={statesOptions} />
+            <Select onChange={handleChange} name="state" options={statesOptions} />
           </div>
           <div className="mt-6 columns-2">
             <Button onClick={onSubmit}>Salvar</Button>

@@ -139,7 +139,7 @@ export function Sidebar() {
             <li>
               <Link
                 className="flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                to="/servicos"
+                to="/pacientes"
               >
                 <svg
                   aria-hidden="true"

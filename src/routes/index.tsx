@@ -8,6 +8,7 @@ import { Services } from '../pages/services';
 import { Roles } from '../pages/roles';
 import { PatientsEdit } from '../pages/patients/edit';
 import { Appointments } from '../pages/appointments';
+import { ProfessionalsEdit } from '../pages/professionals/edit';
 
 const router = [
   {
@@ -28,6 +29,10 @@ const router = [
     element: <CreateProfessional />,
   },
   {
+    path: '/profissionais/editar/:id',
+    element: <ProfessionalsEdit />,
+  },
+  {
     path: '/pacientes',
     element: <Patients />,
   },
@@ -36,7 +41,7 @@ const router = [
     element: <PatientsCreate />,
   },
   {
-    path: '/pacientes/editar',
+    path: '/pacientes/editar/:id',
     element: <PatientsEdit />,
   },
   {
