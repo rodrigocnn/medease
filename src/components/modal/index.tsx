@@ -23,7 +23,7 @@ export const Modal = ({ show, title, setShowModal, children, confirm }: ModalPro
             id="staticModal"
             data-modal-backdrop="static"
             aria-hidden="true"
-            className="absolute right-0 z-50  flex h-[calc(100%-1rem)]  max-h-full justify-center overflow-y-auto overflow-x-hidden p-4 md:inset-0"
+            className="absolute right-0  z-50 flex h-[calc(100%-1rem)] max-h-full justify-center overflow-y-auto overflow-x-hidden p-4 md:inset-0"
           >
             <div className="relative left-14 top-14 max-h-full w-full max-w-2xl">
               <div className="relative rounded-lg bg-white shadow dark:bg-gray-700">
@@ -49,7 +49,7 @@ export const Modal = ({ show, title, setShowModal, children, confirm }: ModalPro
                   </button>
                 </div>
                 <div className="space-y-6 p-6">
-                  <div className="relative h-full  overflow-x-auto   ">
+                  <div className="relative h-full    ">
                     <div className="rounded">
                       <div className="mb-2 columns-1">{children}</div>
 

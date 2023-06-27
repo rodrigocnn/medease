@@ -2,19 +2,20 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import IconButton from '../../components/buttonIcon';
-import { DeleteConfirm } from '../../components/DeleteConfirm';
+
 import { CreateAppointment } from './create';
 import { Button } from '../../components/button';
 import { InsidePage } from '../../components/insidePage';
 import { EditAppointment } from './edit';
 import api from '../../services/api';
 import ReactDataGrid from '@inovua/reactdatagrid-community';
+import { formatDateBR, timeDefaultToString } from '../../helpers/handleDate';
 
 interface Appointment {
   id: string;
-  start?: Date | null;
-  end?: Date | null;
-  date?: Date | null;
+  start?: string | number;
+  end?: string | number;
+  date: string;
   patient?: string;
   professional?: string;
 }
@@ -24,14 +25,16 @@ export function Appointments() {
   const [appointment, setAppointment] = useState<Appointment>();
   const [showModal, setShowModal] = useState(false);
   const [showModalEdit, setShowModalEdit] = useState(false);
-  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-  const [rowIdSelected, setRowIdSelected] = useState('');
+  const gridStyle = { minHeight: 370 };
 
-  const filterValue = [{ name: 'professional', operator: 'startsWith', type: 'string', value: '' }];
+  const filterValue = [
+    { name: 'professional_name', operator: 'startsWith', type: 'string', value: '' },
+    { name: 'date', operator: 'startsWith', type: 'string', value: '' },
+  ];
 
   const columns = [
     {
-      name: 'professional',
+      name: 'professional_name',
       header: 'Profissional',
       minWidth: 50,
       defaultFlex: 2,
@@ -61,23 +64,24 @@ export function Appointments() {
       defaultFlex: 1,
       render: (row: any) => <IconButton icon="edit" onClick={() => editData(row.data.id)} />,
     },
-    {
-      name: 'delete',
-      header: 'Excluir',
-      maxWidth: 1000,
-      defaultFlex: 1,
-      render: (row: any) => <IconButton icon="delete" onClick={() => openDeleteConfirm(row.data.id)} />,
-    },
   ];
 
   useEffect(() => {
+    async function getAppointments() {
+      const response = await api.index('bookings');
+      const bookings: Appointment[] = response.data.map((item: Appointment) => {
+        return {
+          ...item,
+          start: timeDefaultToString(item.start as number),
+          end: timeDefaultToString(item.end as number),
+          date: formatDateBR(item.date),
+        };
+      });
+      setAppointments(bookings);
+    }
+
     getAppointments();
   }, []);
-
-  async function getAppointments() {
-    const response = await api.index('appointments');
-    setAppointments(response.data);
-  }
 
   async function editData(id: string) {
     const response = await api.show('appointments', id);
@@ -85,34 +89,12 @@ export function Appointments() {
     editAppointment.date = new Date(response.data.date);
     editAppointment.start = new Date(response.data.start);
     editAppointment.end = new Date(response.data.end);
-
     setShowModalEdit(true);
     setAppointment(editAppointment);
   }
 
-  async function openDeleteConfirm(id: string) {
-    setShowDeleteConfirm(true);
-    setRowIdSelected(id);
-  }
-
-  async function deleteItem() {
-    const response = await api.delete('appointments', rowIdSelected);
-    if (response.data) {
-      toast('Registro Excluído com Sucesso', { type: 'success' });
-    } else {
-      toast('Não foi possivel realizar operação', { type: 'error' });
-    }
-  }
-
   return (
     <>
-      <DeleteConfirm
-        title="Excluir Agenda"
-        setShowDeleteConfirm={setShowDeleteConfirm}
-        deleteItem={deleteItem}
-        show={showDeleteConfirm}
-      />
-
       <CreateAppointment setShowModal={setShowModal} show={showModal} />
 
       {appointment && (
@@ -124,7 +106,15 @@ export function Appointments() {
           Novo
         </Button>
 
-        <ReactDataGrid idProperty="id" dataSource={appointments} columns={columns} defaultFilterValue={filterValue} />
+        <ReactDataGrid
+          style={gridStyle}
+          idProperty="id"
+          dataSource={appointments}
+          columns={columns}
+          defaultFilterValue={filterValue}
+          pagination={'local'}
+          pageSizes={[10]}
+        />
       </InsidePage>
     </>
   );

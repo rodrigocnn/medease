@@ -9,8 +9,14 @@ import { Roles } from '../pages/roles';
 import { PatientsEdit } from '../pages/patients/edit';
 import { Appointments } from '../pages/appointments';
 import { ProfessionalsEdit } from '../pages/professionals/edit';
+import { Login } from '../pages/login';
 
 const router = [
+  {
+    path: '/login',
+    element: <Login />,
+  },
+
   {
     path: '/cargos',
     element: <Roles />,
