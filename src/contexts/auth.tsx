@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import api from '../services/api';
 
 interface AuthProviderProps {
@@ -6,24 +6,23 @@ interface AuthProviderProps {
 }
 
 interface User {
-  name: string;
+  username?: string;
   password?: string;
 }
 
 interface AuthContextData {
-  signed: boolean;
-  signIn: () => void;
+  signed: boolean | null;
+  signIn: (user: User) => void;
   loading: boolean;
-  user: User;
 }
 
 const initialState = {
   signed: false,
   setSigned: () => {},
   signIn: () => {},
-  loading: false,
+  loading: true,
   user: {
-    name: '',
+    username: '',
   },
   token: null,
 };
@@ -31,25 +30,36 @@ const initialState = {
 const AuthContext = createContext<AuthContextData>(initialState);
 
 function AuthProvider({ children }: AuthProviderProps) {
-  const [user, setUser] = useState<User>(initialState.user);
   const [signed, setSigned] = useState(initialState.signed);
   const [loading, setLoading] = useState(initialState.loading);
-  const [token, setToken] = useState(initialState.token);
+  const [, setToken] = useState(initialState.token);
 
-  async function signIn() {
+  useEffect(() => {
+    function checkIsLogged() {
+      setLoading(true);
+      const storedToken = localStorage.getItem('@Auth:TOKEN');
+      if (storedToken) {
+        setSigned(true);
+      } else {
+        setSigned(false);
+      }
+    }
+    checkIsLogged();
+    setLoading(false);
+  }, []);
+
+  async function signIn(user: User) {
     try {
       setLoading(true);
-      const { data } = await api.login('auth/', {});
+      const { data } = await api.login('users/auth', user);
       localStorage.setItem('@Auth:TOKEN', data.token);
-      localStorage.setItem('@Auth:USER', JSON.stringify(data.name));
       setToken(data.token);
-      setUser({ name: data.name });
       setSigned(true);
       setLoading(false);
     } catch (error) {}
   }
 
-  return <AuthContext.Provider value={{ signed, signIn, loading, user }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ signed, signIn, loading }}>{children}</AuthContext.Provider>;
 }
 
 export { AuthContext, AuthProvider };

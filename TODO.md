@@ -4,6 +4,8 @@ Agenda
 
 # OUTROS
 
+[ ] Form de Cadastro e Edição da Agenda
+
 [ ] Modal fechar no btn cancelar
 [ ] Label dos Form
 [ ] Loading nas ações remotas

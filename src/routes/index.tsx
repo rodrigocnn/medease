@@ -10,13 +10,11 @@ import { PatientsEdit } from '../pages/patients/edit';
 import { Appointments } from '../pages/appointments';
 import { ProfessionalsEdit } from '../pages/professionals/edit';
 import { Login } from '../pages/login';
+import { Admin } from '../components/Admin';
+import { useContext } from 'react';
+import { AuthContext } from '../contexts/auth';
 
 const router = [
-  {
-    path: '/login',
-    element: <Login />,
-  },
-
   {
     path: '/cargos',
     element: <Roles />,
@@ -57,12 +55,31 @@ const router = [
 ];
 
 function Links(): JSX.Element {
+  const { signed, loading } = useContext(AuthContext);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <Routes>
-      {router.map(({ path, element }) => {
-        return <Route key={element.key} path={path} element={element} />;
-      })}
-    </Routes>
+    <>
+      {signed ? (
+        <Admin>
+          <Routes>
+            {router.map(({ path, element }) => {
+              return <Route key={element.key} path={path} element={element} />;
+            })}
+          </Routes>
+        </Admin>
+      ) : (
+        <main>
+          <Routes>
+            <Route path={'/login'} element={<Login />} />;
+            <Route path={'*'} element={<Login />} />;
+          </Routes>
+        </main>
+      )}
+    </>
   );
 }
 

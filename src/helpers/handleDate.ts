@@ -22,6 +22,14 @@ export const timeDefaultToString = (hour: number) => {
   return timeString;
 };
 
+export function timeNowToStringAM(): string {
+  const currentTime = new Date();
+  currentTime.setMinutes(0); // Set minutes to zero
+  const hour = currentTime.getHours();
+  const minute = currentTime.getMinutes();
+  return `${hour}:${minute.toString().padStart(2, '0')}`;
+}
+
 export const timeNow = () => {
   const dateObj: Date = new Date();
   const hours: number = dateObj.getHours();
@@ -30,7 +38,8 @@ export const timeNow = () => {
   return currentTime;
 };
 
-export const formatDateBR = (date: string) => {
-  const dateParts = date.split('-');
-  return `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`;
+export const formatDateBR = (dateString: string) => {
+  const date = new Date(dateString);
+  const options: Intl.DateTimeFormatOptions = { day: '2-digit', month: '2-digit', year: 'numeric' };
+  return date.toLocaleDateString('en-US', options);
 };

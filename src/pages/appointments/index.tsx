@@ -1,15 +1,12 @@
 import { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
+import ReactDataGrid from '@inovua/reactdatagrid-community';
 
 import IconButton from '../../components/buttonIcon';
-
-import { CreateAppointment } from './create';
 import { Button } from '../../components/button';
 import { InsidePage } from '../../components/insidePage';
-import { EditAppointment } from './edit';
-import api from '../../services/api';
-import ReactDataGrid from '@inovua/reactdatagrid-community';
 import { formatDateBR, timeDefaultToString } from '../../helpers/handleDate';
+import { FormAppointment } from './form';
+import api from '../../services/api';
 
 interface Appointment {
   id: string;
@@ -22,9 +19,9 @@ interface Appointment {
 
 export function Appointments() {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
-  const [appointment, setAppointment] = useState<Appointment>();
   const [showModal, setShowModal] = useState(false);
   const [showModalEdit, setShowModalEdit] = useState(false);
+  const [modeEdit, setModeEdit] = useState<null | string>(null);
   const gridStyle = { minHeight: 370 };
 
   const filterValue = [
@@ -84,22 +81,14 @@ export function Appointments() {
   }, []);
 
   async function editData(id: string) {
-    const response = await api.show('appointments', id);
-    const editAppointment = { ...response.data };
-    editAppointment.date = new Date(response.data.date);
-    editAppointment.start = new Date(response.data.start);
-    editAppointment.end = new Date(response.data.end);
     setShowModalEdit(true);
-    setAppointment(editAppointment);
+    setModeEdit(id);
   }
 
   return (
     <>
-      <CreateAppointment setShowModal={setShowModal} show={showModal} />
-
-      {appointment && (
-        <EditAppointment appointment={appointment} setShowModal={setShowModalEdit} show={showModalEdit} />
-      )}
+      <FormAppointment setShowModal={setShowModal} show={showModal} />
+      {modeEdit && <FormAppointment action="edit" id={modeEdit} setShowModal={setShowModalEdit} show={showModalEdit} />}
 
       <InsidePage title="Agenda">
         <Button onClick={() => setShowModal(true)} type="button">
