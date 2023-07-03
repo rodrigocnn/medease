@@ -13,6 +13,8 @@ import { Login } from '../pages/login';
 import { Admin } from '../components/Admin';
 import { useContext } from 'react';
 import { AuthContext } from '../contexts/auth';
+import { InsidePage } from '../components/insidePage';
+import { Loading } from '../components/loading';
 
 const router = [
   {
@@ -58,7 +60,13 @@ function Links(): JSX.Element {
   const { signed, loading } = useContext(AuthContext);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <Admin>
+        <InsidePage title="MedEase">
+          <Loading />
+        </InsidePage>
+      </Admin>
+    );
   }
 
   return (

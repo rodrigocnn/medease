@@ -8,22 +8,11 @@ import { Select } from '../../components/select';
 import { statusOptions, timeOptions } from '../../constants/timeOptions';
 import { stringToDate, timeDefaultToString, timeNowToStringAM } from '../../helpers/handleDate';
 import { Label } from '../../components/label';
+import { Appointment, Options, Professional, Service } from '../../interfaces';
 import api from '../../services/api';
 import BookingMap from '../../mappers/BookingMap';
 
 registerLocale('ptBR', ptBR);
-
-interface Appointment {
-  id?: string;
-  start?: string | number;
-  end?: string | number;
-  date?: string | Date;
-  datepicker?: Date;
-  patient?: string;
-  service?: string;
-  status?: string;
-  professional?: string;
-}
 
 interface FormAppointmentProps {
   show: boolean;
@@ -31,26 +20,6 @@ interface FormAppointmentProps {
   action?: 'create' | 'edit';
   appointment?: Appointment;
   id?: string;
-}
-
-interface Professional {
-  id: string;
-  name: string;
-  email: string;
-  phone: string;
-  role: string;
-}
-
-interface Options {
-  label: string;
-  value: string;
-}
-
-interface Service {
-  id: string;
-  description: string;
-  price: string;
-  role: string;
 }
 
 const INITIA_STATE = {

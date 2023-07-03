@@ -7,21 +7,7 @@ import { Input } from '../../components/input';
 import { Select } from '../../components/select';
 import { Button } from '../../components/button';
 import ProfessionalMap from '../../mappers/ProfessionalMap';
-
-interface Professional {
-  name?: string;
-  email?: string;
-  date_of_birth?: string;
-  phone?: string;
-  cpf?: string;
-  rg?: string;
-  gender?: string;
-  address?: string;
-  district?: string;
-  city?: string;
-  state?: string;
-  role?: string;
-}
+import { Options, Professional, Role } from '../../interfaces';
 
 const statesOptions = [
   { label: 'Acre', value: 'AC' },
@@ -30,16 +16,6 @@ const statesOptions = [
 
 interface ProfessionalFormProps {
   action?: 'create' | 'edit';
-}
-
-interface Role {
-  id: string;
-  description: string;
-}
-
-interface Options {
-  label: string;
-  value: string;
 }
 
 export function ProfessionalForm({ action = 'create' }: ProfessionalFormProps) {

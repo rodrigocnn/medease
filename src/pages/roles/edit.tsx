@@ -3,12 +3,8 @@ import { toast } from 'react-toastify';
 
 import { Input } from '../../components/input';
 import { Modal } from '../../components/modal';
+import { Role } from '../../interfaces';
 import api from '../../services/api';
-
-interface Role {
-  id: string;
-  description?: string;
-}
 
 interface ModalProps {
   show: boolean;
@@ -26,7 +22,7 @@ export const EditRole = ({ show, setShowModal, role }: ModalProps) => {
 
   const onConfirm = async (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
-    const response = await api.update('roles', updateRole.id, updateRole);
+    const response = await api.update('roles', updateRole.id as string, updateRole);
     if (response.data) {
       toast('Registro Atualizado com Sucesso', { type: 'success' });
     } else {

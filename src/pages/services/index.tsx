@@ -24,6 +24,7 @@ export function Services() {
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [rowIdSelected, setRowIdSelected] = useState('');
+  const gridStyle = { minHeight: 370 };
 
   const filterValue = [{ name: 'description', operator: 'startsWith', type: 'string', value: '' }];
 
@@ -103,7 +104,15 @@ export function Services() {
           Novo
         </Button>
 
-        <ReactDataGrid idProperty="id" dataSource={services} columns={columns} defaultFilterValue={filterValue} />
+        <ReactDataGrid
+          pagination={'local'}
+          style={gridStyle}
+          pageSizes={[10]}
+          idProperty="id"
+          dataSource={services}
+          columns={columns}
+          defaultFilterValue={filterValue}
+        />
       </InsidePage>
     </>
   );

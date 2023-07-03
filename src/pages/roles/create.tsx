@@ -1,13 +1,10 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-
 import { toast } from 'react-toastify';
-import api from '../../services/api';
+
 import { Input } from '../../components/input';
 import { Modal } from '../../components/modal';
-
-interface Role {
-  description: string;
-}
+import { Role } from '../../interfaces';
+import api from '../../services/api';
 
 interface CreateRoleProps {
   show: boolean;

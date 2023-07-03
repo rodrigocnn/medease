@@ -6,21 +6,8 @@ import api from '../../services/api';
 import { Input } from '../../components/input';
 import { Select } from '../../components/select';
 import { Button } from '../../components/button';
+import { Patient } from '../../interfaces';
 import PatientMap from '../../mappers/ProfessionalMap';
-
-interface Patient {
-  name?: string;
-  email?: string;
-  date_of_birth?: string;
-  phone?: string;
-  cpf?: string;
-  rg?: string;
-  gender?: string;
-  address?: string;
-  district?: string;
-  city?: string;
-  state?: string;
-}
 
 const statesOptions = [
   { label: 'Acre', value: 'AC' },
@@ -29,16 +16,6 @@ const statesOptions = [
 
 interface PatientFormProps {
   action?: 'create' | 'edit';
-}
-
-interface Role {
-  id: string;
-  description: string;
-}
-
-interface Options {
-  label: string;
-  value: string;
 }
 
 export function PatientForm({ action = 'create' }: PatientFormProps) {

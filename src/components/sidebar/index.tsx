@@ -2,6 +2,10 @@ import { Link } from 'react-router-dom';
 import logo from './../../assets/logo.png';
 
 export function Sidebar() {
+  const logout = () => {
+    localStorage.removeItem('@Auth:TOKEN');
+  };
+
   return (
     <>
       <button
@@ -159,9 +163,10 @@ export function Sidebar() {
             </li>
 
             <li>
-              <Link
+              <a
+                onClick={logout}
                 className="flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                to="/serviços"
+                href="/login"
               >
                 <svg
                   aria-hidden="true"
@@ -177,7 +182,7 @@ export function Sidebar() {
                   ></path>
                 </svg>
                 <span className="ml-3 flex-1 whitespace-nowrap">Sair</span>
-              </Link>
+              </a>
             </li>
           </ul>
         </div>

@@ -7,15 +7,7 @@ import { InsidePage } from '../../components/insidePage';
 import { formatDateBR, timeDefaultToString } from '../../helpers/handleDate';
 import { FormAppointment } from './form';
 import api from '../../services/api';
-
-interface Appointment {
-  id: string;
-  start?: string | number;
-  end?: string | number;
-  date: string;
-  patient?: string;
-  professional?: string;
-}
+import { Appointment } from '../../interfaces';
 
 export function Appointments() {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
@@ -71,7 +63,7 @@ export function Appointments() {
           ...item,
           start: timeDefaultToString(item.start as number),
           end: timeDefaultToString(item.end as number),
-          date: formatDateBR(item.date),
+          date: formatDateBR(item.date as string),
         };
       });
       setAppointments(bookings);

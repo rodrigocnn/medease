@@ -21,6 +21,7 @@ export function Professionals() {
   const [professionals, setProfessionals] = useState<Professional[]>([]);
   const [rowIdSelected, setRowIdSelected] = useState('');
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const gridStyle = { minHeight: 370 };
   const navigate = useNavigate();
 
   const filterValue = [{ name: 'name', operator: 'startsWith', type: 'string', value: '' }];
@@ -105,7 +106,15 @@ export function Professionals() {
           Novo
         </Button>
 
-        <ReactDataGrid idProperty="id" dataSource={professionals} columns={columns} defaultFilterValue={filterValue} />
+        <ReactDataGrid
+          pagination={'local'}
+          style={gridStyle}
+          pageSizes={[10]}
+          idProperty="id"
+          dataSource={professionals}
+          columns={columns}
+          defaultFilterValue={filterValue}
+        />
       </InsidePage>
     </>
   );
