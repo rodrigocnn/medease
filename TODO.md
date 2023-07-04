@@ -4,26 +4,16 @@ Agenda
 
 # OUTROS
 
+[ ] Página de Dashboard
 [ ] Atualizar index de Agenda quando cadastrar
 [ ] Não permitir mudança de status ao cadastrar agenda
-
-[ ] Implementar Signout
+[ ] Status no Grid Agenda
 [ ] Modal fechar no btn cancelar
 [ ] Label dos Form
 [ ] Loading nas ações remotas
 [ ] Fechar Modal Apos Ação de Salvar/Editar
 [ ] Mascara CPF e Telefone
-
-[ ] Página de Dashboard
 [ ] Refatorar Código Sidebar - remover icones svg
-[x] Implementar componente Tabela
-[ ] Implementar Componente Sidebar
-[x] Json Server
-[x] Configuração do React Router Dom
-[x] Logo na Sidebar
-[x] Busca no Pacientes
-[x] Cadastro de Serviços Layout
 [ ] Favicon
 [ ] Icones Sidebar
-[ ] Url quando loga permance '/login'
 [ ] Validações

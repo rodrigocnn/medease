@@ -1,10 +1,9 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Button } from '../../components/button';
 import { Input } from '../../components/input';
 import { Label } from '../../components/label';
 import { AuthContext } from '../../contexts/auth';
 import { BoxLogin } from '../../components/BoxLogin';
-import { Navigate } from 'react-router-dom';
 
 interface User {
   username?: string;
@@ -12,7 +11,7 @@ interface User {
 }
 
 export function Login() {
-  const { signIn, signed } = useContext(AuthContext);
+  const { signIn } = useContext(AuthContext);
   const [user, setUser] = useState<User>();
 
   const handleLogin = () => {
@@ -29,8 +28,6 @@ export function Login() {
 
   return (
     <>
-      {signed && <Navigate replace to="/profissionais" />}
-
       <BoxLogin>
         <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white md:text-2xl">
           Login
