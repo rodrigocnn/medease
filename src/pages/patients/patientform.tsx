@@ -25,15 +25,15 @@ export function PatientForm({ action = 'create' }: PatientFormProps) {
   const { id } = useParams();
 
   useEffect(() => {
+    async function getPatient() {
+      const response = await api.show('patients/show', id as string);
+      setPatient(response.data);
+    }
+
     if (action === 'edit') {
       getPatient();
     }
-  }, []);
-
-  async function getPatient() {
-    const response = await api.show('patients/show', id as string);
-    setPatient(response.data);
-  }
+  }, [action, id]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const fieldName = event.target.name;

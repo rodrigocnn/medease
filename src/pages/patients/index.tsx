@@ -9,6 +9,7 @@ import IconButton from '../../components/buttonIcon';
 import { DeleteConfirm } from '../../components/DeleteConfirm';
 import { toast } from 'react-toastify';
 import api from '../../services/api';
+import useApi from '../../hooks/useApi';
 
 interface Patient {
   name: string;
@@ -20,6 +21,7 @@ export function Patients() {
   const [patients, setPatients] = useState<Patient[]>([]);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const filterValue = [{ name: 'name', operator: 'startsWith', type: 'string', value: '' }];
+  const { loading, fetchAllData } = useApi();
   const [rowIdSelected, setRowIdSelected] = useState('');
   const navigate = useNavigate();
 
@@ -56,13 +58,12 @@ export function Patients() {
   ];
 
   useEffect(() => {
+    async function getPatients() {
+      const response = await fetchAllData('patients');
+      setPatients(response.data);
+    }
     getPatients();
-  }, [showDeleteConfirm]);
-
-  async function getPatients() {
-    const response = await api.index('patients');
-    setPatients(response.data);
-  }
+  }, [showDeleteConfirm, fetchAllData]);
 
   async function openDeleteConfirm(id: string) {
     setShowDeleteConfirm(true);
@@ -81,7 +82,7 @@ export function Patients() {
 
   return (
     <>
-      <InsidePage title="Pacientes">
+      <InsidePage loading={loading} title="Pacientes">
         <Link to="/pacientes/novo">
           <Button type="button">Novo</Button>
         </Link>

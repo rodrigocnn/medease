@@ -10,6 +10,7 @@ import IconButton from '../../components/buttonIcon';
 
 import { InsidePage } from '../../components/insidePage';
 import api from '../../services/api';
+import useApi from '../../hooks/useApi';
 
 interface Role {
   id: string;
@@ -25,6 +26,7 @@ export function Roles() {
   const [rowIdSelected, setRowIdSelected] = useState('');
   const gridStyle = { minHeight: 370 };
   const filterValue = [{ name: 'description', operator: 'startsWith', type: 'string', value: '' }];
+  const { loading, fetchAllData } = useApi();
 
   const columns = [
     {
@@ -50,13 +52,13 @@ export function Roles() {
   ];
 
   useEffect(() => {
-    getRoles();
-  }, [showDeleteConfirm, showModal]);
+    async function getRoles() {
+      const response = await fetchAllData('roles');
+      setRoles(response.data);
+    }
 
-  async function getRoles() {
-    const response = await api.index('roles');
-    setRoles(response.data);
-  }
+    getRoles();
+  }, [showDeleteConfirm, showModal, fetchAllData]);
 
   async function editRole(id: string) {
     const response = await api.show('roles/show', id);
@@ -71,7 +73,7 @@ export function Roles() {
 
   async function deleteItem() {
     const response = await api.delete('roles', rowIdSelected);
-    console.log(response);
+
     if (response.status === 204) {
       toast('Registro Excluído com Sucesso', { type: 'success' });
     } else {
@@ -92,7 +94,7 @@ export function Roles() {
 
       {role && <EditRole role={role} setShowModal={setShowModalEdit} show={showModalEdit} />}
 
-      <InsidePage title="Cargos">
+      <InsidePage loading={loading} title="Cargos">
         <Button onClick={() => setShowModal(true)} type="button">
           Novo
         </Button>

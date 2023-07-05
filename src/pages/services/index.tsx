@@ -9,6 +9,7 @@ import { Button } from '../../components/button';
 import { InsidePage } from '../../components/insidePage';
 import api from '../../services/api';
 import ReactDataGrid from '@inovua/reactdatagrid-community';
+import useApi from '../../hooks/useApi';
 
 interface Service {
   id: string;
@@ -24,8 +25,8 @@ export function Services() {
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [rowIdSelected, setRowIdSelected] = useState('');
+  const { loading, fetchAllData } = useApi();
   const gridStyle = { minHeight: 370 };
-
   const filterValue = [{ name: 'description', operator: 'startsWith', type: 'string', value: '' }];
 
   const columns = [
@@ -59,13 +60,12 @@ export function Services() {
   ];
 
   useEffect(() => {
+    async function getServices() {
+      const response = await fetchAllData('services');
+      setServices(response.data);
+    }
     getServices();
-  }, []);
-
-  async function getServices() {
-    const response = await api.index('services');
-    setServices(response.data);
-  }
+  }, [fetchAllData]);
 
   async function editData(id: string) {
     const response = await api.show('services/show', id);
@@ -99,7 +99,7 @@ export function Services() {
 
       {service && <EditService service={service} setShowModal={setShowModalEdit} show={showModalEdit} />}
 
-      <InsidePage title="Serviços">
+      <InsidePage loading={loading} title="Serviços">
         <Button onClick={() => setShowModal(true)} type="button">
           Novo
         </Button>
