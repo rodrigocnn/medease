@@ -1,9 +1,10 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 import { Input } from '../../components/input';
 import { Modal } from '../../components/modal';
 import { toast } from 'react-toastify';
-import api from '../../services/api';
+import { Loading } from '../../components/loading';
+import useApi from '../../hooks/useApi';
 
 interface Service {
   description?: string;
@@ -17,6 +18,7 @@ interface CreateServiceProps {
 
 export function CreateService({ show, setShowModal }: CreateServiceProps) {
   const [service, setService] = useState<Service>();
+  const { loading, sendDataPost } = useApi();
 
   const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
     const fieldName = event.currentTarget.name;
@@ -27,7 +29,7 @@ export function CreateService({ show, setShowModal }: CreateServiceProps) {
 
   const onConfirm = async (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
-    const response = await api.store('services/', service);
+    const response = await sendDataPost('services', service);
     if (response.data) {
       toast('Registro Atualizado com Sucesso', { type: 'success' });
     } else {
@@ -38,6 +40,8 @@ export function CreateService({ show, setShowModal }: CreateServiceProps) {
   return (
     <>
       <Modal title="Cadastrar Serviço" confirm={onConfirm} setShowModal={setShowModal} show={show}>
+        {loading && <Loading />}
+
         <div className="mb-2 columns-1">
           <Input
             value={service?.description}

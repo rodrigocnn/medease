@@ -20,7 +20,6 @@ interface Service {
 
 export function Services() {
   const [services, setServices] = useState<Service[]>([]);
-  const [service, setService] = useState<Service>();
   const [showModal, setShowModal] = useState(false);
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
@@ -44,18 +43,18 @@ export function Services() {
       defaultFlex: 2,
     },
     {
-      name: 'edit',
+      name: 'id',
       header: 'Editar',
       maxWidth: 1000,
       defaultFlex: 1,
-      render: (row: any) => <IconButton icon="edit" onClick={() => editData(row.data.id)} />,
+      render: ({ value }: any) => <IconButton icon="edit" onClick={() => editData(value)} />,
     },
     {
-      name: 'delete',
+      name: 'id',
       header: 'Excluir',
       maxWidth: 1000,
       defaultFlex: 1,
-      render: (row: any) => <IconButton icon="delete" onClick={() => openDeleteConfirm(row.data.id)} />,
+      render: ({ value }: any) => <IconButton icon="delete" onClick={() => openDeleteConfirm(value)} />,
     },
   ];
 
@@ -65,12 +64,11 @@ export function Services() {
       setServices(response.data);
     }
     getServices();
-  }, [fetchAllData]);
+  }, [fetchAllData, showModal, showDeleteConfirm, showModalEdit]);
 
   async function editData(id: string) {
-    const response = await api.show('services/show', id);
     setShowModalEdit(true);
-    setService(response.data);
+    setRowIdSelected(id);
   }
 
   async function openDeleteConfirm(id: string) {
@@ -82,8 +80,10 @@ export function Services() {
     const response = await api.delete('services', rowIdSelected);
     if (response.status === 204) {
       toast('Registro Excluído com Sucesso', { type: 'success' });
+      setShowDeleteConfirm(false);
     } else {
       toast('Não foi possivel realizar operação', { type: 'error' });
+      setShowDeleteConfirm(false);
     }
   }
 
@@ -97,7 +97,7 @@ export function Services() {
       />
       <CreateService setShowModal={setShowModal} show={showModal} />
 
-      {service && <EditService service={service} setShowModal={setShowModalEdit} show={showModalEdit} />}
+      {showModalEdit && <EditService id={rowIdSelected} setShowModal={setShowModalEdit} show={showModalEdit} />}
 
       <InsidePage loading={loading} title="Serviços">
         <Button onClick={() => setShowModal(true)} type="button">

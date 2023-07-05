@@ -1,19 +1,29 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { Input } from '../../components/input';
 import { Modal } from '../../components/modal';
 import { Role } from '../../interfaces';
-import api from '../../services/api';
+import { Loading } from '../../components/loading';
+import useApi from '../../hooks/useApi';
 
 interface ModalProps {
   show: boolean;
   setShowModal: Dispatch<SetStateAction<boolean>>;
-  role: Role;
+  id: string;
 }
 
-export const EditRole = ({ show, setShowModal, role }: ModalProps) => {
-  const [updateRole, setUpdateRole] = useState<Role>(role);
+export const EditRole = ({ show, setShowModal, id }: ModalProps) => {
+  const [updateRole, setUpdateRole] = useState<Role>();
+  const { loading, sendDataUpdate, fetchDataShow } = useApi();
+
+  useEffect(() => {
+    async function getRole() {
+      const response = await fetchDataShow('roles/show', id);
+      setUpdateRole(response.data);
+    }
+    getRole();
+  }, [fetchDataShow]);
 
   const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
     const updatedRole: Role = { ...updateRole, description: event.currentTarget.value };
@@ -22,17 +32,20 @@ export const EditRole = ({ show, setShowModal, role }: ModalProps) => {
 
   const onConfirm = async (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
-    const response = await api.update('roles', updateRole.id as string, updateRole);
+    const response = await sendDataUpdate('roles', updateRole?.id as string, updateRole);
     if (response.data) {
       toast('Registro Atualizado com Sucesso', { type: 'success' });
+      setShowModal(false);
     } else {
       toast('Não foi possivel realizar operação', { type: 'error' });
+      setShowModal(false);
     }
   };
 
   return (
     <Modal title="Editar Cargo" confirm={onConfirm} setShowModal={setShowModal} show={show}>
-      <Input value={updateRole.description} onChange={handleChange} type="text" placeholder="Nome" />
+      {loading && <Loading />}
+      <Input value={updateRole?.description} onChange={handleChange} type="text" placeholder="Nome" />
     </Modal>
   );
 };
