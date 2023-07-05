@@ -1,14 +1,10 @@
-import { useContext } from 'react';
 import { Sidebar } from '../sidebar';
-import { AuthContext } from '../../contexts/auth';
 
 interface Props {
   children: React.ReactNode;
 }
 
 export function Admin({ children }: Props) {
-  const { signed } = useContext(AuthContext);
-
   return (
     <div className="grid grid-cols-6 ">
       <div className="col-span-1 ">

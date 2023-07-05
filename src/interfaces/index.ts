@@ -25,7 +25,7 @@ export interface Patient {
 }
 
 export interface Professional {
-  id: string;
+  id?: string;
   name?: string;
   email?: string;
   date_of_birth?: string;
