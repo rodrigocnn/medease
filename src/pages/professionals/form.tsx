@@ -2,12 +2,14 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import api from '../../services/api';
 import { Input } from '../../components/input';
 import { Select } from '../../components/select';
 import { Button } from '../../components/button';
-import ProfessionalMap from '../../mappers/ProfessionalMap';
 import { Options, Professional, Role } from '../../interfaces';
+import { Loading } from '../../components/loading';
+import api from '../../services/api';
+import ProfessionalMap from '../../mappers/ProfessionalMap';
+import useApi from '../../hooks/useApi';
 
 const statesOptions = [
   { label: 'Acre', value: 'AC' },
@@ -21,11 +23,16 @@ interface ProfessionalFormProps {
 export function ProfessionalForm({ action = 'create' }: ProfessionalFormProps) {
   const [professional, setProfessional] = useState<Professional>();
   const [roles, setRoles] = useState<Options[]>([]);
+  const { loading, fetchDataShow, sendDataPost } = useApi();
   const navigate = useNavigate();
   const { id } = useParams();
 
   useEffect(() => {
     if (action === 'edit') {
+      async function getProfessional() {
+        const response = await fetchDataShow('professionals/show', id as string);
+        setProfessional(response.data);
+      }
       getProfessional();
     }
   }, []);
@@ -33,11 +40,6 @@ export function ProfessionalForm({ action = 'create' }: ProfessionalFormProps) {
   useEffect(() => {
     getRoles();
   }, []);
-
-  async function getProfessional() {
-    const response = await api.show('professionals/show', id as string);
-    setProfessional(response.data);
-  }
 
   async function getRoles() {
     const response = await api.index('roles');
@@ -67,7 +69,7 @@ export function ProfessionalForm({ action = 'create' }: ProfessionalFormProps) {
           toast('Não foi possivel realizar operação', { type: 'error' });
         }
       } else {
-        const response = await api.store('professionals', ProfessionalMap.toPersistent(professional));
+        const response = await sendDataPost('professionals', ProfessionalMap.toPersistent(professional));
         if (response.data) {
           toast('Registro Inserido com Sucesso', { type: 'success' });
           navigate('/profissionais');
@@ -80,6 +82,8 @@ export function ProfessionalForm({ action = 'create' }: ProfessionalFormProps) {
 
   return (
     <form onSubmit={onSubmit}>
+      {loading && <Loading />}
+
       <div className="mb-4 mt-4 p-1   font-bold text-[#06afb1] ">Dados Pessoais</div>
 
       <div className="mb-2 columns-2">

@@ -6,14 +6,15 @@ import { Button } from '../../components/button';
 import { InsidePage } from '../../components/insidePage';
 import { formatDateBR, timeDefaultToString } from '../../helpers/handleDate';
 import { FormAppointment } from './form';
-import api from '../../services/api';
 import { Appointment } from '../../interfaces';
+import useApi from '../../hooks/useApi';
 
 export function Appointments() {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [showModal, setShowModal] = useState(false);
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [modeEdit, setModeEdit] = useState<null | string>(null);
+  const { loading, fetchAllData } = useApi();
   const gridStyle = { minHeight: 370 };
 
   const filterValue = [
@@ -57,7 +58,7 @@ export function Appointments() {
 
   useEffect(() => {
     async function getAppointments() {
-      const response = await api.index('bookings');
+      const response = await fetchAllData('bookings');
       const bookings: Appointment[] = response.data.map((item: Appointment) => {
         return {
           ...item,
@@ -70,7 +71,7 @@ export function Appointments() {
     }
 
     getAppointments();
-  }, []);
+  }, [fetchAllData]);
 
   async function editData(id: string) {
     setShowModalEdit(true);
@@ -82,7 +83,7 @@ export function Appointments() {
       <FormAppointment setShowModal={setShowModal} show={showModal} />
       {modeEdit && <FormAppointment action="edit" id={modeEdit} setShowModal={setShowModalEdit} show={showModalEdit} />}
 
-      <InsidePage title="Agenda">
+      <InsidePage loading={loading} title="Agenda">
         <Button onClick={() => setShowModal(true)} type="button">
           Novo
         </Button>

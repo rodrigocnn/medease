@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
 import { Professionals } from '../pages/professionals';
 import { Patients } from '../pages/patients';
@@ -15,8 +15,13 @@ import { useContext } from 'react';
 import { AuthContext } from '../contexts/auth';
 import { InsidePage } from '../components/insidePage';
 import { Loading } from '../components/loading';
+import { Dashboard } from '../pages/dashboard';
 
 const router = [
+  {
+    path: '/dashboard',
+    element: <Dashboard />,
+  },
   {
     path: '/cargos',
     element: <Roles />,
@@ -58,6 +63,12 @@ const router = [
 
 function Links(): JSX.Element {
   const { signed, loading } = useContext(AuthContext);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  if (signed && location.pathname === '/login') {
+    navigate('/dashboard');
+  }
 
   if (loading) {
     return (

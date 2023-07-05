@@ -8,6 +8,7 @@ import IconButton from '../../components/buttonIcon';
 import { DeleteConfirm } from '../../components/DeleteConfirm';
 import api from '../../services/api';
 import ReactDataGrid from '@inovua/reactdatagrid-community';
+import useApi from '../../hooks/useApi';
 
 interface Professional {
   id: string;
@@ -21,9 +22,9 @@ export function Professionals() {
   const [professionals, setProfessionals] = useState<Professional[]>([]);
   const [rowIdSelected, setRowIdSelected] = useState('');
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const { loading, fetchAllData } = useApi();
   const gridStyle = { minHeight: 370 };
   const navigate = useNavigate();
-
   const filterValue = [{ name: 'name', operator: 'startsWith', type: 'string', value: '' }];
   const columns = [
     {
@@ -69,13 +70,12 @@ export function Professionals() {
   ];
 
   useEffect(() => {
+    async function getProfessionals() {
+      const response = await fetchAllData('professionals');
+      setProfessionals(response.data);
+    }
     getProfessionals();
-  }, []);
-
-  async function getProfessionals() {
-    const response = await api.index('professionals');
-    setProfessionals(response.data);
-  }
+  }, [fetchAllData]);
 
   async function openDeleteConfirm(id: string) {
     console.log(id);
@@ -101,7 +101,7 @@ export function Professionals() {
         show={showDeleteConfirm}
       />
 
-      <InsidePage title="Profissionais">
+      <InsidePage loading={loading} title="Profissionais">
         <Button onClick={() => navigate('/profissionais/novo')} type="button">
           Novo
         </Button>
