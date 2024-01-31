@@ -1,11 +1,11 @@
-interface Props {
+export interface IBoxInfoProps {
   title: string;
   number: string;
   color: string;
   children: React.ReactNode;
 }
 
-export function BoxInfo({ title, number, color, children }: Props) {
+export function BoxInfo({ title, number, color, children }: IBoxInfoProps ) {
   return (
     <div className="w-screen bg-white md:col-span-2 lg:col-span-2 xl:col-span-1">
       <div className="relative w-full overflow-hidden  rounded-md  p-4 shadow dark:bg-slate-800">

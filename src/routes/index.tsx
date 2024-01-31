@@ -62,9 +62,11 @@ const router = [
 ];
 
 function Links(): JSX.Element {
-  const { signed, loading } = useContext(AuthContext);
+  const { loading } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
+
+  const signed = true;
 
   if (signed && location.pathname === '/login') {
     navigate('/dashboard');

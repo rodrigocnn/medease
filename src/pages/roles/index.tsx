@@ -1,29 +1,33 @@
-import { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
+import { useContext } from 'react';
 import ReactDataGrid from '@inovua/reactdatagrid-community';
 
+import IconButton from '../../components/buttonIcon';
 import { Button } from '../../components/button';
 import { CreateRole } from './create';
 import { EditRole } from './edit';
 import { DeleteConfirm } from '../../components/DeleteConfirm';
-import { Role } from '../../interfaces';
 import { InsidePage } from '../../components/insidePage';
-import IconButton from '../../components/buttonIcon';
-import useApi from '../../hooks/useApi';
+import { ModalContext } from '../../shared/contexts/ModalContext';
+import { useIndexRole } from '../../modules/roles/hooks/useIndexRole';
 
 export function Roles() {
-  const [roles, setRoles] = useState<Role[]>([]);
-  const [showModal, setShowModal] = useState(false);
-  const [showModalEdit, setShowModalEdit] = useState(false);
-  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-  const [rowIdSelected, setRowIdSelected] = useState('');
+  const { showModal, setShowModal } = useContext(ModalContext);
+  const {
+    editRole,
+    openDeleteConfirm,
+    deleteItem,
+    setShowDeleteConfirm,
+    loading,
+    showDeleteConfirm,
+    rowIdSelected,
+    roles,
+  } = useIndexRole();
   const gridStyle = { minHeight: 370 };
   const filterValue = [{ name: 'description', operator: 'startsWith', type: 'string', value: '' }];
-  const { loading, fetchAllData, deleteData } = useApi();
 
   const columns = [
     {
-      name: 'description',
+      name: 'name',
       header: 'Nome',
       minWidth: 50,
       defaultFlex: 2,
@@ -36,42 +40,13 @@ export function Roles() {
       render: ({ value }: any) => <IconButton icon="edit" onClick={() => editRole(value)} />,
     },
     {
-      name: 'id',
+      name: 'idDelete',
       header: 'Excluir',
       maxWidth: 1000,
       defaultFlex: 1,
       render: ({ value }: any) => <IconButton icon="delete" onClick={() => openDeleteConfirm(value)} />,
     },
   ];
-
-  useEffect(() => {
-    async function getRoles() {
-      const response = await fetchAllData('roles');
-      setRoles(response.data);
-    }
-    getRoles();
-  }, [showDeleteConfirm, showModal, showModalEdit, fetchAllData]);
-
-  async function editRole(id: string) {
-    setShowModalEdit(true);
-    setRowIdSelected(id);
-  }
-
-  async function openDeleteConfirm(id: string) {
-    setShowDeleteConfirm(true);
-    setRowIdSelected(id);
-  }
-
-  async function deleteItem() {
-    const response = await deleteData('roles', rowIdSelected);
-    if (response.status === 204) {
-      toast('Registro Excluído com Sucesso', { type: 'success' });
-      setShowDeleteConfirm(false);
-    } else {
-      toast('Não foi possivel realizar operação', { type: 'error' });
-      setShowDeleteConfirm(false);
-    }
-  }
 
   return (
     <>
@@ -84,7 +59,7 @@ export function Roles() {
 
       <CreateRole setShowModal={setShowModal} show={showModal} />
 
-      {showModalEdit && <EditRole id={rowIdSelected} setShowModal={setShowModalEdit} show={showModalEdit} />}
+      {showModal && <EditRole id={rowIdSelected} />}
 
       <InsidePage loading={loading} title="Cargos">
         <Button onClick={() => setShowModal(true)} type="button">

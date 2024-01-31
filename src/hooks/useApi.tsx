@@ -59,6 +59,7 @@ function useApi() {
   const sendDataUpdate = useCallback(async (url: string, id: string, data: any) => {
     try {
       setLoading(true);
+      console.log('update', data);
       const response = await api.update(url, id, data);
       setLoading(false);
       return response;

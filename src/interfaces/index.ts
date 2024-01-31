@@ -49,7 +49,7 @@ export interface Service {
 
 export interface Role {
   id?: string;
-  description?: string;
+  name?: string;
 }
 
 export interface Options {

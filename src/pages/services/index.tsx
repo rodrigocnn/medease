@@ -30,7 +30,7 @@ export function Services() {
 
   const columns = [
     {
-      name: 'description',
+      name: 'name',
       header: 'Nome',
       minWidth: 50,
       defaultFlex: 2,

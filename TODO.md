@@ -1,9 +1,17 @@
 # CRUDS
 
-Agenda
+# INTEGRAÇÃO COM BACK END
+
+[ ] Integração Roles [ ] Create [x] Read [x] Show [x] Update [x] [ ] Delete
+[ ] Integração Services [ ] Create [x] Read [ ] Show [ ] Update [ ] [ ] Delete
+[ ] Integração Appointments[ ] Create [ ] Read [ ] Show [ ] Update [ ] [ ] Delete
+[ ] Integração Professionals[ ] Create [ ] Read [ ] Show [ ] Update [ ] [ ] Delete
+[ ] Integração Patients [ ] Create [x] Read [ ] Show [ ] Update [ ] [ ] Delete
+[ ] Integração Users [ ] Create [ ] Read [ ] Show [ ] Update [ ] [ ] Delete
 
 # OUTROS
 
+[ ] Formatar Preço em R$ do Serviços
 [ ] Loading nas ações remotas
 [ ] Página de Dashboard
 [ ] Atualizar index de Agenda quando cadastrar
@@ -17,3 +25,4 @@ Agenda
 [ ] Icones Sidebar
 [ ] Validações
 [ ] Lista de Estados Brasileiros no Select
+[ ] LogoMarca no Login
