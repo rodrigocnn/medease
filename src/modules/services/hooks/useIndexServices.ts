@@ -1,27 +1,27 @@
 import { toast } from 'react-toastify';
 
 import { useContext, useEffect, useState } from 'react';
-import { Role } from '../../../interfaces';
+import { Service } from '../../../interfaces';
 import { ModalContext } from '../../../shared/contexts/ModalContext';
 import useApi from '../../../hooks/useApi';
+import api from '../../../services/api';
 
-export function useIndexRole() {
-  const [roles, setRoles] = useState<Role[]>([]);
+export function useIndexServices() {
+  const [services, setServices] = useState<Service[]>([]);
+  const { showModal, setShowModal, showModalEdit, setShowModalEdit } = useContext(ModalContext);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [rowIdSelected, setRowIdSelected] = useState('');
-
-  const { loading, fetchAllData, deleteData } = useApi();
-  const { showModal, setShowModal, setShowModalEdit } = useContext(ModalContext);
+  const { loading, fetchAllData } = useApi();
 
   useEffect(() => {
-    async function getRoles() {
-      const response = await fetchAllData('roles');
-      setRoles(response.data);
+    async function getServices() {
+      const response = await fetchAllData('services');
+      setServices(response.data);
     }
-    getRoles();
-  }, [showDeleteConfirm, showModal, fetchAllData]);
+    getServices();
+  }, [fetchAllData, showModal, showDeleteConfirm, showModalEdit]);
 
-  async function editRole(id: string) {
+  async function editData(id: string) {
     setShowModalEdit(true);
     setRowIdSelected(id);
   }
@@ -32,7 +32,7 @@ export function useIndexRole() {
   }
 
   async function deleteItem() {
-    const response = await deleteData('roles', rowIdSelected);
+    const response = await api.delete('services', rowIdSelected);
     if (response.status === 204) {
       toast('Registro Excluído com Sucesso', { type: 'success' });
       setShowDeleteConfirm(false);
@@ -43,16 +43,17 @@ export function useIndexRole() {
   }
 
   return {
-    openDeleteConfirm,
     deleteItem,
-    setShowDeleteConfirm,
-    editRole,
-    setShowModal,
-    showModal,
+    openDeleteConfirm,
+    editData,
     setShowModalEdit,
-    showDeleteConfirm,
+    setShowDeleteConfirm,
+    setShowModal,
+    services,
     loading,
+    showDeleteConfirm,
     rowIdSelected,
-    roles,
+    showModalEdit,
+    showModal,
   };
 }

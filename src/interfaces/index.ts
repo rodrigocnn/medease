@@ -13,7 +13,7 @@ export interface Appointment {
 export interface Patient {
   name?: string;
   email?: string;
-  date_of_birth?: string;
+  birth?: string;
   phone?: string;
   cpf?: string;
   rg?: string;
@@ -42,7 +42,7 @@ export interface Professional {
 
 export interface Service {
   id?: string;
-  description: string;
+  name: string;
   price: string;
   role: string;
 }

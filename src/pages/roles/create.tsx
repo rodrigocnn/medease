@@ -1,46 +1,19 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
+import { useContext } from 'react';
 
 import { Input } from '../../components/input';
 import { Modal } from '../../components/modal';
-import { Role } from '../../interfaces';
 import { Loading } from '../../components/loading';
-import useApi from '../../hooks/useApi';
+import { useCreateRole } from '../../modules/roles/hooks/useCreateRole';
+import { ModalContext } from '../../shared/contexts/ModalContext';
 
-interface CreateRoleProps {
-  show: boolean;
-  setShowModal: Dispatch<SetStateAction<boolean>>;
-}
-
-export const CreateRole = ({ show, setShowModal }: CreateRoleProps) => {
-  const [role, setRole] = useState<Role>();
-  const { loading, sendDataPost } = useApi();
-
-  useEffect(() => {
-    setRole({ description: '' });
-  }, [show]);
-
-  const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
-    const updatedState: Role = { ...role, description: event.currentTarget.value };
-    setRole(updatedState);
-  };
-
-  const onConfirm = async (event: React.MouseEvent<HTMLElement>) => {
-    event.preventDefault();
-    const response = await sendDataPost('roles', role);
-    if (response.data) {
-      toast('Registro Atualizado com Sucesso', { type: 'success' });
-      setShowModal(false);
-    } else {
-      toast('Não foi possivel realizar operação', { type: 'error' });
-      setShowModal(false);
-    }
-  };
+export const CreateRole = () => {
+  const { onConfirm, role, loading, handleChange } = useCreateRole();
+  const { showModal, setShowModal } = useContext(ModalContext);
 
   return (
-    <Modal title="Cadastrar Cargo" confirm={onConfirm} setShowModal={setShowModal} show={show}>
+    <Modal title="Cadastrar Cargo" confirm={onConfirm} setShowModal={setShowModal} show={showModal}>
       {loading && <Loading />}
-      <Input value={role?.description} onChange={handleChange} type="text" placeholder="Nome" />
+      <Input value={role?.name} onChange={handleChange} type="text" placeholder="Nome" />
     </Modal>
   );
 };

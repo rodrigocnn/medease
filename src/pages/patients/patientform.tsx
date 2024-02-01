@@ -1,15 +1,8 @@
-import { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
-import { useNavigate, useParams } from 'react-router-dom';
-
-import api from '../../services/api';
 import { Input } from '../../components/input';
 import { Select } from '../../components/select';
 import { Button } from '../../components/button';
-import { Patient } from '../../interfaces';
-import PatientMap from '../../mappers/ProfessionalMap';
-import useApi from '../../hooks/useApi';
 import { Loading } from '../../components/loading';
+import { usePatientForm } from '../../modules/patients/hooks/usePatientForm';
 
 const statesOptions = [
   { label: 'Acre', value: 'AC' },
@@ -21,50 +14,8 @@ interface PatientFormProps {
 }
 
 export function PatientForm({ action = 'create' }: PatientFormProps) {
-  const [patient, setPatient] = useState<Patient>();
-  const { loading, fetchDataShow, sendDataPost } = useApi();
-
-  const navigate = useNavigate();
-  const { id } = useParams();
-
-  useEffect(() => {
-    if (action === 'edit') {
-      async function getPatient() {
-        const response = await fetchDataShow('patients/show', id as string);
-        setPatient(response.data);
-      }
-      getPatient();
-    }
-  }, [action, id, fetchDataShow]);
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const fieldName = event.target.name;
-    const value = event.target.value;
-    setPatient({ ...patient, [fieldName]: value });
-  };
-
-  const onSubmit = async (event: React.FormEvent<EventTarget | HTMLFormElement>) => {
-    event.preventDefault();
-    if (patient) {
-      if (action === 'edit') {
-        const response = await api.update('patients', id as string, PatientMap.toPersistent(patient));
-        if (response.data) {
-          toast('Registro Atualizado com Sucesso', { type: 'success' });
-          navigate('/pacientes');
-        } else {
-          toast('Não foi possivel realizar operação', { type: 'error' });
-        }
-      } else {
-        const response = await sendDataPost('patients', PatientMap.toPersistent(patient));
-        if (response.data) {
-          toast('Registro Inserido com Sucesso', { type: 'success' });
-          navigate('/pacientes');
-        } else {
-          toast('Não foi possivel realizar operação', { type: 'error' });
-        }
-      }
-    }
-  };
+  const actionForm = action;
+  const { patient, loading, handleChange, onSubmit } = usePatientForm(actionForm);
 
   return (
     <>
@@ -84,8 +35,8 @@ export function PatientForm({ action = 'create' }: PatientFormProps) {
 
             <div className="mb-2 columns-3">
               <Input
-                value={patient?.date_of_birth}
-                name="date_of_birth"
+                value={patient?.birth}
+                name="birth"
                 onChange={handleChange}
                 type="text"
                 placeholder="Data de Nascimento"

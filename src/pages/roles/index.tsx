@@ -1,4 +1,3 @@
-import { useContext } from 'react';
 import ReactDataGrid from '@inovua/reactdatagrid-community';
 
 import IconButton from '../../components/buttonIcon';
@@ -7,16 +6,18 @@ import { CreateRole } from './create';
 import { EditRole } from './edit';
 import { DeleteConfirm } from '../../components/DeleteConfirm';
 import { InsidePage } from '../../components/insidePage';
-import { ModalContext } from '../../shared/contexts/ModalContext';
+
 import { useIndexRole } from '../../modules/roles/hooks/useIndexRole';
 
 export function Roles() {
-  const { showModal, setShowModal } = useContext(ModalContext);
   const {
     editRole,
     openDeleteConfirm,
     deleteItem,
     setShowDeleteConfirm,
+    setShowModal,
+    showModal,
+    setShowModalEdit,
     loading,
     showDeleteConfirm,
     rowIdSelected,
@@ -57,9 +58,9 @@ export function Roles() {
         show={showDeleteConfirm}
       />
 
-      <CreateRole setShowModal={setShowModal} show={showModal} />
+      {showModal && <CreateRole />}
 
-      {showModal && <EditRole id={rowIdSelected} />}
+      {setShowModalEdit && <EditRole id={rowIdSelected} />}
 
       <InsidePage loading={loading} title="Cargos">
         <Button onClick={() => setShowModal(true)} type="button">

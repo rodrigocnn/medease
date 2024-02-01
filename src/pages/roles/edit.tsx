@@ -12,10 +12,10 @@ interface ModalProps {
 
 export const EditRole = ({ id }: ModalProps) => {
   const { onConfirmUpdate, handleChange, loading, updateRole } = useUpdateRole(id);
-  const { showModal, setShowModal } = useContext(ModalContext);
+  const { showModalEdit, setShowModalEdit } = useContext(ModalContext);
 
   return (
-    <Modal title="Editar Cargo" confirm={onConfirmUpdate} setShowModal={setShowModal} show={showModal}>
+    <Modal title="Editar Cargo" confirm={onConfirmUpdate} setShowModal={setShowModalEdit} show={showModalEdit}>
       {loading && <Loading />}
       <Input value={updateRole?.name} onChange={handleChange} type="text" placeholder="Nome" />
     </Modal>
