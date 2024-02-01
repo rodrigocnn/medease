@@ -1,15 +1,9 @@
-import { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
-import { useNavigate, useParams } from 'react-router-dom';
-
 import { Input } from '../../components/input';
 import { Select } from '../../components/select';
 import { Button } from '../../components/button';
-import { Options, Professional, Role } from '../../interfaces';
+
 import { Loading } from '../../components/loading';
-import api from '../../services/api';
-import ProfessionalMap from '../../mappers/ProfessionalMap';
-import useApi from '../../hooks/useApi';
+import { useProfessionalForm } from '../../modules/professionals/hooks/useProfessionalForm';
 
 const statesOptions = [
   { label: 'Acre', value: 'AC' },
@@ -21,64 +15,7 @@ interface ProfessionalFormProps {
 }
 
 export function ProfessionalForm({ action = 'create' }: ProfessionalFormProps) {
-  const [professional, setProfessional] = useState<Professional>();
-  const [roles, setRoles] = useState<Options[]>([]);
-  const { loading, fetchDataShow, sendDataPost } = useApi();
-  const navigate = useNavigate();
-  const { id } = useParams();
-
-  useEffect(() => {
-    if (action === 'edit') {
-      async function getProfessional() {
-        const response = await fetchDataShow('professionals/show', id as string);
-        setProfessional(response.data);
-      }
-      getProfessional();
-    }
-  }, []);
-
-  useEffect(() => {
-    getRoles();
-  }, []);
-
-  async function getRoles() {
-    const response = await api.index('roles');
-    const optionsRole = [{ label: 'Selecione um Cargo', value: '0' }];
-    const updatedOptionsRole = response.data.map((item: Role) => ({
-      label: item.description,
-      value: item.id,
-    }));
-    setRoles([...optionsRole, ...updatedOptionsRole]);
-  }
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const fieldName = event.target.name;
-    const value = event.target.value;
-    setProfessional({ ...professional, [fieldName]: value });
-  };
-
-  const onSubmit = async (event: React.FormEvent<EventTarget | HTMLFormElement>) => {
-    event.preventDefault();
-    if (professional) {
-      if (action === 'edit') {
-        const response = await api.update('professionals', id as string, ProfessionalMap.toPersistent(professional));
-        if (response.data) {
-          toast('Registro Atualizado com Sucesso', { type: 'success' });
-          navigate('/profissionais');
-        } else {
-          toast('Não foi possivel realizar operação', { type: 'error' });
-        }
-      } else {
-        const response = await sendDataPost('professionals', ProfessionalMap.toPersistent(professional));
-        if (response.data) {
-          toast('Registro Inserido com Sucesso', { type: 'success' });
-          navigate('/profissionais');
-        } else {
-          toast('Não foi possivel realizar operação', { type: 'error' });
-        }
-      }
-    }
-  };
+  const { professional, roles, loading, handleChange, onSubmit } = useProfessionalForm(action);
 
   return (
     <form onSubmit={onSubmit}>
@@ -93,8 +30,8 @@ export function ProfessionalForm({ action = 'create' }: ProfessionalFormProps) {
 
       <div className="mb-2 columns-2">
         <Input
-          value={professional?.date_of_birth}
-          name="date_of_birth"
+          value={professional?.birth}
+          name="birth"
           onChange={handleChange}
           type="text"
           placeholder="Data de Nascimento"

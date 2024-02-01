@@ -28,7 +28,7 @@ export interface Professional {
   id?: string;
   name?: string;
   email?: string;
-  date_of_birth?: string;
+  birth?: string;
   phone?: string;
   cpf?: string;
   rg?: string;
