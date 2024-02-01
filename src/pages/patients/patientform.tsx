@@ -3,6 +3,7 @@ import { Select } from '../../components/select';
 import { Button } from '../../components/button';
 import { Loading } from '../../components/loading';
 import { usePatientForm } from '../../modules/patients/hooks/usePatientForm';
+import { useNavigate } from 'react-router-dom';
 
 const statesOptions = [
   { label: 'Acre', value: 'AC' },
@@ -16,6 +17,7 @@ interface PatientFormProps {
 export function PatientForm({ action = 'create' }: PatientFormProps) {
   const actionForm = action;
   const { patient, loading, handleChange, onSubmit } = usePatientForm(actionForm);
+  const navigate = useNavigate();
 
   return (
     <>
@@ -71,6 +73,7 @@ export function PatientForm({ action = 'create' }: PatientFormProps) {
             <div className="mt-6 columns-2">
               <Button onClick={onSubmit}>Salvar</Button>
               <button
+                onClick={() => navigate('/pacientes')}
                 type="button"
                 className="mb-2 mr-2 rounded-lg border border-gray-200 bg-white px-5 py-2.5
                 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-[#06afb1] focus:z-10

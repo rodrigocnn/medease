@@ -1,6 +1,7 @@
 import { Input } from '../../components/input';
 import { Select } from '../../components/select';
 import { Button } from '../../components/button';
+import { useNavigate } from 'react-router-dom';
 
 import { Loading } from '../../components/loading';
 import { useProfessionalForm } from '../../modules/professionals/hooks/useProfessionalForm';
@@ -16,6 +17,7 @@ interface ProfessionalFormProps {
 
 export function ProfessionalForm({ action = 'create' }: ProfessionalFormProps) {
   const { professional, roles, loading, handleChange, onSubmit } = useProfessionalForm(action);
+  const navigate = useNavigate();
 
   return (
     <form onSubmit={onSubmit}>
@@ -71,6 +73,7 @@ export function ProfessionalForm({ action = 'create' }: ProfessionalFormProps) {
       <div className="mt-6 columns-2">
         <Button onClick={onSubmit}>Salvar</Button>
         <button
+          onClick={() => navigate('/profissionais')}
           type="button"
           className="mb-2 mr-2 rounded-lg border border-gray-200 bg-white px-5 py-2.5
                 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-[#06afb1] focus:z-10

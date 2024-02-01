@@ -5,11 +5,12 @@
 [ ] Integração Roles [x] Create [x] Read [x] Show [x] Update [x] [ ] Delete
 [ ] Integração Services [x] Create [x] Read [x] Show [x] Update [x] [ ] Delete
 [ ] Integração Patients [x] Create [x] Read [x] Show [x] Update [x] [ ] Delete
-[ ] Integração Professionals [x] Create [x] Read [ ] Show [ ] Update [ ] [ ] Delete
-[ ] Integração Appointments[ ] Create [ ] Read [ ] Show [ ] Update [ ] [ ] Delete
+[ ] Integração Professionals [x] Create [x] Read [x] Show [x] Update [ ] Delete
+[ ] Integração Appointments[ ] Create [ ] Read [ ] Show [ ] Update [ ] Delete
 
 # OUTROS
 
+[ ] Botao de Cancelar em páginas voltar para index
 [ ] Formatar Preço em R$ do Serviços
 [ ] Loading nas ações remotas
 [ ] Página de Dashboard
