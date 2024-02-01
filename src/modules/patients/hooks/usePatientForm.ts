@@ -17,7 +17,7 @@ export function usePatientForm(action: string) {
   useEffect(() => {
     if (action === 'edit') {
       async function getPatient() {
-        const response = await fetchDataShow('patients/show', id as string);
+        const response = await fetchDataShow('patients', id as string);
         setPatient(response.data);
       }
       getPatient();

@@ -3,10 +3,9 @@
 # INTEGRAÇÃO COM BACK END
 
 [ ] Integração Roles [x] Create [x] Read [x] Show [x] Update [x] [ ] Delete
-[ ] Integração Services [x] Create [x] Read [x] Show [x] Update [ ] [ ] Delete
-[ ] Integração Patients [x] Create [x] Read [ ] Show [ ] Update [ ] [ ] Delete
-[ ] Integração Professionals[ ] Create [ ] Read [ ] Show [ ] Update [ ] [ ] Delete
-[ ] Integração Users [ ] Create [ ] Read [ ] Show [ ] Update [ ] [ ] Delete
+[ ] Integração Services [x] Create [x] Read [x] Show [x] Update [x] [ ] Delete
+[ ] Integração Patients [x] Create [x] Read [x] Show [x] Update [x] [ ] Delete
+[ ] Integração Professionals [ ] Create [ ] Read [ ] Show [ ] Update [ ] [ ] Delete
 [ ] Integração Appointments[ ] Create [ ] Read [ ] Show [ ] Update [ ] [ ] Delete
 
 # OUTROS
@@ -26,3 +25,4 @@
 [ ] Validações
 [ ] Lista de Estados Brasileiros no Select
 [ ] LogoMarca no Login
+[ ] Integração Users [ ] Create [ ] Read [ ] Show [ ] Update [ ] [ ] Delete
