@@ -35,7 +35,7 @@ export function Professionals() {
     },
 
     {
-      name: 'role_description',
+      name: 'roleName',
       header: 'Cargo',
       minWidth: 50,
       defaultFlex: 2,

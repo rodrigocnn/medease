@@ -1,9 +1,13 @@
 import { Link } from 'react-router-dom';
 import logo from './../../assets/logo.png';
+import { useContext } from 'react';
+import { AuthContext } from '../../contexts/auth';
 
 export function Sidebar() {
-  const logout = () => {
-    localStorage.removeItem('@Auth:TOKEN');
+  const { signOut } = useContext(AuthContext);
+
+  const handleLogout = () => {
+    signOut();
   };
 
   return (
@@ -164,9 +168,9 @@ export function Sidebar() {
 
             <li>
               <a
-                onClick={logout}
+                onClick={handleLogout}
                 className="flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                href="/login"
+                href="/"
               >
                 <svg
                   aria-hidden="true"

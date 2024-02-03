@@ -13,6 +13,7 @@ interface User {
 interface AuthContextData {
   signed: boolean | null;
   signIn: (user: User) => void;
+  signOut: () => void;
   loading: boolean;
 }
 
@@ -20,6 +21,7 @@ const initialState = {
   signed: false,
   setSigned: () => {},
   signIn: () => {},
+  signOut: () => {},
   loading: true,
   user: {
     username: '',
@@ -51,7 +53,7 @@ function AuthProvider({ children }: AuthProviderProps) {
   async function signIn(user: User) {
     try {
       setLoading(true);
-      const { data } = await api.login('users/auth', user);
+      const { data } = await api.login('login', user);
       localStorage.setItem('@Auth:TOKEN', data.token);
       setToken(data.token);
       setSigned(true);
@@ -59,7 +61,13 @@ function AuthProvider({ children }: AuthProviderProps) {
     } catch (error) {}
   }
 
-  return <AuthContext.Provider value={{ signed, signIn, loading }}>{children}</AuthContext.Provider>;
+  function signOut() {
+    localStorage.removeItem('@Auth:TOKEN');
+    setToken(null);
+    setSigned(false);
+  }
+
+  return <AuthContext.Provider value={{ signed, signIn, signOut, loading }}>{children}</AuthContext.Provider>;
 }
 
 export { AuthContext, AuthProvider };

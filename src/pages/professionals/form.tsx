@@ -2,9 +2,11 @@ import { Input } from '../../components/input';
 import { Select } from '../../components/select';
 import { Button } from '../../components/button';
 import { useNavigate } from 'react-router-dom';
+import MaskedInput from 'react-text-mask';
 
 import { Loading } from '../../components/loading';
 import { useProfessionalForm } from '../../modules/professionals/hooks/useProfessionalForm';
+import Masks from '../../shared/utils/Masks';
 
 const statesOptions = [
   { label: 'Acre', value: 'AC' },
@@ -38,13 +40,31 @@ export function ProfessionalForm({ action = 'create' }: ProfessionalFormProps) {
           type="text"
           placeholder="Data de Nascimento"
         />
-        <Input value={professional?.phone} name="phone" onChange={handleChange} type="text" placeholder="Telefone" />
+        <MaskedInput
+          value={professional?.phone}
+          mask={Masks.celular}
+          name="phone"
+          onChange={handleChange}
+          type="text"
+          placeholder="Telefone"
+          className='  className="block dark:focus:ring-blue-500" /> w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400
+    dark:focus:border-blue-500'
+        />
       </div>
 
       <div className="mb-2 columns-3">
-        <Input value={professional?.cpf} name="cpf" onChange={handleChange} type="text" placeholder="CPF" />
+        <MaskedInput
+          className='  className="block dark:focus:ring-blue-500" /> w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400
+    dark:focus:border-blue-500'
+          mask={Masks.cpf}
+          value={professional?.cpf}
+          name="cpf"
+          onChange={handleChange}
+          type="text"
+          placeholder="CPF"
+        />
         <Input value={professional?.rg} name="rg" onChange={handleChange} type="text" placeholder="RG" />
-        <Select onChange={handleChange} value={professional?.role} name="role" options={roles} />
+        <Select onChange={handleChange} value={professional?.roleId} name="roleId" options={roles} />
       </div>
 
       <div className="mb-4 mt-4 p-1   font-bold text-[#06afb1] ">Endereço</div>

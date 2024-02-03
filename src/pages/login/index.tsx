@@ -6,7 +6,7 @@ import { AuthContext } from '../../contexts/auth';
 import { BoxLogin } from '../../components/BoxLogin';
 
 interface User {
-  username?: string;
+  email?: string;
   password?: string;
 }
 
@@ -34,23 +34,14 @@ export function Login() {
         </h1>
         <form className="space-y-4 md:space-y-6" action="#">
           <div>
-            <Label title="Your email" />
-            <Input onChange={handleChange} name="username" id="email" type="text" placeholder="name@company.com" />
+            <Label title="Seu email" />
+            <Input onChange={handleChange} name="email" id="email" type="text" />
           </div>
           <div>
-            <Label title="Password" />
-            <Input onChange={handleChange} type="password" name="password" id="password" placeholder="••••••••" />
+            <Label title="Senha" />
+            <Input onChange={handleChange} type="password" name="password" id="password" />
           </div>
-          <div className="flex items-center justify-between">
-            <div className="flex items-end">
-              <a
-                href="http://www.globo.com"
-                className="text-primary-600 dark:text-primary-500 text-sm font-medium hover:underline"
-              >
-                Forgot password?
-              </a>
-            </div>
-          </div>
+
           <Button onClick={handleLogin} type="button">
             Entrar
           </Button>

@@ -4,6 +4,8 @@ import { Button } from '../../components/button';
 import { Loading } from '../../components/loading';
 import { usePatientForm } from '../../modules/patients/hooks/usePatientForm';
 import { useNavigate } from 'react-router-dom';
+import Masks from '../../shared/utils/Masks';
+import MaskedInput from 'react-text-mask';
 
 const statesOptions = [
   { label: 'Acre', value: 'AC' },
@@ -32,7 +34,16 @@ export function PatientForm({ action = 'create' }: PatientFormProps) {
             </div>
             <div className="mb-2 columns-2">
               <Input value={patient?.email} name="email" onChange={handleChange} type="text" placeholder="Email" />
-              <Input value={patient?.phone} name="phone" onChange={handleChange} type="text" placeholder="Telefone" />
+              <MaskedInput
+                mask={Masks.celular}
+                value={patient?.phone}
+                name="phone"
+                onChange={handleChange}
+                type="text"
+                placeholder="Telefone"
+                className='  className="block dark:focus:ring-blue-500" /> w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400
+    dark:focus:border-blue-500'
+              />
             </div>
 
             <div className="mb-2 columns-3">
@@ -43,7 +54,18 @@ export function PatientForm({ action = 'create' }: PatientFormProps) {
                 type="text"
                 placeholder="Data de Nascimento"
               />
-              <Input value={patient?.cpf} name="cpf" onChange={handleChange} type="text" placeholder="CPF" />
+
+              <MaskedInput
+                mask={Masks.cpf}
+                value={patient?.cpf}
+                name="cpf"
+                onChange={handleChange}
+                type="text"
+                placeholder="CPF"
+                className='  className="block dark:focus:ring-blue-500" /> w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400
+    dark:focus:border-blue-500'
+              />
+
               <Input value={patient?.rg} name="rg" onChange={handleChange} type="text" placeholder="RG" />
             </div>
 

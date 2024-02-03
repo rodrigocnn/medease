@@ -10,16 +10,15 @@
 
 # OUTROS
 
-[ ] Botao de Cancelar em páginas voltar para index
-[ ] Formatar Preço em R$ do Serviços
-[ ] Loading nas ações remotas
+[ ] Logout
+
+[ ] Fazer função mapper para enviar preço de serviço para o banco
 [ ] Página de Dashboard
 [ ] Atualizar index de Agenda quando cadastrar
 [ ] Não permitir mudança de status ao cadastrar agenda
 [ ] Status no Grid Agenda
 [ ] Label dos Form
 [ ] Fechar Modal Apos Ação de Salvar/Editar
-[ ] Mascara CPF e Telefone
 [ ] Refatorar Código Sidebar - remover icones svg
 [ ] Favicon
 [ ] Icones Sidebar
