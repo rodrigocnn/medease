@@ -6,11 +6,7 @@ import { usePatientForm } from '../../modules/patients/hooks/usePatientForm';
 import { useNavigate } from 'react-router-dom';
 import Masks from '../../shared/utils/Masks';
 import MaskedInput from 'react-text-mask';
-
-const statesOptions = [
-  { label: 'Acre', value: 'AC' },
-  { label: 'Bahia', value: 'BA' },
-];
+import { StatesBR } from '../../constants/StatesBR';
 
 interface PatientFormProps {
   action?: 'create' | 'edit';
@@ -90,7 +86,7 @@ export function PatientForm({ action = 'create' }: PatientFormProps) {
                 placeholder="Bairro"
               />
               <Input value={patient?.city} name="city" onChange={handleChange} type="text" placeholder="Cidade" />
-              <Select onChange={handleChange} name="state" options={statesOptions} />
+              <Select onChange={handleChange} name="state" options={StatesBR} />
             </div>
             <div className="mt-6 columns-2">
               <Button onClick={onSubmit}>Salvar</Button>

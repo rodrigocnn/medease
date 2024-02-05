@@ -6,12 +6,8 @@ import MaskedInput from 'react-text-mask';
 
 import { Loading } from '../../components/loading';
 import { useProfessionalForm } from '../../modules/professionals/hooks/useProfessionalForm';
+import { StatesBR } from '../../constants/StatesBR';
 import Masks from '../../shared/utils/Masks';
-
-const statesOptions = [
-  { label: 'Acre', value: 'AC' },
-  { label: 'Bahia', value: 'BA' },
-];
 
 interface ProfessionalFormProps {
   action?: 'create' | 'edit';
@@ -88,7 +84,7 @@ export function ProfessionalForm({ action = 'create' }: ProfessionalFormProps) {
           placeholder="Bairro"
         />
         <Input value={professional?.city} name="city" onChange={handleChange} type="text" placeholder="Cidade" />
-        <Select onChange={handleChange} name="state" options={statesOptions} />
+        <Select onChange={handleChange} name="state" options={StatesBR} />
       </div>
       <div className="mt-6 columns-2">
         <Button onClick={onSubmit}>Salvar</Button>

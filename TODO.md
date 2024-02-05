@@ -11,7 +11,6 @@
 # OUTROS
 
 [ ] Logout
-
 [ ] Fazer função mapper para enviar preço de serviço para o banco
 [ ] Página de Dashboard
 [ ] Atualizar index de Agenda quando cadastrar
@@ -23,6 +22,6 @@
 [ ] Favicon
 [ ] Icones Sidebar
 [ ] Validações
-[ ] Lista de Estados Brasileiros no Select
+
 [ ] LogoMarca no Login
 [ ] Integração Users [ ] Create [ ] Read [ ] Show [ ] Update [ ] [ ] Delete
