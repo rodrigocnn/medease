@@ -83,7 +83,7 @@ export function FormAppointment({ show, setShowModal, action = 'create', id }: F
     async function getServices() {
       const response = await api.index('services');
       const servicesOptions: Options[] = response.data.map((item: Service) => {
-        return { label: item.description, value: item.id };
+        return { label: item.name, value: item.id };
       });
       const firstOption = { label: 'Selecione um Serviço', value: '0' };
       servicesOptions.unshift(firstOption);
