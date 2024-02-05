@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction, useState } from 'react';
+import { NumericFormat } from 'react-number-format';
 
 import { Input } from '../../components/input';
 import { Modal } from '../../components/modal';
@@ -7,7 +8,7 @@ import { Loading } from '../../components/loading';
 import useApi from '../../hooks/useApi';
 
 interface Service {
-  description?: string;
+  name?: string;
   price?: string;
 }
 
@@ -43,16 +44,21 @@ export function CreateService({ show, setShowModal }: CreateServiceProps) {
         {loading && <Loading />}
 
         <div className="mb-2 columns-1">
-          <Input
-            value={service?.description}
-            type="text"
-            name="description"
-            onChange={handleChange}
-            placeholder="Nome"
-          />
+          <Input value={service?.name} type="text" name="name" onChange={handleChange} placeholder="Nome" />
         </div>
         <div className="mb-2 columns-1">
-          <Input value={service?.price} type="text" name="price" onChange={handleChange} placeholder="Valor" />
+          <NumericFormat
+            thousandSeparator="."
+            decimalSeparator=","
+            prefix="R$"
+            className='  className="block dark:focus:ring-blue-500" /> w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400
+    dark:focus:border-blue-500'
+            value={service?.price}
+            type="text"
+            name="price"
+            onChange={handleChange}
+            placeholder="Valor"
+          />
         </div>
       </Modal>
     </>

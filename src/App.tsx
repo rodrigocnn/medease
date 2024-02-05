@@ -5,14 +5,17 @@ import 'react-toastify/dist/ReactToastify.css';
 import '@inovua/reactdatagrid-community/index.css';
 
 import ContextProvider from './contexts';
+import { ModalProvider } from './shared/contexts/ModalContext';
 
 function App() {
   return (
     <ContextProvider>
-      <BrowserRouter>
-        <ToastContainer theme="colored" />
-        <Links />
-      </BrowserRouter>
+      <ModalProvider>
+        <BrowserRouter>
+          <ToastContainer theme="colored" />
+          <Links />
+        </BrowserRouter>
+      </ModalProvider>
     </ContextProvider>
   );
 }

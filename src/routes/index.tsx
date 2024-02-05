@@ -11,7 +11,7 @@ import { Appointments } from '../pages/appointments';
 import { ProfessionalsEdit } from '../pages/professionals/edit';
 import { Login } from '../pages/login';
 import { Admin } from '../components/Admin';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { AuthContext } from '../contexts/auth';
 import { InsidePage } from '../components/insidePage';
 import { Loading } from '../components/loading';
@@ -66,9 +66,15 @@ function Links(): JSX.Element {
   const location = useLocation();
   const navigate = useNavigate();
 
-  if (signed && location.pathname === '/login') {
-    navigate('/dashboard');
-  }
+  useEffect(() => {
+    if ((signed && location.pathname === '/login') || (signed && location.pathname === '/')) {
+      navigate('/dashboard');
+    }
+
+    if (!signed) {
+      navigate('/');
+    }
+  }, [signed, location.pathname, navigate]);
 
   if (loading) {
     return (

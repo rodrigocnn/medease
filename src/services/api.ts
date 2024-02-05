@@ -4,18 +4,18 @@ const instance = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
 });
 
-function getToken() {
-  if (localStorage.getItem('@Auth:TOKEN')) {
-    const token = localStorage.getItem('@Auth:TOKEN') as string;
-    return token;
-  }
-}
+// function getToken() {
+//   if (localStorage.getItem('@Auth:TOKEN')) {
+//     const token = localStorage.getItem('@Auth:TOKEN') as string;
+//     return token;
+//   }
+// }
 
-instance.interceptors.request.use(async config => {
-  const token = getToken();
-  config.headers.Authorization = `Bearer ${token}`;
-  return config;
-});
+// instance.interceptors.request.use(async config => {
+//   const token = getToken();
+//   config.headers.Authorization = `Bearer ${token}`;
+//   return config;
+// });
 
 const apis = {
   index: (endpoint: string) => instance.get(endpoint),

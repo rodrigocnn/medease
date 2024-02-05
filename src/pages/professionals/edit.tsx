@@ -4,7 +4,7 @@ import { ProfessionalForm } from './form';
 export function ProfessionalsEdit() {
   return (
     <>
-      <InsidePage title="Cadastrar Profissional">
+      <InsidePage title="Editar Profissional">
         <ProfessionalForm action="edit" />
       </InsidePage>
     </>

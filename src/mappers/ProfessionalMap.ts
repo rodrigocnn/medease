@@ -1,23 +1,10 @@
-interface Professional {
-  name?: string;
-  email?: string;
-  date_of_birth?: string;
-  phone?: string;
-  cpf?: string;
-  rg?: string;
-  gender?: string;
-  address?: string;
-  district?: string;
-  city?: string;
-  state?: string;
-  role?: string;
-}
+import { Professional } from '../interfaces';
 
 class ProfessionalMap {
-  toPersistent(patient: Professional) {
-    let patientAux = Object.assign({});
-    const patientPersist = { ...patient, ...patientAux };
-    patientPersist.role_id = patient.role;
+  toPersistent(professional: Professional) {
+    let professionalAux = Object.assign({});
+    const patientPersist = { ...professional, ...professionalAux };
+    patientPersist.roleId = Number(professional.roleId);
     delete patientPersist.role;
     return patientPersist;
   }
