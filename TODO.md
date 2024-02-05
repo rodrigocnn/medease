@@ -22,6 +22,6 @@
 [ ] Favicon
 [ ] Icones Sidebar
 [ ] Validações
-
+[ ] Remover nome "Barra superior" na barra
 [ ] LogoMarca no Login
 [ ] Integração Users [ ] Create [ ] Read [ ] Show [ ] Update [ ] [ ] Delete
