@@ -46,7 +46,12 @@ export interface Service {
   id?: string;
   name: string;
   price: string;
-  role: string;
+  role?: string;
+}
+
+export interface ServiceRequest {
+  name: string;
+  price: number | null | string;
 }
 
 export interface Role {

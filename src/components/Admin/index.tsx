@@ -11,7 +11,7 @@ export function Admin({ children }: Props) {
         <Sidebar />
       </div>
       <div className="col-span-5">
-        <div className="bg-[#01d8da] p-5">Barra Superior</div>
+        <div className="bg-[#01d8da] p-5"></div>
         <main>{children}</main>
       </div>
     </div>

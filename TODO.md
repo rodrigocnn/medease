@@ -10,18 +10,12 @@
 
 # OUTROS
 
-[ ] Logout
-[ ] Fazer função mapper para enviar preço de serviço para o banco
+[ ] Validações
 [ ] Página de Dashboard
 [ ] Atualizar index de Agenda quando cadastrar
 [ ] Não permitir mudança de status ao cadastrar agenda
 [ ] Status no Grid Agenda
 [ ] Label dos Form
-[ ] Fechar Modal Apos Ação de Salvar/Editar
-[ ] Refatorar Código Sidebar - remover icones svg
 [ ] Favicon
 [ ] Icones Sidebar
-[ ] Validações
-[ ] Remover nome "Barra superior" na barra
 [ ] LogoMarca no Login
-[ ] Integração Users [ ] Create [ ] Read [ ] Show [ ] Update [ ] [ ] Delete
