@@ -6,6 +6,7 @@ import { Modal } from '../../components/modal';
 import { toast } from 'react-toastify';
 import { Loading } from '../../components/loading';
 import useApi from '../../hooks/useApi';
+import ServiceMap from '../../modules/services/mappers/ServiceMap';
 
 interface Service {
   name?: string;
@@ -30,11 +31,20 @@ export function CreateService({ show, setShowModal }: CreateServiceProps) {
 
   const onConfirm = async (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
-    const response = await sendDataPost('services', service);
-    if (response.data) {
-      toast('Registro Atualizado com Sucesso', { type: 'success' });
+    if (service) {
+      const requestService = {
+        name: service.name as string,
+        price: service.price as string,
+      };
+      const request = ServiceMap.toPersistent(requestService);
+      const response = await sendDataPost('services', request);
+      if (response.data) {
+        toast('Registro Atualizado com Sucesso', { type: 'success' });
+        setShowModal(false);
+      }
     } else {
       toast('Não foi possivel realizar operação', { type: 'error' });
+      setShowModal(false);
     }
   };
 
