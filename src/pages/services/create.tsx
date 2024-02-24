@@ -1,10 +1,10 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import { NumericFormat } from 'react-number-format';
 
-import { Input } from '../../components/input';
-import { Modal } from '../../components/modal';
+import { Input } from '../../components/Input';
+import { Modal } from '../../components/Modal';
 import { toast } from 'react-toastify';
-import { Loading } from '../../components/loading';
+import { Loading } from '../../components/Loading';
 import useApi from '../../hooks/useApi';
 import ServiceMap from '../../modules/services/mappers/ServiceMap';
 

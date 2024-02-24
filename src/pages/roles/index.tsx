@@ -1,11 +1,11 @@
 import ReactDataGrid from '@inovua/reactdatagrid-community';
 
-import IconButton from '../../components/buttonIcon';
-import { Button } from '../../components/button';
+import IconButton from '../../components/ButtonIcon';
+import { Button } from '../../components/Button';
 import { CreateRole } from './create';
 import { EditRole } from './edit';
 import { DeleteConfirm } from '../../components/DeleteConfirm';
-import { InsidePage } from '../../components/insidePage';
+import { InsidePage } from '../../components/InsidePage';
 
 import { useIndexRole } from '../../modules/roles/hooks/useIndexRole';
 

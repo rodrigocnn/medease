@@ -3,10 +3,10 @@ import ReactDataGrid from '@inovua/reactdatagrid-community';
 import { CreateService } from './create';
 import { EditService } from './edit';
 import { DeleteConfirm } from '../../components/DeleteConfirm';
-import { Button } from '../../components/button';
-import { InsidePage } from '../../components/insidePage';
+import { Button } from '../../components/Button';
+import { InsidePage } from '../../components/InsidePage';
 import { useIndexServices } from '../../modules/services/hooks/useIndexServices';
-import IconButton from '../../components/buttonIcon';
+import IconButton from '../../components/ButtonIcon';
 
 export function Services() {
   const gridStyle = { minHeight: 370 };

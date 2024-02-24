@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
-import { Button } from '../../components/button';
-import { InsidePage } from '../../components/insidePage';
-import IconButton from '../../components/buttonIcon';
+import { Button } from '../../components/Button';
+import { InsidePage } from '../../components/InsidePage';
+import IconButton from '../../components/ButtonIcon';
 import { DeleteConfirm } from '../../components/DeleteConfirm';
 import api from '../../services/api';
 import ReactDataGrid from '@inovua/reactdatagrid-community';

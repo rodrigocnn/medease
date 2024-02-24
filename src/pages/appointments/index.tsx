@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import ReactDataGrid from '@inovua/reactdatagrid-community';
 
-import IconButton from '../../components/buttonIcon';
-import { Button } from '../../components/button';
-import { InsidePage } from '../../components/insidePage';
+import IconButton from '../../components/ButtonIcon';
+import { Button } from '../../components/Button';
+import { InsidePage } from '../../components/InsidePage';
 import { formatDateBR, timeDefaultToString } from '../../helpers/handleDate';
 import { FormAppointment } from './form';
 import { Appointment } from '../../interfaces';

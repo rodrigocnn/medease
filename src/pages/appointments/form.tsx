@@ -3,11 +3,11 @@ import DatePicker, { registerLocale } from 'react-datepicker';
 import { toast } from 'react-toastify';
 import ptBR from 'date-fns/locale/pt-BR';
 
-import { Modal } from '../../components/modal';
-import { Select } from '../../components/select';
+import { Modal } from '../../components/Modal';
+import { Select } from '../../components/Select';
 import { statusOptions, timeOptions } from '../../constants/timeOptions';
 import { stringToDate, timeDefaultToString, timeNowToStringAM } from '../../helpers/handleDate';
-import { Label } from '../../components/label';
+import { Label } from '../../components/Label';
 import { Appointment, Options, Professional, Service } from '../../interfaces';
 import api from '../../services/api';
 import BookingMap from '../../mappers/BookingMap';

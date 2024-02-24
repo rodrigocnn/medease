@@ -1,6 +1,6 @@
-import { Input } from '../../components/input';
-import { Modal } from '../../components/modal';
-import { Loading } from '../../components/loading';
+import { Input } from '../../components/Input';
+import { Modal } from '../../components/Modal';
+import { Loading } from '../../components/Loading';
 import { useEditService } from '../../modules/services/hooks/useEditService';
 
 interface EditServiceProps {

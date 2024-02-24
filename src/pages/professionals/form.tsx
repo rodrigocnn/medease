@@ -1,10 +1,10 @@
-import { Input } from '../../components/input';
-import { Select } from '../../components/select';
-import { Button } from '../../components/button';
+import { Input } from '../../components/Input';
+import { Select } from '../../components/Select';
+import { Button } from '../../components/Button';
 import { useNavigate } from 'react-router-dom';
 import MaskedInput from 'react-text-mask';
 
-import { Loading } from '../../components/loading';
+import { Loading } from '../../components/Loading';
 import { useProfessionalForm } from '../../modules/professionals/hooks/useProfessionalForm';
 import { StatesBR } from '../../constants/StatesBR';
 import Masks from '../../shared/utils/Masks';

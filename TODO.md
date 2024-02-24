@@ -17,5 +17,5 @@
 [ ] Status no Grid Agenda
 [ ] Label dos Form
 [ ] Favicon
-[ ] Icones Sidebar
+
 [ ] LogoMarca no Login

@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { MemoryRouter, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
 import { Professionals } from '../pages/professionals';
 import { Patients } from '../pages/patients';
@@ -13,8 +13,8 @@ import { Login } from '../pages/login';
 import { Admin } from '../components/Admin';
 import { useContext, useEffect } from 'react';
 import { AuthContext } from '../contexts/auth';
-import { InsidePage } from '../components/insidePage';
-import { Loading } from '../components/loading';
+import { InsidePage } from '../components/InsidePage';
+import { Loading } from '../components/Loading';
 import { Dashboard } from '../pages/dashboard';
 
 const router = [

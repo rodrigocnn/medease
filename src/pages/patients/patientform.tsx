@@ -1,7 +1,7 @@
-import { Input } from '../../components/input';
-import { Select } from '../../components/select';
-import { Button } from '../../components/button';
-import { Loading } from '../../components/loading';
+import { Input } from '../../components/Input';
+import { Select } from '../../components/Select';
+import { Button } from '../../components/Button';
+import { Loading } from '../../components/Loading';
 import { usePatientForm } from '../../modules/patients/hooks/usePatientForm';
 import { useNavigate } from 'react-router-dom';
 import Masks from '../../shared/utils/Masks';
