@@ -63,3 +63,8 @@ export interface Options {
   label: string;
   value: string;
 }
+
+export interface ValidationError {
+  name: string;
+  errors: string[];
+}
