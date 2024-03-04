@@ -1,20 +1,20 @@
+import MaskedInput from 'react-text-mask';
+import { useNavigate } from 'react-router-dom';
+
+import Masks from '../../shared/utils/Masks';
 import { Input } from '../../components/Input';
 import { Select } from '../../components/Select';
 import { Button } from '../../components/Button';
-import { useNavigate } from 'react-router-dom';
-import MaskedInput from 'react-text-mask';
-
 import { Loading } from '../../components/Loading';
 import { useProfessionalForm } from '../../modules/professionals/hooks/useProfessionalForm';
 import { StatesBR } from '../../constants/StatesBR';
-import Masks from '../../shared/utils/Masks';
 
 interface ProfessionalFormProps {
   action?: 'create' | 'edit';
 }
 
 export function ProfessionalForm({ action = 'create' }: ProfessionalFormProps) {
-  const { professional, roles, loading, handleChange, onSubmit } = useProfessionalForm(action);
+  const { professional, roles, loading, validations, handleChange, onSubmit } = useProfessionalForm(action);
   const navigate = useNavigate();
 
   return (
@@ -24,12 +24,27 @@ export function ProfessionalForm({ action = 'create' }: ProfessionalFormProps) {
       <div className="mb-4 mt-4 p-1   font-bold text-[#06afb1] ">Dados Pessoais</div>
 
       <div className="mb-2 columns-2">
-        <Input value={professional?.name} name="name" onChange={handleChange} type="text" placeholder="Nome" />
-        <Input value={professional?.email} name="email" onChange={handleChange} type="text" placeholder="Email" />
+        <Input
+          error={validations?.fieldName === 'name' && !validations.validate}
+          value={professional?.name}
+          name="name"
+          onChange={handleChange}
+          type="text"
+          placeholder="Nome"
+        />
+        <Input
+          error={validations?.fieldName === 'email' && !validations.validate}
+          value={professional?.email}
+          name="email"
+          onChange={handleChange}
+          type="text"
+          placeholder="Email"
+        />
       </div>
 
       <div className="mb-2 columns-2">
         <Input
+          error={validations?.fieldName === 'birth' && !validations.validate}
           value={professional?.birth}
           name="birth"
           onChange={handleChange}
@@ -43,15 +58,13 @@ export function ProfessionalForm({ action = 'create' }: ProfessionalFormProps) {
           onChange={handleChange}
           type="text"
           placeholder="Telefone"
-          className='  className="block dark:focus:ring-blue-500" /> w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400
-    dark:focus:border-blue-500'
+          className="input-default"
         />
       </div>
 
       <div className="mb-2 columns-3">
         <MaskedInput
-          className='  className="block dark:focus:ring-blue-500" /> w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400
-    dark:focus:border-blue-500'
+          className="input-default"
           mask={Masks.cpf}
           value={professional?.cpf}
           name="cpf"
@@ -67,6 +80,7 @@ export function ProfessionalForm({ action = 'create' }: ProfessionalFormProps) {
 
       <div className="mb-2 columns-1">
         <Input
+          error={validations?.fieldName === 'address' && !validations.validate}
           value={professional?.address}
           name="address"
           onChange={handleChange}
@@ -77,17 +91,26 @@ export function ProfessionalForm({ action = 'create' }: ProfessionalFormProps) {
 
       <div className="mb-2 columns-3">
         <Input
+          error={validations?.fieldName === 'district' && !validations.validate}
           value={professional?.district}
           name="district"
           onChange={handleChange}
           type="text"
           placeholder="Bairro"
         />
-        <Input value={professional?.city} name="city" onChange={handleChange} type="text" placeholder="Cidade" />
+        <Input
+          error={validations?.fieldName === 'city' && !validations.validate}
+          value={professional?.city}
+          name="city"
+          onChange={handleChange}
+          type="text"
+          placeholder="Cidade"
+        />
         <Select onChange={handleChange} name="state" options={StatesBR} />
       </div>
       <div className="mt-6 columns-2">
         <Button onClick={onSubmit}>Salvar</Button>
+
         <button
           onClick={() => navigate('/profissionais')}
           type="button"

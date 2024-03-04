@@ -68,3 +68,8 @@ export interface ValidationError {
   name: string;
   errors: string[];
 }
+
+export interface FieldValidate {
+  fieldName: string;
+  validate: boolean;
+}

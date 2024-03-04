@@ -54,18 +54,20 @@ export function Professionals() {
     },
 
     {
-      name: 'id',
+      name: 'edit',
       header: 'Editar',
       maxWidth: 1000,
       defaultFlex: 1,
-      render: ({ value }: any) => <IconButton icon="edit" onClick={() => navigate(`/profissionais/editar/${value}`)} />,
+      render: ({ data }: any) => (
+        <IconButton icon="edit" onClick={() => navigate(`/profissionais/editar/${data.id}`)} />
+      ),
     },
     {
-      name: 'id',
+      name: 'delete',
       header: 'Excluir',
       maxWidth: 1000,
       defaultFlex: 1,
-      render: ({ value }: any) => <IconButton icon="delete" onClick={() => openDeleteConfirm(value)} />,
+      render: ({ data }: any) => <IconButton icon="delete" onClick={() => openDeleteConfirm(data.id)} />,
     },
   ];
 
@@ -75,7 +77,7 @@ export function Professionals() {
       setProfessionals(response.data);
     }
     getProfessionals();
-  }, [fetchAllData]);
+  }, [fetchAllData, showDeleteConfirm]);
 
   async function openDeleteConfirm(id: string) {
     console.log(id);
@@ -85,10 +87,12 @@ export function Professionals() {
 
   async function deleteItem() {
     const response = await api.delete('professionals', rowIdSelected);
-    if (response.status === 204) {
+    if (response.data) {
       toast('Registro Excluído com Sucesso', { type: 'success' });
+      setShowDeleteConfirm(false);
     } else {
       toast('Não foi possivel realizar operação', { type: 'error' });
+      setShowDeleteConfirm(false);
     }
   }
 

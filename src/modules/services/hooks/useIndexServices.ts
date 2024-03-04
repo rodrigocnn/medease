@@ -33,7 +33,7 @@ export function useIndexServices() {
 
   async function deleteItem() {
     const response = await api.delete('services', rowIdSelected);
-    if (response.status === 204) {
+    if (response.data) {
       toast('Registro Excluído com Sucesso', { type: 'success' });
       setShowDeleteConfirm(false);
     } else {

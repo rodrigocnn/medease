@@ -33,7 +33,7 @@ export function useIndexRole() {
 
   async function deleteItem() {
     const response = await deleteData('roles', rowIdSelected);
-    if (response.status === 204) {
+    if (response.data) {
       toast('Registro Excluído com Sucesso', { type: 'success' });
       setShowDeleteConfirm(false);
     } else {

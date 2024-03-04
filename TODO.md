@@ -2,10 +2,10 @@
 
 # INTEGRAÇÃO COM BACK END
 
-[ ] Integração Roles [x] Create [x] Read [x] Show [x] Update [x] [ ] Delete
-[ ] Integração Services [x] Create [x] Read [x] Show [x] Update [x] [ ] Delete
-[ ] Integração Patients [x] Create [x] Read [x] Show [x] Update [x] [ ] Delete
-[ ] Integração Professionals [x] Create [x] Read [x] Show [x] Update [ ] Delete
+[ ] Integração Roles [x] Create [x] Read [x] Show [x] Update [x] [x] Delete
+[ ] Integração Services [x] Create [x] Read [x] Show [x] Update [x] [x] Delete
+[ ] Integração Patients [x] Create [x] Read [x] Show [x] Update [x] [x] Delete
+[ ] Integração Professionals [x] Create [x] Read [x] Show [x] Update [x] Delete
 [ ] Integração Appointments[ ] Create [ ] Read [ ] Show [ ] Update [ ] Delete
 
 # OUTROS

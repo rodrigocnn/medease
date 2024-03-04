@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import ReactDataGrid from '@inovua/reactdatagrid-community';
 
+import useApi from '../../hooks/useApi';
 import IconButton from '../../components/ButtonIcon';
 import { Button } from '../../components/Button';
 import { InsidePage } from '../../components/InsidePage';
 import { formatDateBR, timeDefaultToString } from '../../helpers/handleDate';
 import { FormAppointment } from './form';
 import { Appointment } from '../../interfaces';
-import useApi from '../../hooks/useApi';
 
 export function Appointments() {
   const [appointments, setAppointments] = useState<Appointment[]>([]);

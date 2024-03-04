@@ -4,19 +4,14 @@ import ServiceMap from '../mappers/ServiceMap';
 import useApi from '../../../hooks/useApi';
 import { useContext, useState } from 'react';
 import { ModalContext } from '../../../shared/contexts/ModalContext';
-import { Service } from '../../../interfaces';
+import { FieldValidate, Service } from '../../../interfaces';
 import { serviceSchema } from '../validations';
-
-interface FielValidate {
-  fieldName: string;
-  validate: boolean;
-}
 
 export function useCreateService() {
   const [service, setService] = useState<Service>();
   const { loading, sendDataPost } = useApi();
   const { showModal, setShowModal } = useContext(ModalContext);
-  const [validations, setValidations] = useState<FielValidate>();
+  const [validations, setValidations] = useState<FieldValidate>();
 
   const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
     const fieldName = event.currentTarget.name;

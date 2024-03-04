@@ -16,7 +16,6 @@ export function Services() {
     deleteItem,
     editData,
     openDeleteConfirm,
-
     services,
     setShowDeleteConfirm,
     showDeleteConfirm,
@@ -42,18 +41,18 @@ export function Services() {
       defaultFlex: 2,
     },
     {
-      name: 'id',
+      name: 'edit',
       header: 'Editar',
       maxWidth: 1000,
       defaultFlex: 1,
-      render: ({ value }: any) => <IconButton icon="edit" onClick={() => editData(value)} />,
+      render: ({ data }: any) => <IconButton icon="edit" onClick={() => editData(data.id)} />,
     },
     {
-      name: 'idDelete',
+      name: 'delete',
       header: 'Excluir',
       maxWidth: 1000,
       defaultFlex: 1,
-      render: ({ value }: any) => <IconButton icon="delete" onClick={() => openDeleteConfirm(value)} />,
+      render: ({ data }: any) => <IconButton icon="delete" onClick={() => openDeleteConfirm(data.id)} />,
     },
   ];
 

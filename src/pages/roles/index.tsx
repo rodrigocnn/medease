@@ -23,7 +23,7 @@ export function Roles() {
     rowIdSelected,
     roles,
   } = useIndexRole();
-  const gridStyle = { minHeight: 370 };
+  const gridStyle = { minHeight: 550 };
   const filterValue = [{ name: 'description', operator: 'startsWith', type: 'string', value: '' }];
 
   const columns = [
@@ -34,18 +34,18 @@ export function Roles() {
       defaultFlex: 2,
     },
     {
-      name: 'id',
+      name: 'edit',
       header: 'Editar',
       maxWidth: 1000,
       defaultFlex: 1,
-      render: ({ value }: any) => <IconButton icon="edit" onClick={() => editRole(value)} />,
+      render: ({ data }: any) => <IconButton icon="edit" onClick={() => editRole(data.id)} />,
     },
     {
-      name: 'idDelete',
+      name: 'delete',
       header: 'Excluir',
       maxWidth: 1000,
       defaultFlex: 1,
-      render: ({ value }: any) => <IconButton icon="delete" onClick={() => openDeleteConfirm(value)} />,
+      render: ({ data }: any) => <IconButton icon="delete" onClick={() => openDeleteConfirm(data.id)} />,
     },
   ];
 
@@ -71,6 +71,7 @@ export function Roles() {
           pagination={'local'}
           style={gridStyle}
           pageSizes={[10]}
+          limit={10}
           idProperty="id"
           dataSource={roles}
           columns={columns}

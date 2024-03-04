@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Options, Professional, Role } from '../../../interfaces';
+import { FieldValidate, Options, Professional, Role } from '../../../interfaces';
 import useApi from '../../../hooks/useApi';
 import ProfessionalMap from '../../../mappers/ProfessionalMap';
 import api from '../../../services/api';
+import { professionalSchema } from '../validations';
 
 export function useProfessionalForm(action: string) {
   const [professional, setProfessional] = useState<Professional>();
   const [roles, setRoles] = useState<Options[]>([]);
+  const [validations, setValidations] = useState<FieldValidate>();
   const { loading, fetchDataShow, sendDataPost } = useApi();
   const navigate = useNavigate();
   const { id } = useParams();
@@ -43,24 +45,39 @@ export function useProfessionalForm(action: string) {
     setProfessional({ ...professional, [fieldName]: value });
   };
 
+  const validation = async () => {
+    try {
+      await professionalSchema.validate(professional);
+      return true;
+    } catch (error: any) {
+      toast(error.errors[0], { type: 'error' });
+      const fieldNameValidation = { fieldName: error.path as string, validate: false };
+      setValidations(fieldNameValidation);
+      return false;
+    }
+  };
+
   const onSubmit = async (event: React.FormEvent<EventTarget | HTMLFormElement>) => {
     event.preventDefault();
-    if (professional) {
-      if (action === 'edit') {
-        const response = await api.update('professionals', id as string, ProfessionalMap.toPersistent(professional));
-        if (response.data) {
-          toast('Registro Atualizado com Sucesso', { type: 'success' });
-          navigate('/profissionais');
+
+    if (await validation()) {
+      if (professional) {
+        if (action === 'edit') {
+          const response = await api.update('professionals', id as string, ProfessionalMap.toPersistent(professional));
+          if (response.data) {
+            toast('Registro Atualizado com Sucesso', { type: 'success' });
+            navigate('/profissionais');
+          } else {
+            toast('Não foi possivel realizar operação', { type: 'error' });
+          }
         } else {
-          toast('Não foi possivel realizar operação', { type: 'error' });
-        }
-      } else {
-        const response = await sendDataPost('professionals', ProfessionalMap.toPersistent(professional));
-        if (response.data) {
-          toast('Registro Inserido com Sucesso', { type: 'success' });
-          navigate('/profissionais');
-        } else {
-          toast('Não foi possivel realizar operação', { type: 'error' });
+          const response = await sendDataPost('professionals', ProfessionalMap.toPersistent(professional));
+          if (response.data) {
+            toast('Registro Inserido com Sucesso', { type: 'success' });
+            navigate('/profissionais');
+          } else {
+            toast('Não foi possivel realizar operação', { type: 'error' });
+          }
         }
       }
     }
@@ -70,6 +87,7 @@ export function useProfessionalForm(action: string) {
     professional,
     roles,
     loading,
+    validations,
     handleChange,
     onSubmit,
   };
