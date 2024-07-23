@@ -1,20 +1,25 @@
+import DatePicker, { registerLocale } from 'react-datepicker';
+import { useNavigate } from 'react-router-dom';
+import MaskedInput from 'react-text-mask';
+import ptBR from 'date-fns/locale/pt-BR';
+
 import { Input } from '../../components/Input';
 import { Select } from '../../components/Select';
 import { Button } from '../../components/Button';
 import { Loading } from '../../components/Loading';
 import { usePatientForm } from '../../modules/patients/hooks/usePatientForm';
-import { useNavigate } from 'react-router-dom';
 import Masks from '../../shared/utils/Masks';
-import MaskedInput from 'react-text-mask';
 import { StatesBR } from '../../constants/StatesBR';
 
 interface PatientFormProps {
   action?: 'create' | 'edit';
 }
 
+registerLocale('ptBR', ptBR);
+
 export function PatientForm({ action = 'create' }: PatientFormProps) {
   const actionForm = action;
-  const { patient, loading, handleChange, onSubmit } = usePatientForm(actionForm);
+  const { patient, loading, handleChange, handleDate, onSubmit } = usePatientForm(actionForm);
   const navigate = useNavigate();
 
   return (
@@ -37,20 +42,26 @@ export function PatientForm({ action = 'create' }: PatientFormProps) {
                 onChange={handleChange}
                 type="text"
                 placeholder="Telefone"
-                className='  className="block dark:focus:ring-blue-500" /> w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400
+                className='dark:focus:ring-blue-500"
+                lock w-full rounded-lg border border-gray-300
+                bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500
+                dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400
     dark:focus:border-blue-500'
               />
             </div>
 
-            <div className="mb-2 columns-3">
-              <Input
-                value={patient?.birth}
-                name="birth"
-                onChange={handleChange}
-                type="text"
-                placeholder="Data de Nascimento"
-              />
-
+            <div className=" mb-2  columns-3">
+              <div className="container-datepicker">
+                <DatePicker
+                  placeholderText="Data de Nascimento"
+                  locale="ptBR"
+                  name="birth"
+                  dateFormat="dd/MM/yyyy"
+                  className="input-default w-full"
+                  selected={patient?.birth ? new Date(patient?.birth) : null}
+                  onChange={date => handleDate(date, 'birth')}
+                />
+              </div>
               <MaskedInput
                 mask={Masks.cpf}
                 value={patient?.cpf}
@@ -58,7 +69,7 @@ export function PatientForm({ action = 'create' }: PatientFormProps) {
                 onChange={handleChange}
                 type="text"
                 placeholder="CPF"
-                className='  className="block dark:focus:ring-blue-500" /> w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400
+                className='dark:focus:ring-blue-500" block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400
     dark:focus:border-blue-500'
               />
 
@@ -86,7 +97,7 @@ export function PatientForm({ action = 'create' }: PatientFormProps) {
                 placeholder="Bairro"
               />
               <Input value={patient?.city} name="city" onChange={handleChange} type="text" placeholder="Cidade" />
-              <Select onChange={handleChange} name="state" options={StatesBR} />
+              <Select value={patient?.state} onChange={handleChange} name="state" options={StatesBR} />
             </div>
             <div className="mt-6 columns-2">
               <Button onClick={onSubmit}>Salvar</Button>

@@ -5,7 +5,8 @@ import { useCreateService } from '../../modules/services/hooks/useCreateService'
 import { InputNumeric } from '../../components/InputNumeric';
 
 export function CreateService() {
-  const { handleChange, onConfirm, loading, showModal, setShowModal, service, validations } = useCreateService();
+  const { handleChange, onConfirm, loading, showModal, setShowModal, service, validations, handleChangeNumeric } =
+    useCreateService();
 
   return (
     <>
@@ -28,7 +29,7 @@ export function CreateService() {
             value={service?.price}
             type="text"
             name="price"
-            onChange={handleChange}
+            onChange={handleChangeNumeric}
             placeholder="Valor"
           />
         </div>

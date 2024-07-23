@@ -30,6 +30,11 @@ export function usePatientForm(action: string) {
     setPatient({ ...patient, [fieldName]: value });
   };
 
+  const handleDate = (date: Date | null, fieldName: string) => {
+    const updatedState: Patient = { ...patient, [fieldName]: date };
+    setPatient(updatedState);
+  };
+
   const onSubmit = async (event: React.FormEvent<EventTarget | HTMLFormElement>) => {
     event.preventDefault();
     if (patient) {
@@ -56,6 +61,7 @@ export function usePatientForm(action: string) {
   return {
     onSubmit,
     handleChange,
+    handleDate,
     loading,
     patient,
   };

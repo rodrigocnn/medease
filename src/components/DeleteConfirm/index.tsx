@@ -44,12 +44,13 @@ export const DeleteConfirm = ({ show, title, deleteItem, setShowDeleteConfirm }:
                     </svg>
                   </button>
                 </div>
-                <div className="relative rounded-lg bg-white p-4 text-center shadow dark:bg-gray-800 sm:p-5">
+                <div className="relative rounded-lg bg-white p-4 text-center shadow sm:p-5 dark:bg-gray-800">
                   <p className="mb-4 text-gray-500 dark:text-gray-300">
                     Você tem certeza que deseja realizar exclusão?{' '}
                   </p>
                   <div className="flex items-center justify-center space-x-4">
                     <button
+                      onClick={() => setShowDeleteConfirm(false)}
                       data-modal-toggle="deleteModal"
                       type="button"
                       className="focus:ring-primary-300 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:outline-none focus:ring-4 dark:border-gray-500 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-600"

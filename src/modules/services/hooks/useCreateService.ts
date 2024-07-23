@@ -20,6 +20,12 @@ export function useCreateService() {
     setService(updatedState);
   };
 
+  const handleChangeNumeric = (event: any) => {
+    const value = event.target.value;
+    const updatedState: Service = { ...service, price: value } as Service;
+    setService(updatedState);
+  };
+
   const validation = async () => {
     try {
       await serviceSchema.validate(service);
@@ -41,8 +47,7 @@ export function useCreateService() {
           name: service.name as string,
           price: service.price as string,
         };
-        const request = ServiceMap.toPersistent(requestService);
-        const response = await sendDataPost('services', request);
+        const response = await sendDataPost('services', requestService);
         if (response.data) {
           toast('Registro Atualizado com Sucesso', { type: 'success' });
           setShowModal(false);
@@ -56,6 +61,7 @@ export function useCreateService() {
 
   return {
     handleChange,
+    handleChangeNumeric,
     onConfirm,
     loading,
     showModal,

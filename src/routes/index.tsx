@@ -1,4 +1,4 @@
-import { MemoryRouter, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 import { Professionals } from '../pages/professionals';
 import { Patients } from '../pages/patients';
@@ -11,13 +11,17 @@ import { Appointments } from '../pages/appointments';
 import { ProfessionalsEdit } from '../pages/professionals/edit';
 import { Login } from '../pages/login';
 import { Admin } from '../components/Admin';
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { AuthContext } from '../contexts/auth';
 import { InsidePage } from '../components/InsidePage';
 import { Loading } from '../components/Loading';
 import { Dashboard } from '../pages/dashboard';
 
 const router = [
+  {
+    path: '/',
+    element: <Dashboard />,
+  },
   {
     path: '/dashboard',
     element: <Dashboard />,
@@ -63,18 +67,6 @@ const router = [
 
 function Links(): JSX.Element {
   const { signed, loading } = useContext(AuthContext);
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if ((signed && location.pathname === '/login') || (signed && location.pathname === '/')) {
-      navigate('/dashboard');
-    }
-
-    if (!signed) {
-      navigate('/');
-    }
-  }, [signed, location.pathname, navigate]);
 
   if (loading) {
     return (

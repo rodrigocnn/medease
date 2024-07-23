@@ -1,27 +1,34 @@
 import MaskedInput from 'react-text-mask';
+import DatePicker, { registerLocale } from 'react-datepicker';
 import { useNavigate } from 'react-router-dom';
 
-import Masks from '../../shared/utils/Masks';
 import { Input } from '../../components/Input';
 import { Select } from '../../components/Select';
 import { Button } from '../../components/Button';
 import { Loading } from '../../components/Loading';
 import { useProfessionalForm } from '../../modules/professionals/hooks/useProfessionalForm';
 import { StatesBR } from '../../constants/StatesBR';
+import { DivisorTitleForm } from '../../components/DivisorTitleForm';
+import ptBR from 'date-fns/locale/pt-BR';
+import Masks from '../../shared/utils/Masks';
+
+registerLocale('ptBR', ptBR);
 
 interface ProfessionalFormProps {
   action?: 'create' | 'edit';
 }
 
 export function ProfessionalForm({ action = 'create' }: ProfessionalFormProps) {
-  const { professional, roles, loading, validations, handleChange, onSubmit } = useProfessionalForm(action);
+  const { professional, roles, loading, validations, handleChange, handleDate, onSubmit } = useProfessionalForm(action);
   const navigate = useNavigate();
+
+  console.log('ofessional?.birth', professional?.birth);
 
   return (
     <form onSubmit={onSubmit}>
       {loading && <Loading />}
 
-      <div className="mb-4 mt-4 p-1   font-bold text-[#06afb1] ">Dados Pessoais</div>
+      <DivisorTitleForm>Dados Pessoais</DivisorTitleForm>
 
       <div className="mb-2 columns-2">
         <Input
@@ -43,14 +50,16 @@ export function ProfessionalForm({ action = 'create' }: ProfessionalFormProps) {
       </div>
 
       <div className="mb-2 columns-2">
-        <Input
-          error={validations?.fieldName === 'birth' && !validations.validate}
-          value={professional?.birth}
-          name="birth"
-          onChange={handleChange}
-          type="text"
-          placeholder="Data de Nascimento"
-        />
+        <div className="container-datepicker">
+          <DatePicker
+            placeholderText="Data de Nascimento"
+            locale="ptBR"
+            dateFormat="dd/MM/yyyy"
+            className="input-default w-full"
+            selected={professional?.birth ? new Date(professional.birth) : null}
+            onChange={date => handleDate(date, 'birth')}
+          />
+        </div>
         <MaskedInput
           value={professional?.phone}
           mask={Masks.celular}
@@ -76,7 +85,7 @@ export function ProfessionalForm({ action = 'create' }: ProfessionalFormProps) {
         <Select onChange={handleChange} value={professional?.roleId} name="roleId" options={roles} />
       </div>
 
-      <div className="mb-4 mt-4 p-1   font-bold text-[#06afb1] ">Endereço</div>
+      <DivisorTitleForm>Endereço</DivisorTitleForm>
 
       <div className="mb-2 columns-1">
         <Input
@@ -106,19 +115,11 @@ export function ProfessionalForm({ action = 'create' }: ProfessionalFormProps) {
           type="text"
           placeholder="Cidade"
         />
-        <Select onChange={handleChange} name="state" options={StatesBR} />
+        <Select value={professional?.state} onChange={handleChange} name="state" options={StatesBR} />
       </div>
       <div className="mt-6 columns-2">
         <Button onClick={onSubmit}>Salvar</Button>
-
-        <button
-          onClick={() => navigate('/profissionais')}
-          type="button"
-          className="mb-2 mr-2 rounded-lg border border-gray-200 bg-white px-5 py-2.5
-                text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-[#06afb1] focus:z-10
-                focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-600 dark:bg-gray-800
-                dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700"
-        >
+        <button onClick={() => navigate('/profissionais')} type="button" className="btn-secondary ">
           Cancelar
         </button>
       </div>

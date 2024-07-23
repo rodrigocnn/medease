@@ -4,9 +4,10 @@ import { NumericFormat } from 'react-number-format';
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   value?: string;
   error?: boolean;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const InputNumeric: React.FC<InputProps> = ({ error, value }) => {
+export const InputNumeric: React.FC<InputProps> = ({ error, value, onChange }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const typeFocus = error ? `focus:border-red-500 ` : `focus:border-blue-500 `;
   const className = `block w-full rounded-lg border border-gray-300
@@ -26,12 +27,22 @@ export const InputNumeric: React.FC<InputProps> = ({ error, value }) => {
       getInputRef={inputRef}
       thousandSeparator="."
       decimalSeparator=","
-      prefix="R$"
+      prefix="R$ "
       className={className}
       value={value}
       type="text"
       name="price"
       placeholder="Valor"
+      onValueChange={values => {
+        if (onChange) {
+          const event = {
+            target: {
+              value: values.value,
+            },
+          } as React.ChangeEvent<HTMLInputElement>;
+          onChange(event);
+        }
+      }}
     />
   );
 };

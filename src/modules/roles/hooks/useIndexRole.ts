@@ -11,7 +11,7 @@ export function useIndexRole() {
   const [rowIdSelected, setRowIdSelected] = useState('');
 
   const { loading, fetchAllData, deleteData } = useApi();
-  const { showModal, setShowModal, setShowModalEdit } = useContext(ModalContext);
+  const { showModal, setShowModal, showModalEdit, setShowModalEdit } = useContext(ModalContext);
 
   useEffect(() => {
     async function getRoles() {
@@ -19,7 +19,7 @@ export function useIndexRole() {
       setRoles(response.data);
     }
     getRoles();
-  }, [showDeleteConfirm, showModal, fetchAllData]);
+  }, [showDeleteConfirm, showModal, showModalEdit, fetchAllData]);
 
   async function editRole(id: string) {
     setShowModalEdit(true);

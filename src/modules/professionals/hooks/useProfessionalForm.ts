@@ -57,6 +57,11 @@ export function useProfessionalForm(action: string) {
     }
   };
 
+  const handleDate = (date: Date | null, fieldName: string) => {
+    const updatedState: Professional = { ...professional, [fieldName]: date };
+    setProfessional(updatedState);
+  };
+
   const onSubmit = async (event: React.FormEvent<EventTarget | HTMLFormElement>) => {
     event.preventDefault();
 
@@ -89,6 +94,7 @@ export function useProfessionalForm(action: string) {
     loading,
     validations,
     handleChange,
+    handleDate,
     onSubmit,
   };
 }

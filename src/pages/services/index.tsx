@@ -7,6 +7,7 @@ import { Button } from '../../components/Button';
 import { InsidePage } from '../../components/InsidePage';
 import { useIndexServices } from '../../modules/services/hooks/useIndexServices';
 import IconButton from '../../components/ButtonIcon';
+import { formatToCurrency } from '../../shared/utils/currency';
 
 export function Services() {
   const gridStyle = { minHeight: 370 };
@@ -36,9 +37,10 @@ export function Services() {
 
     {
       name: 'price',
-      header: 'Preço',
+      header: 'Preço R$',
       minWidth: 50,
       defaultFlex: 2,
+      render: ({ data }: any) => <span>{formatToCurrency(data.price)}</span>,
     },
     {
       name: 'edit',
@@ -65,7 +67,7 @@ export function Services() {
         show={showDeleteConfirm}
       />
 
-      {showModal && <CreateService setShowModal={setShowModal} show={showModal} />}
+      {showModal && <CreateService />}
 
       {showModalEdit && <EditService id={rowIdSelected} />}
 

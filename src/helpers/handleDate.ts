@@ -1,6 +1,6 @@
-export const stringToDate = (hour: string) => {
+export const stringToDate = (hour: string, date: Date) => {
   const [hours, minutes] = hour.split(':');
-  const dateObj = new Date();
+  const dateObj = new Date(date);
   dateObj.setHours(Number(hours));
   dateObj.setMinutes(Number(minutes));
 

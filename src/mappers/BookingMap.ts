@@ -1,27 +1,40 @@
-interface Appointment {
-  id?: string;
-  start?: string | number;
-  end?: string | number;
-  date?: string | Date;
-  datepicker?: Date;
-  patient?: string;
-  service?: string;
-  status?: string;
-  professional?: string;
-}
+import { stringToDate } from '../helpers/handleDate';
+import { Appointment, AppointmentDataGrid, AppointmentFromApi, AppointmentPersist } from '../interfaces';
 
 class BookingMap {
   toPersistent(booking: Appointment) {
-    let bookingAux = Object.assign({});
-    const bookingPersist = { ...booking, ...bookingAux };
-    bookingPersist.patient_id = booking.patient;
-    bookingPersist.service_id = booking.service;
-    bookingPersist.professional_id = booking.professional;
-    delete bookingPersist.professional;
-    delete bookingPersist.service;
-    delete bookingPersist.patient;
-    delete bookingPersist.datepicker;
-    return bookingPersist;
+    const appointment: AppointmentPersist = {
+      start: '',
+      end: '',
+      date: '',
+      patientId: 0,
+      serviceId: 0,
+      professionalId: 0,
+      status: 0,
+    };
+    appointment.patientId = Number(booking.patient);
+    appointment.serviceId = Number(booking.service);
+    appointment.professionalId = Number(booking.professional);
+    appointment.date = booking.datepicker?.toISOString();
+    appointment.start = String(stringToDate(booking.start, booking.datepicker));
+    appointment.end = String(stringToDate(booking.end, booking?.datepicker));
+    appointment.date = booking.datepicker?.toISOString();
+    appointment.status = Number(booking.status);
+    return appointment;
+  }
+
+  normalizeApiData(booking: AppointmentFromApi) {
+    const normalizeData: AppointmentDataGrid = {};
+    normalizeData.id = booking.id as number;
+    normalizeData.start = Number(booking.start);
+    normalizeData.end = Number(booking.end);
+    normalizeData.date = booking.date;
+    normalizeData.title = booking.patient.name as string;
+    normalizeData.patientId = booking.patientId;
+    normalizeData.professionalId = booking.professionalId;
+    normalizeData.serviceId = booking.serviceId;
+    normalizeData.status = booking.status;
+    return normalizeData;
   }
 }
 
