@@ -19,7 +19,8 @@ interface ProfessionalFormProps {
 }
 
 export function ProfessionalForm({ action = 'create' }: ProfessionalFormProps) {
-  const { professional, roles, loading, validations, handleChange, handleDate, onSubmit } = useProfessionalForm(action);
+  const { professional, roles, loading, validations, handleChange, handleDate, onSubmit } =
+    useProfessionalForm(action);
   const navigate = useNavigate();
 
   console.log('ofessional?.birth', professional?.birth);
@@ -81,8 +82,19 @@ export function ProfessionalForm({ action = 'create' }: ProfessionalFormProps) {
           type="text"
           placeholder="CPF"
         />
-        <Input value={professional?.rg} name="rg" onChange={handleChange} type="text" placeholder="RG" />
-        <Select onChange={handleChange} value={professional?.roleId} name="roleId" options={roles} />
+        <Input
+          value={professional?.rg}
+          name="rg"
+          onChange={handleChange}
+          type="text"
+          placeholder="RG"
+        />
+        <Select
+          onChange={handleChange}
+          value={professional?.roleId}
+          name="roleId"
+          options={roles}
+        />
       </div>
 
       <DivisorTitleForm>Endereço</DivisorTitleForm>
@@ -115,13 +127,18 @@ export function ProfessionalForm({ action = 'create' }: ProfessionalFormProps) {
           type="text"
           placeholder="Cidade"
         />
-        <Select value={professional?.state} onChange={handleChange} name="state" options={StatesBR} />
+        <Select
+          value={professional?.state}
+          onChange={handleChange}
+          name="state"
+          options={StatesBR}
+        />
       </div>
       <div className="mt-6 columns-2">
         <Button onClick={onSubmit}>Salvar</Button>
-        <button onClick={() => navigate('/profissionais')} type="button" className="btn-secondary ">
+        <Button type="cancel" onClick={() => navigate('/profissionais')}>
           Cancelar
-        </button>
+        </Button>
       </div>
     </form>
   );

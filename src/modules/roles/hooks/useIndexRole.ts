@@ -2,7 +2,7 @@ import { toast } from 'react-toastify';
 
 import { useContext, useEffect, useState } from 'react';
 import { Role } from '../../../interfaces';
-import { ModalContext } from '../../../shared/contexts/ModalContext';
+import { AppContext } from '../../../shared/contexts/AppContext';
 import useApi from '../../../hooks/useApi';
 
 export function useIndexRole() {
@@ -11,7 +11,7 @@ export function useIndexRole() {
   const [rowIdSelected, setRowIdSelected] = useState('');
 
   const { loading, fetchAllData, deleteData } = useApi();
-  const { showModal, setShowModal, showModalEdit, setShowModalEdit } = useContext(ModalContext);
+  const { showModal, setShowModal, showModalEdit, setShowModalEdit } = useContext(AppContext);
 
   useEffect(() => {
     async function getRoles() {

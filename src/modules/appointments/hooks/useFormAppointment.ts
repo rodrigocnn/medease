@@ -1,16 +1,10 @@
-import { useState } from 'react';
+import { useContext } from 'react';
 import { Appointment, Options } from '../../../interfaces';
-import { timeNowToStringAM } from '../../../helpers/handleDate';
+
+import { AppContext } from '../../../shared/contexts/AppContext';
 
 export function useFormAppointment() {
-  const INITIA_STATE = {
-    datepicker: new Date(),
-    start: timeNowToStringAM(),
-    end: timeNowToStringAM(),
-    status: '1',
-  };
-
-  const [appointment, setAppointment] = useState<Appointment>(INITIA_STATE);
+  const { appointment, setAppointment } = useContext(AppContext);
 
   const handleChange = (event: React.FormEvent<HTMLSelectElement>) => {
     const fieldName = event.currentTarget.name;
@@ -26,7 +20,6 @@ export function useFormAppointment() {
 
   const getSelectOptions = <T>(items: T[]): Options[] => {
     if (!items) {
-      console.error('Items is undefined');
       return [];
     }
     const options = items.map(item => {
@@ -40,6 +33,5 @@ export function useFormAppointment() {
     handleChange,
     handleDate,
     getSelectOptions,
-    appointment,
   };
 }

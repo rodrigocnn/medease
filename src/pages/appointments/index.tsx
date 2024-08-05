@@ -1,57 +1,83 @@
 import { useContext, useState } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 
+import BookingMap from '../../mappers/BookingMap';
 import { Button } from '../../components/Button';
 import { InsidePage } from '../../components/InsidePage';
 import { FormAppointment } from './form';
-import { ModalContext } from '../../shared/contexts/ModalContext';
+import { AppContext } from '../../shared/contexts/AppContext';
 import { useGetAppointments } from '../../modules/appointments/hooks/useGetAppointments';
-import { Appointment } from '../../interfaces';
+import { timeNowToStringAM } from '../../helpers/handleDate';
+
+const INITIAL_STATE_APPOINTMENT = {
+  id: '',
+  start: timeNowToStringAM(),
+  end: timeNowToStringAM(),
+  date: '',
+  patient: -1,
+  service: -1,
+  status: 1,
+  professional: -1,
+  datepicker: new Date(),
+};
 
 export function Appointments() {
   const [editMode, setEditMode] = useState(false);
-  const [modeEdit, setModeEdit] = useState<null | string>(null);
-
-  const { setShowModal } = useContext(ModalContext);
-  const { appointments, loading } = useGetAppointments();
-  const [appointment, setAppointament] = useState<Appointment>();
-
-  async function editData(id: string) {
-    setModeEdit(id);
-  }
+  const { setShowModal, setAppointment } = useContext(AppContext);
+  const { queryAppointments } = useGetAppointments();
 
   const findAppointmentById = (id: number) => {
-    return appointments.find(item => Number(item.id) === Number(id));
-  };
-
-  const handleDateClick = (arg: any) => {
-    alert(arg.dateStr);
+    return queryAppointments.data?.find(item => Number(item.id) === Number(id));
   };
 
   const handleEventClick = (arg: any) => {
-    setAppointament(findAppointmentById(arg.event.id));
-    setEditMode(true);
+    const appointment = findAppointmentById(arg.event.id);
+    if (appointment) {
+      const appointmentEdit = BookingMap.normalizeToEdit(appointment);
+      setAppointment(appointmentEdit);
+      setEditMode(true);
+      setShowModal(true);
+    }
+  };
+
+  const openModal = () => {
+    setAppointment(INITIAL_STATE_APPOINTMENT);
     setShowModal(true);
   };
 
   return (
     <>
-      {editMode ? <FormAppointment appointment={appointment} action="edit" /> : <FormAppointment />}
+      {<FormAppointment action={editMode ? 'edit' : 'create'} />}
 
-      <InsidePage loading={loading} title="Agenda">
-        <Button onClick={() => setShowModal(true)} type="button">
+      <InsidePage loading={queryAppointments.isLoading} title="Agenda">
+        <Button onClick={() => openModal()} type="button">
           Novo
         </Button>
 
         <FullCalendar
-          events={appointments}
-          plugins={[dayGridPlugin, interactionPlugin]}
+          events={queryAppointments.data}
+          plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
           initialView="dayGridMonth"
-          dateClick={handleDateClick}
           eventClick={handleEventClick}
           displayEventTime={false}
+          locale={'pt-br'}
+          noEventsText="Sem Eventos"
+          buttonText={{
+            today: 'Hoje',
+            month: 'Mês',
+            day: 'Dia',
+          }}
+          headerToolbar={{
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridDay',
+          }}
+          views={{
+            listWeek: { buttonText: 'Lista' },
+          }}
         />
       </InsidePage>
     </>

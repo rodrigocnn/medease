@@ -9,7 +9,7 @@ import { AppContext } from '../../../shared/contexts/AppContext';
 import api from '../../../services/api';
 import BookingMap from '../../../mappers/BookingMap';
 
-export function useCreateAppointment(appointment: Appointment) {
+export function useUpdateAppointment(appointment: Appointment) {
   const [validations, setValidations] = useState<string[]>([]);
   const { setShowModal } = useContext(AppContext);
   const queryClient = useQueryClient();
@@ -25,17 +25,17 @@ export function useCreateAppointment(appointment: Appointment) {
     }
   };
 
-  const createAppointment = async (appointment: AppointmentPersist) => {
-    delete appointment.id;
-    const response = await api.store('schedules', appointment);
+  const updateAppointment = async (appointment: AppointmentPersist) => {
+    console.log('Atualizar', appointment.id);
+    const response = await api.update('schedules', String(appointment.id), appointment);
     return response.data;
   };
 
   const mutation = useMutation<AxiosResponse, AxiosError, AppointmentPersist>({
-    mutationFn: createAppointment,
+    mutationFn: updateAppointment,
     onSuccess: data => {
       if (data) {
-        toast('Registro Salvo com Sucesso', { type: 'success' });
+        toast('Registro Atualizado com Sucesso', { type: 'success' });
         setShowModal(false);
         queryClient.refetchQueries({ queryKey: ['get-appointments'] });
       }
@@ -46,8 +46,9 @@ export function useCreateAppointment(appointment: Appointment) {
     },
   });
 
-  const onConfirm = async (event: React.MouseEvent<HTMLElement>) => {
+  const onUpdate = async (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
+
     const appointmentPersist = BookingMap.toPersistent(appointment);
     if (await validation(appointmentPersist)) {
       mutation.mutate(appointmentPersist);
@@ -55,7 +56,7 @@ export function useCreateAppointment(appointment: Appointment) {
   };
 
   return {
-    onConfirm,
+    onUpdate,
     validations,
   };
 }

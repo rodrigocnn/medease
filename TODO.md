@@ -15,11 +15,12 @@
 
 # AGENDA
 
+[x] Após criar ou editar deverá atualizar o fullcalendar
+[x] Por default o cadastro deverá ter select com status agendado
+[x] Ao Fechar Modal "agendamento selecionado deverá ser setado como null"
+[x] Editar Agendamento
 [x] Cadastro não está funcionando
-[ ] Buscar Agendamentos
-[ ] Editar Agendamento
-[ ] Por default o cadastro deverá ter select com status agendado
-[ ] Fechar Modal
+[x] Buscar Agendamentos
 
 # PROFISSIONAIS
 
@@ -38,12 +39,39 @@
 
 # OUTROS
 
-[ ] Página de Dashboard
-[ ] Existe um problema com react router dom - ao atualizar vai sempre pra dashboard
-[ ] Atualizar index de Agenda quando cadastrar
+[ ] Inputs Mask e Datepicker Não exibe a borda vermelha quando componente retorna erro de validação
+
+[x] Tradução do FullCalendar
+[x] Existe um problema com react router dom - ao atualizar vai sempre pra dashboard
+[x] Atualizar index de Agenda quando cadastrar
 [ ] LogoMarca no Login
 [ ] Label dos Form
 [ ] Favicon
 [ ] InputNumeric componente precisa ajudes nas props
 [ ] Quando fechar modal deve resetar o estado do form
 [ ] Mover arquivo de mapper para modulo correspondente
+[ ] Página de Dashboard
+[ ] Responsividade
+
+====================== TESTES ================================
+
+# CARGOS
+
+[x] CRIA
+[x] BUSCA
+[x] ATUALIZA
+[x] DELETA
+
+# SERVIÇOS
+
+[x] CRIA
+[x] BUSCA
+[x] ATUALIZA
+[x] DELETA
+
+# PROFISSIONAIS
+
+[x] CRIA
+[x] BUSCA
+[x] ATUALIZA
+[x] DELETA

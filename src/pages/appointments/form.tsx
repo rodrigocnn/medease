@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useContext } from 'react';
+import { useContext } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
 
 import ptBR from 'date-fns/locale/pt-BR';
@@ -13,7 +13,8 @@ import { useCreateAppointment } from '../../modules/appointments/hooks/useCreate
 import { useIndexServices } from '../../modules/services/hooks/useIndexServices';
 import { useGetPatients } from '../../modules/patients/hooks/useGetPatients';
 import { useGeProfessionals } from '../../modules/professionals/hooks/useGetProfessionals';
-import { ModalContext } from '../../shared/contexts/ModalContext';
+import { AppContext } from '../../shared/contexts/AppContext';
+import { useUpdateAppointment } from '../../modules/appointments/hooks/useUpdateAppointment';
 
 registerLocale('ptBR', ptBR);
 
@@ -23,17 +24,23 @@ interface FormAppointmentProps {
   id?: string;
 }
 
-export function FormAppointment({}: FormAppointmentProps) {
-  const { handleChange, handleDate, getSelectOptions, appointment } = useFormAppointment();
-  const { onConfirm } = useCreateAppointment(appointment);
+export function FormAppointment({ action }: FormAppointmentProps) {
+  const { showModal, setShowModal, appointment } = useContext(AppContext);
   const { services } = useIndexServices();
   const { queryPatients } = useGetPatients();
   const { queryProfessionals } = useGeProfessionals();
-  const { showModal, setShowModal } = useContext(ModalContext);
+  const { handleChange, handleDate, getSelectOptions } = useFormAppointment();
+  const { onConfirm } = useCreateAppointment(appointment);
+  const { onUpdate } = useUpdateAppointment(appointment);
 
   return (
     <>
-      <Modal title="Cadastrar Agenda" confirm={onConfirm} setShowModal={setShowModal} show={showModal}>
+      <Modal
+        title="Cadastrar Agenda"
+        confirm={action === 'create' ? onConfirm : onUpdate}
+        setShowModal={setShowModal}
+        show={showModal}
+      >
         <div className="mb-2 columns-2">
           <div className="relative ">
             <Label title="Professional" />
@@ -72,12 +79,24 @@ export function FormAppointment({}: FormAppointmentProps) {
 
           <div className="relative">
             <Label title="Hora Início" />
-            <Select value={appointment?.start} name="start" onChange={handleChange} id="start" options={timeOptions} />
+            <Select
+              value={appointment?.start}
+              name="start"
+              onChange={handleChange}
+              id="start"
+              options={timeOptions}
+            />
           </div>
 
           <div className="relative">
             <Label title="Hora Fim" />
-            <Select value={appointment?.end} name="end" onChange={handleChange} id="end" options={timeOptions} />
+            <Select
+              value={appointment?.end}
+              name="end"
+              onChange={handleChange}
+              id="end"
+              options={timeOptions}
+            />
           </div>
         </div>
 
@@ -101,6 +120,7 @@ export function FormAppointment({}: FormAppointmentProps) {
               onChange={handleChange}
               id="status"
               options={statusOptions}
+              disabled={action === 'create'}
             />
           </div>
         </div>

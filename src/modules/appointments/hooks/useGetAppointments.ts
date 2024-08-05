@@ -3,29 +3,28 @@ import { Appointment, AppointmentFromApi } from '../../../interfaces';
 
 import useApi from '../../../hooks/useApi';
 import BookingMap from '../../../mappers/BookingMap';
+import { useQuery } from '@tanstack/react-query';
+import api from '../../../services/api';
 
 export function useGetAppointments() {
-  const [appointments, setAppointments] = useState<Appointment[]>([]);
-  const { loading, fetchAllData } = useApi();
+  const getAppointments = async (): Promise<Appointment[]> => {
+    const response = await api.index('schedules');
+    const appointments: Appointment[] = response.data.map((item: AppointmentFromApi) => {
+      const normalizeData = BookingMap.normalizeApiData(item);
+      return {
+        ...normalizeData,
+      };
+    });
 
-  useEffect(() => {
-    async function getAppointments() {
-      const response = await fetchAllData('schedules');
-      const appointments: Appointment[] = response.data.map((item: AppointmentFromApi) => {
-        const normalizeData = BookingMap.normalizeApiData(item);
-        return {
-          ...normalizeData,
-        };
-      });
+    return appointments;
+  };
 
-      setAppointments(appointments);
-    }
-
-    getAppointments();
-  }, [fetchAllData]);
+  const queryAppointments = useQuery({
+    queryKey: ['get-appointments'],
+    queryFn: getAppointments,
+  });
 
   return {
-    appointments,
-    loading,
+    queryAppointments,
   };
 }

@@ -26,8 +26,8 @@ export function Sidebar() {
         aria-controls="default-sidebar"
         type="button"
         className="ml-3 mt-2 inline-flex items-center rounded-lg p-2 text-sm text-gray-500
-        hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400
-        dark:hover:bg-gray-700 dark:focus:ring-gray-600 sm:hidden"
+        hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 sm:hidden
+        dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
       >
         <span className="sr-only">Open sidebar</span>
         <svg
@@ -89,15 +89,6 @@ export function Sidebar() {
             <li>
               <Link
                 className="flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                to="/agenda"
-              >
-                <AiFillSchedule className="h-6 w-6 flex-shrink-0 text-gray-500 transition " />
-                <span className="ml-3 flex-1 whitespace-nowrap">Agenda</span>
-              </Link>
-            </li>
-            <li>
-              <Link
-                className="flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                 to="/profissionais"
               >
                 <FaUserNurse className="h-6 w-6 flex-shrink-0 text-gray-500 transition " />
@@ -111,6 +102,16 @@ export function Sidebar() {
               >
                 <FaHospitalUser className="h-6 w-6 flex-shrink-0 text-gray-500 transition " />
                 <span className="ml-3 flex-1 whitespace-nowrap">Pacientes</span>
+              </Link>
+            </li>
+
+            <li>
+              <Link
+                className="flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                to="/agenda"
+              >
+                <AiFillSchedule className="h-6 w-6 flex-shrink-0 text-gray-500 transition " />
+                <span className="ml-3 flex-1 whitespace-nowrap">Agenda</span>
               </Link>
             </li>
 

@@ -1,17 +1,4 @@
-interface Patient {
-  name?: string;
-  email?: string;
-  birth: string;
-  phone?: string;
-  cpf?: string;
-  rg?: string;
-  gender?: string;
-  address?: string;
-  district?: string;
-  city?: string;
-  state?: string;
-  role?: string;
-}
+import { Patient } from '../../../interfaces';
 
 class PatientlMap {
   handleBirthDate(date: string | Date) {
@@ -25,10 +12,8 @@ class PatientlMap {
   toPersistent(patient: Patient) {
     let patientAux = Object.assign({});
     const patientPersist = { ...patient, ...patientAux };
-    const originalBirth = patient.birth;
+    const originalBirth = patient.birth as Date;
     patientPersist.birth = this.handleBirthDate(originalBirth);
-    patientPersist.role_id = patient.role;
-    delete patientPersist.role;
     return patientPersist;
   }
 }

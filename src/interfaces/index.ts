@@ -13,26 +13,26 @@ export interface Patient {
 }
 
 export interface Appointment {
-  id: string;
-  start: string;
-  end: string;
-  date: string;
-  datepicker: Date;
-  patient: string;
-  service: string;
-  status: string;
-  professional: string;
+  id?: string;
+  start?: string;
+  end?: string;
+  date?: string;
+  datepicker?: Date;
+  patient?: number;
+  service?: number;
+  status?: number;
+  professional?: number;
 }
 
 export interface AppointmentPersist {
   id?: number;
-  start: string;
-  end: string;
-  date: string;
-  patientId: number;
-  serviceId: number;
-  professionalId: number;
-  status: number;
+  start?: string;
+  end?: string;
+  date?: string;
+  patientId?: number;
+  serviceId?: number;
+  professionalId?: number;
+  status?: number;
 }
 
 export interface AppointmentFromApi {
@@ -48,15 +48,16 @@ export interface AppointmentFromApi {
   patient: Patient;
 }
 export interface AppointmentDataGrid {
-  id?: number;
+  id?: string;
   start?: number;
   end?: number;
   date?: string;
+  datepicker?: Date;
   title?: string;
   status?: number;
-  patientId?: number;
-  professionalId?: number;
-  serviceId?: number;
+  patient?: number;
+  professional?: number;
+  service?: number;
 }
 
 export interface Professional {

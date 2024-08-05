@@ -1,14 +1,14 @@
 import { useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import useApi from '../../../hooks/useApi';
-import { ModalContext } from '../../../shared/contexts/ModalContext';
+import { AppContext } from '../../../shared/contexts/AppContext';
 import { FieldValidate, Service } from '../../../interfaces';
 import { serviceSchema } from '../validations';
 
 export function useEditService(id: string) {
   const [updateService, setUpdateService] = useState<Service>();
   const { loading, sendDataUpdate, fetchDataShow } = useApi();
-  const { showModalEdit, setShowModalEdit } = useContext(ModalContext);
+  const { showModalEdit, setShowModalEdit } = useContext(AppContext);
   const [validations, setValidations] = useState<FieldValidate>();
 
   useEffect(() => {

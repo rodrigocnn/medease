@@ -4,7 +4,7 @@ export const stringToDate = (hour: string, date: Date) => {
   dateObj.setHours(Number(hours));
   dateObj.setMinutes(Number(minutes));
 
-  return dateObj.getTime();
+  return dateObj.getTime().toString();
 };
 
 export const dateToString = (date: number) => {
@@ -42,4 +42,11 @@ export const formatDateBR = (dateString: string) => {
   const date = new Date(dateString);
   const options: Intl.DateTimeFormatOptions = { day: '2-digit', month: '2-digit', year: 'numeric' };
   return date.toLocaleDateString('en-US', options);
+};
+
+export const convertTimestampToTime = (timestamp: number): string => {
+  const date = new Date(timestamp);
+  const hours = date.getHours();
+  const formattedHours = hours < 10 ? `0${hours}` : `${hours}`;
+  return `${formattedHours}:00`;
 };

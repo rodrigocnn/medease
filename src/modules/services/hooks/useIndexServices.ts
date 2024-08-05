@@ -2,13 +2,13 @@ import { toast } from 'react-toastify';
 
 import { useContext, useEffect, useState } from 'react';
 import { Service } from '../../../interfaces';
-import { ModalContext } from '../../../shared/contexts/ModalContext';
+import { AppContext } from '../../../shared/contexts/AppContext';
 import useApi from '../../../hooks/useApi';
 import api from '../../../services/api';
 
 export function useIndexServices() {
   const [services, setServices] = useState<Service[]>([]);
-  const { showModal, setShowModal, showModalEdit, setShowModalEdit } = useContext(ModalContext);
+  const { showModal, setShowModal, showModalEdit, setShowModalEdit } = useContext(AppContext);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [rowIdSelected, setRowIdSelected] = useState('');
   const { loading, fetchAllData } = useApi();

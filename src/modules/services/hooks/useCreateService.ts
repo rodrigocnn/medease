@@ -1,16 +1,15 @@
 import { toast } from 'react-toastify';
 
-import ServiceMap from '../mappers/ServiceMap';
 import useApi from '../../../hooks/useApi';
 import { useContext, useState } from 'react';
-import { ModalContext } from '../../../shared/contexts/ModalContext';
+import { AppContext } from '../../../shared/contexts/AppContext';
 import { FieldValidate, Service } from '../../../interfaces';
 import { serviceSchema } from '../validations';
 
 export function useCreateService() {
   const [service, setService] = useState<Service>();
   const { loading, sendDataPost } = useApi();
-  const { showModal, setShowModal } = useContext(ModalContext);
+  const { showModal, setShowModal } = useContext(AppContext);
   const [validations, setValidations] = useState<FieldValidate>();
 
   const handleChange = (event: React.FormEvent<HTMLInputElement>) => {

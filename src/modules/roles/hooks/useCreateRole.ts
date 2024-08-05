@@ -2,13 +2,13 @@ import { useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import useApi from '../../../hooks/useApi';
 import { Role } from '../../../interfaces';
-import { ModalContext } from '../../../shared/contexts/ModalContext';
+import { AppContext } from '../../../shared/contexts/AppContext';
 import { roleSchema } from '../validations';
 
 export function useCreateRole() {
   const [role, setRole] = useState<Role>();
   const { loading, sendDataPost } = useApi();
-  const { showModal, setShowModal } = useContext(ModalContext);
+  const { showModal, setShowModal } = useContext(AppContext);
   const [validations, setValidations] = useState<string[]>([]);
 
   useEffect(() => {

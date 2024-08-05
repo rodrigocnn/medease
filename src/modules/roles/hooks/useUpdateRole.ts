@@ -2,13 +2,13 @@ import { useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { Role } from '../../../interfaces';
-import { ModalContext } from '../../../shared/contexts/ModalContext';
+import { AppContext } from '../../../shared/contexts/AppContext';
 import useApi from '../../../hooks/useApi';
 
 export function useUpdateRole(id: string) {
   const [updateRole, setUpdateRole] = useState<Role>();
   const { loading, sendDataUpdate, fetchDataShow } = useApi();
-  const { showModalEdit, setShowModalEdit } = useContext(ModalContext);
+  const { showModalEdit, setShowModalEdit } = useContext(AppContext);
 
   useEffect(() => {
     async function getRole() {
