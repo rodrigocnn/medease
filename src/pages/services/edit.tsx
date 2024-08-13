@@ -1,8 +1,8 @@
-import { Input } from '../../components/Input';
-import { Modal } from '../../components/Modal';
-import { Loading } from '../../components/Loading';
+import { Input } from '../../components/input';
+import { Modal } from '../../components/modal';
+import { Loading } from '../../components/loading';
 import { useEditService } from '../../modules/services/hooks/useEditService';
-import { InputNumeric } from '../../components/InputNumeric';
+import { InputNumeric } from '../../components/input-numeric';
 
 interface EditServiceProps {
   id: string;
@@ -21,7 +21,12 @@ export function EditService({ id }: EditServiceProps) {
   } = useEditService(id);
 
   return (
-    <Modal title="Editar Serviço" confirm={onConfirm} setShowModal={setShowModalEdit} show={showModalEdit}>
+    <Modal
+      title="Editar Serviço"
+      confirm={onConfirm}
+      setShowModal={setShowModalEdit}
+      show={showModalEdit}
+    >
       {loading && <Loading />}
       <div className="mb-2 columns-1">
         <Input

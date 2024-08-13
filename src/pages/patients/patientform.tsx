@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import MaskedInput from 'react-text-mask';
 import ptBR from 'date-fns/locale/pt-BR';
 
-import { Input } from '../../components/Input';
-import { Select } from '../../components/Select';
-import { Button } from '../../components/Button';
-import { Loading } from '../../components/Loading';
+import { Input } from '../../components/input';
+import { Select } from '../../components/select';
+import { Button } from '../../components/button';
+import { Loading } from '../../components/loading';
 import { usePatientForm } from '../../modules/patients/hooks/usePatientForm';
 import { StatesBR } from '../../constants/StatesBR';
 import Masks from '../../shared/utils/Masks';

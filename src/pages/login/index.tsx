@@ -1,9 +1,10 @@
 import { useContext, useState } from 'react';
-import { Button } from '../../components/Button';
-import { Input } from '../../components/Input';
-import { Label } from '../../components/Label';
+import { Button } from '../../components/button';
+import { Input } from '../../components/input';
+
 import { AuthContext } from '../../contexts/auth';
-import { BoxLogin } from '../../components/BoxLogin';
+import { BoxLogin } from '../../components/box-login';
+import { Label } from '../../components/label';
 
 interface User {
   email?: string;
@@ -29,7 +30,7 @@ export function Login() {
   return (
     <>
       <BoxLogin>
-        <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white md:text-2xl">
+        <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
           Login
         </h1>
         <form className="space-y-4 md:space-y-6" action="#">

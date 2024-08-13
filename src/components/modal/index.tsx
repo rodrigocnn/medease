@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
-import { Button } from '../Button';
+import { Button } from '../button';
 
 interface ModalProps {
   show: boolean;

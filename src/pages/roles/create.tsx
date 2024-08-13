@@ -1,8 +1,8 @@
 import { useContext } from 'react';
 
-import { Input } from '../../components/Input';
-import { Modal } from '../../components/Modal';
-import { Loading } from '../../components/Loading';
+import { Input } from '../../components/input';
+import { Modal } from '../../components/modal';
+import { Loading } from '../../components/loading';
 import { useCreateRole } from '../../modules/roles/hooks/useCreateRole';
 import { AppContext } from '../../shared/contexts/AppContext';
 

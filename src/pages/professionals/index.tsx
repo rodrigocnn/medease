@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-
-import { Button } from '../../components/Button';
-import { InsidePage } from '../../components/InsidePage';
-import IconButton from '../../components/ButtonIcon';
-import { DeleteConfirm } from '../../components/DeleteConfirm';
-import api from '../../services/api';
 import ReactDataGrid from '@inovua/reactdatagrid-community';
+
+import api from '../../services/api';
 import useApi from '../../hooks/useApi';
+import IconButton from '../../components/button-icon';
+import { DeleteConfirm } from '../../components/delete-confirm';
+import { InsidePage } from '../../components/inside-page';
+import { Button } from '../../components/button';
 
 interface Professional {
   id: string;
@@ -67,7 +67,9 @@ export function Professionals() {
       header: 'Excluir',
       maxWidth: 1000,
       defaultFlex: 1,
-      render: ({ data }: any) => <IconButton icon="delete" onClick={() => openDeleteConfirm(data.id)} />,
+      render: ({ data }: any) => (
+        <IconButton icon="delete" onClick={() => openDeleteConfirm(data.id)} />
+      ),
     },
   ];
 

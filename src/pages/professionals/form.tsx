@@ -2,13 +2,14 @@ import MaskedInput from 'react-text-mask';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import { useNavigate } from 'react-router-dom';
 
-import { Input } from '../../components/Input';
-import { Select } from '../../components/Select';
-import { Button } from '../../components/Button';
-import { Loading } from '../../components/Loading';
+import { Button } from '../../components/button';
+import { Loading } from '../../components/loading';
 import { useProfessionalForm } from '../../modules/professionals/hooks/useProfessionalForm';
 import { StatesBR } from '../../constants/StatesBR';
-import { DivisorTitleForm } from '../../components/DivisorTitleForm';
+import { DivisorTitleForm } from '../../components/divisor-title';
+import { Input } from '../../components/input';
+import { Select } from '../../components/select';
+
 import ptBR from 'date-fns/locale/pt-BR';
 import Masks from '../../shared/utils/Masks';
 

@@ -5,12 +5,12 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 
 import BookingMap from '../../mappers/BookingMap';
-import { Button } from '../../components/Button';
-import { InsidePage } from '../../components/InsidePage';
+import { Button } from '../../components/button';
 import { FormAppointment } from './form';
 import { AppContext } from '../../shared/contexts/AppContext';
 import { useGetAppointments } from '../../modules/appointments/hooks/useGetAppointments';
 import { timeNowToStringAM } from '../../helpers/handleDate';
+import { InsidePage } from '../../components/inside-page';
 
 const INITIAL_STATE_APPOINTMENT = {
   id: '',

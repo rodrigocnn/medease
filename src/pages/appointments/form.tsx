@@ -4,10 +4,10 @@ import DatePicker, { registerLocale } from 'react-datepicker';
 import ptBR from 'date-fns/locale/pt-BR';
 
 import { statusOptions, timeOptions } from '../../constants/timeOptions';
-import { Label } from '../../components/Label';
+
 import { Appointment, Patient, Professional } from '../../interfaces';
-import { Modal } from '../../components/Modal';
-import { Select } from '../../components/Select';
+import { Modal } from '../../components/modal';
+import { Select } from '../../components/select';
 import { useFormAppointment } from '../../modules/appointments/hooks/useFormAppointment';
 import { useCreateAppointment } from '../../modules/appointments/hooks/useCreateAppointment';
 import { useIndexServices } from '../../modules/services/hooks/useIndexServices';
@@ -15,6 +15,7 @@ import { useGetPatients } from '../../modules/patients/hooks/useGetPatients';
 import { useGeProfessionals } from '../../modules/professionals/hooks/useGetProfessionals';
 import { AppContext } from '../../shared/contexts/AppContext';
 import { useUpdateAppointment } from '../../modules/appointments/hooks/useUpdateAppointment';
+import { Label } from '../../components/label';
 
 registerLocale('ptBR', ptBR);
 

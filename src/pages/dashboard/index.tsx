@@ -1,8 +1,8 @@
 import { FaUserMd, FaUserPlus, FaRegCalendar, FaRegCalendarCheck } from 'react-icons/fa';
 import ReactApexChart from 'react-apexcharts';
 
-import { BoxInfo } from '../../components/BoxInfo';
 import { chartCallServices, chartData } from './charts';
+import { BoxInfo } from '../../components/box-info';
 
 export function Dashboard() {
   return (
@@ -24,7 +24,11 @@ export function Dashboard() {
       <div className="mt-5 flex gap-3">
         <div className="w-1/2 bg-white">
           <h2 className="m-3 font-semibold">Atendimentos</h2>
-          <ReactApexChart options={chartCallServices} type="bar" series={chartCallServices.series} />
+          <ReactApexChart
+            options={chartCallServices}
+            type="bar"
+            series={chartCallServices.series}
+          />
         </div>
         <div className="w-1/2 bg-white">
           <h2 className="m-3 font-semibold">Novos Pacientes</h2>

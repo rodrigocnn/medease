@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import ReactDataGrid from '@inovua/reactdatagrid-community';
-import { useNavigate } from 'react-router-dom';
-
-import { Button } from '../../components/Button';
-import { InsidePage } from '../../components/InsidePage';
-import IconButton from '../../components/ButtonIcon';
-import { DeleteConfirm } from '../../components/DeleteConfirm';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import ReactDataGrid from '@inovua/reactdatagrid-community';
+
+import { Button } from '../../components/button';
+import { InsidePage } from '../../components/inside-page';
+import { DeleteConfirm } from '../../components/delete-confirm';
 import api from '../../services/api';
 import useApi from '../../hooks/useApi';
+import IconButton from '../../components/button-icon';
 
 interface Patient {
   name: string;
