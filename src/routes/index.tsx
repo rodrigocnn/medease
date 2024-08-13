@@ -10,12 +10,14 @@ import { PatientsEdit } from '../pages/patients/edit';
 import { Appointments } from '../pages/appointments';
 import { ProfessionalsEdit } from '../pages/professionals/edit';
 import { Login } from '../pages/login';
-import { Admin } from '../components/Admin';
+
 import { useContext } from 'react';
 import { AuthContext } from '../contexts/auth';
-import { InsidePage } from '../components/InsidePage';
-import { Loading } from '../components/Loading';
+
 import { Dashboard } from '../pages/dashboard';
+import { InsidePage } from '../components/inside-page';
+import { Admin } from '../components/admin';
+import { Loading } from '../components/loading';
 
 const router = [
   {

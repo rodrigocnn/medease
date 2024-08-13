@@ -2,11 +2,11 @@ import ReactDataGrid from '@inovua/reactdatagrid-community';
 
 import { CreateService } from './create';
 import { EditService } from './edit';
-import { DeleteConfirm } from '../../components/DeleteConfirm';
-import { Button } from '../../components/Button';
-import { InsidePage } from '../../components/InsidePage';
+import { DeleteConfirm } from '../../components/delete-confirm';
+import { Button } from '../../components/button';
+import { InsidePage } from '../../components/inside-page';
 import { useIndexServices } from '../../modules/services/hooks/useIndexServices';
-import IconButton from '../../components/ButtonIcon';
+import IconButton from '../../components/button-icon';
 import { formatToCurrency } from '../../shared/utils/currency';
 
 export function Services() {
@@ -54,7 +54,9 @@ export function Services() {
       header: 'Excluir',
       maxWidth: 1000,
       defaultFlex: 1,
-      render: ({ data }: any) => <IconButton icon="delete" onClick={() => openDeleteConfirm(data.id)} />,
+      render: ({ data }: any) => (
+        <IconButton icon="delete" onClick={() => openDeleteConfirm(data.id)} />
+      ),
     },
   ];
 

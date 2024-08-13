@@ -1,8 +1,8 @@
 import { useContext } from 'react';
 
-import { Input } from '../../components/Input';
-import { Modal } from '../../components/Modal';
-import { Loading } from '../../components/Loading';
+import { Input } from '../../components/input';
+import { Modal } from '../../components/modal';
+import { Loading } from '../../components/loading';
 import { useUpdateRole } from '../../modules/roles/hooks/useUpdateRole';
 import { AppContext } from '../../shared/contexts/AppContext';
 

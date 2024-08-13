@@ -1,13 +1,12 @@
 import ReactDataGrid from '@inovua/reactdatagrid-community';
 
-import IconButton from '../../components/ButtonIcon';
-import { Button } from '../../components/Button';
 import { CreateRole } from './create';
 import { EditRole } from './edit';
-import { DeleteConfirm } from '../../components/DeleteConfirm';
-import { InsidePage } from '../../components/InsidePage';
-
 import { useIndexRole } from '../../modules/roles/hooks/useIndexRole';
+import { DeleteConfirm } from '../../components/delete-confirm';
+import { InsidePage } from '../../components/inside-page';
+import { Button } from '../../components/button';
+import IconButton from '../../components/button-icon';
 
 export function Roles() {
   const {
@@ -45,7 +44,9 @@ export function Roles() {
       header: 'Excluir',
       maxWidth: 1000,
       defaultFlex: 1,
-      render: ({ data }: any) => <IconButton icon="delete" onClick={() => openDeleteConfirm(data.id)} />,
+      render: ({ data }: any) => (
+        <IconButton icon="delete" onClick={() => openDeleteConfirm(data.id)} />
+      ),
     },
   ];
 

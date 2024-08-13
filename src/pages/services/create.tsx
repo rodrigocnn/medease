@@ -1,16 +1,29 @@
-import { Input } from '../../components/Input';
-import { Modal } from '../../components/Modal';
-import { Loading } from '../../components/Loading';
+import { Input } from '../../components/input';
+import { Modal } from '../../components/modal';
+import { Loading } from '../../components/loading';
 import { useCreateService } from '../../modules/services/hooks/useCreateService';
-import { InputNumeric } from '../../components/InputNumeric';
+import { InputNumeric } from '../../components/input-numeric';
 
 export function CreateService() {
-  const { handleChange, onConfirm, loading, showModal, setShowModal, service, validations, handleChangeNumeric } =
-    useCreateService();
+  const {
+    handleChange,
+    onConfirm,
+    loading,
+    showModal,
+    setShowModal,
+    service,
+    validations,
+    handleChangeNumeric,
+  } = useCreateService();
 
   return (
     <>
-      <Modal title="Cadastrar Serviço" confirm={onConfirm} setShowModal={setShowModal} show={showModal}>
+      <Modal
+        title="Cadastrar Serviço"
+        confirm={onConfirm}
+        setShowModal={setShowModal}
+        show={showModal}
+      >
         {loading && <Loading />}
 
         <div className="mb-2 columns-1">
