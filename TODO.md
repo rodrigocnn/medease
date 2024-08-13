@@ -40,7 +40,6 @@
 # OUTROS
 
 [ ] Inputs Mask e Datepicker Não exibe a borda vermelha quando componente retorna erro de validação
-
 [x] Tradução do FullCalendar
 [x] Existe um problema com react router dom - ao atualizar vai sempre pra dashboard
 [x] Atualizar index de Agenda quando cadastrar
@@ -52,26 +51,3 @@
 [ ] Mover arquivo de mapper para modulo correspondente
 [ ] Página de Dashboard
 [ ] Responsividade
-
-====================== TESTES ================================
-
-# CARGOS
-
-[x] CRIA
-[x] BUSCA
-[x] ATUALIZA
-[x] DELETA
-
-# SERVIÇOS
-
-[x] CRIA
-[x] BUSCA
-[x] ATUALIZA
-[x] DELETA
-
-# PROFISSIONAIS
-
-[x] CRIA
-[x] BUSCA
-[x] ATUALIZA
-[x] DELETA

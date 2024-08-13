@@ -1,10 +1,8 @@
-import { useEffect, useState } from 'react';
-import { Appointment, AppointmentFromApi } from '../../../interfaces';
-
-import useApi from '../../../hooks/useApi';
-import BookingMap from '../../../mappers/BookingMap';
 import { useQuery } from '@tanstack/react-query';
+
+import { Appointment, AppointmentFromApi } from '../../../interfaces';
 import api from '../../../services/api';
+import BookingMap from '../../../mappers/BookingMap';
 
 export function useGetAppointments() {
   const getAppointments = async (): Promise<Appointment[]> => {
