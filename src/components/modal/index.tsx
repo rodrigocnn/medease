@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
-import { Button } from '../button';
+import { Button } from '../Button';
 
 interface ModalProps {
   show: boolean;
@@ -18,12 +18,12 @@ export const Modal = ({ show, title, setShowModal, children, confirm }: ModalPro
   return (
     <>
       {show ? (
-        <>
+        <div className="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-50">
           <div
             id="staticModal"
             data-modal-backdrop="static"
             aria-hidden="true"
-            className="absolute right-0  z-50 flex h-[calc(100%-1rem)] max-h-full justify-center overflow-y-auto overflow-x-hidden p-4 md:inset-0"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4"
           >
             <div className="relative left-14 top-14 max-h-full w-full max-w-2xl">
               <div className="relative rounded-lg bg-white shadow dark:bg-gray-700">
@@ -37,7 +37,12 @@ export const Modal = ({ show, title, setShowModal, children, confirm }: ModalPro
                     dark:hover:text-white"
                     data-modal-hide="staticModal"
                   >
-                    <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <svg
+                      className="h-5 w-5"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
                       <path
                         fill-rule="evenodd"
                         d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293
@@ -73,7 +78,7 @@ export const Modal = ({ show, title, setShowModal, children, confirm }: ModalPro
               </div>
             </div>
           </div>
-        </>
+        </div>
       ) : null}
     </>
   );

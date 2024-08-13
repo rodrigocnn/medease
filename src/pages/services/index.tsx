@@ -3,10 +3,11 @@ import ReactDataGrid from '@inovua/reactdatagrid-community';
 import { CreateService } from './create';
 import { EditService } from './edit';
 import { DeleteConfirm } from '../../components/DeleteConfirm';
-import { Button } from '../../components/button';
-import { InsidePage } from '../../components/insidePage';
+import { Button } from '../../components/Button';
+import { InsidePage } from '../../components/InsidePage';
 import { useIndexServices } from '../../modules/services/hooks/useIndexServices';
-import IconButton from '../../components/buttonIcon';
+import IconButton from '../../components/ButtonIcon';
+import { formatToCurrency } from '../../shared/utils/currency';
 
 export function Services() {
   const gridStyle = { minHeight: 370 };
@@ -16,7 +17,6 @@ export function Services() {
     deleteItem,
     editData,
     openDeleteConfirm,
-
     services,
     setShowDeleteConfirm,
     showDeleteConfirm,
@@ -37,23 +37,24 @@ export function Services() {
 
     {
       name: 'price',
-      header: 'Preço',
+      header: 'Preço R$',
       minWidth: 50,
       defaultFlex: 2,
+      render: ({ data }: any) => <span>{formatToCurrency(data.price)}</span>,
     },
     {
-      name: 'id',
+      name: 'edit',
       header: 'Editar',
       maxWidth: 1000,
       defaultFlex: 1,
-      render: ({ value }: any) => <IconButton icon="edit" onClick={() => editData(value)} />,
+      render: ({ data }: any) => <IconButton icon="edit" onClick={() => editData(data.id)} />,
     },
     {
-      name: 'idDelete',
+      name: 'delete',
       header: 'Excluir',
       maxWidth: 1000,
       defaultFlex: 1,
-      render: ({ value }: any) => <IconButton icon="delete" onClick={() => openDeleteConfirm(value)} />,
+      render: ({ data }: any) => <IconButton icon="delete" onClick={() => openDeleteConfirm(data.id)} />,
     },
   ];
 
@@ -66,7 +67,7 @@ export function Services() {
         show={showDeleteConfirm}
       />
 
-      {showModal && <CreateService setShowModal={setShowModal} show={showModal} />}
+      {showModal && <CreateService />}
 
       {showModalEdit && <EditService id={rowIdSelected} />}
 

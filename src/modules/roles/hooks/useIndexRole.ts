@@ -2,7 +2,7 @@ import { toast } from 'react-toastify';
 
 import { useContext, useEffect, useState } from 'react';
 import { Role } from '../../../interfaces';
-import { ModalContext } from '../../../shared/contexts/ModalContext';
+import { AppContext } from '../../../shared/contexts/AppContext';
 import useApi from '../../../hooks/useApi';
 
 export function useIndexRole() {
@@ -11,7 +11,7 @@ export function useIndexRole() {
   const [rowIdSelected, setRowIdSelected] = useState('');
 
   const { loading, fetchAllData, deleteData } = useApi();
-  const { showModal, setShowModal, setShowModalEdit } = useContext(ModalContext);
+  const { showModal, setShowModal, showModalEdit, setShowModalEdit } = useContext(AppContext);
 
   useEffect(() => {
     async function getRoles() {
@@ -19,7 +19,7 @@ export function useIndexRole() {
       setRoles(response.data);
     }
     getRoles();
-  }, [showDeleteConfirm, showModal, fetchAllData]);
+  }, [showDeleteConfirm, showModal, showModalEdit, fetchAllData]);
 
   async function editRole(id: string) {
     setShowModalEdit(true);
@@ -33,7 +33,7 @@ export function useIndexRole() {
 
   async function deleteItem() {
     const response = await deleteData('roles', rowIdSelected);
-    if (response.status === 204) {
+    if (response.data) {
       toast('Registro Excluído com Sucesso', { type: 'success' });
       setShowDeleteConfirm(false);
     } else {

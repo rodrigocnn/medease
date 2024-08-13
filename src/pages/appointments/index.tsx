@@ -1,101 +1,83 @@
-import { useEffect, useState } from 'react';
-import ReactDataGrid from '@inovua/reactdatagrid-community';
+import { useContext, useState } from 'react';
+import FullCalendar from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import interactionPlugin from '@fullcalendar/interaction';
 
-import IconButton from '../../components/buttonIcon';
-import { Button } from '../../components/button';
-import { InsidePage } from '../../components/insidePage';
-import { formatDateBR, timeDefaultToString } from '../../helpers/handleDate';
+import BookingMap from '../../mappers/BookingMap';
+import { Button } from '../../components/Button';
+import { InsidePage } from '../../components/InsidePage';
 import { FormAppointment } from './form';
-import { Appointment } from '../../interfaces';
-import useApi from '../../hooks/useApi';
+import { AppContext } from '../../shared/contexts/AppContext';
+import { useGetAppointments } from '../../modules/appointments/hooks/useGetAppointments';
+import { timeNowToStringAM } from '../../helpers/handleDate';
+
+const INITIAL_STATE_APPOINTMENT = {
+  id: '',
+  start: timeNowToStringAM(),
+  end: timeNowToStringAM(),
+  date: '',
+  patient: -1,
+  service: -1,
+  status: 1,
+  professional: -1,
+  datepicker: new Date(),
+};
 
 export function Appointments() {
-  const [appointments, setAppointments] = useState<Appointment[]>([]);
-  const [showModal, setShowModal] = useState(false);
-  const [showModalEdit, setShowModalEdit] = useState(false);
-  const [modeEdit, setModeEdit] = useState<null | string>(null);
-  const { loading, fetchAllData } = useApi();
-  const gridStyle = { minHeight: 370 };
+  const [editMode, setEditMode] = useState(false);
+  const { setShowModal, setAppointment } = useContext(AppContext);
+  const { queryAppointments } = useGetAppointments();
 
-  const filterValue = [
-    { name: 'professional_name', operator: 'startsWith', type: 'string', value: '' },
-    { name: 'date', operator: 'startsWith', type: 'string', value: '' },
-  ];
+  const findAppointmentById = (id: number) => {
+    return queryAppointments.data?.find(item => Number(item.id) === Number(id));
+  };
 
-  const columns = [
-    {
-      name: 'professional_name',
-      header: 'Profissional',
-      minWidth: 50,
-      defaultFlex: 2,
-    },
-    {
-      name: 'date',
-      header: 'Data',
-      minWidth: 50,
-      defaultFlex: 2,
-    },
-    {
-      name: 'start',
-      header: 'Início',
-      minWidth: 50,
-      defaultFlex: 2,
-    },
-    {
-      name: 'end',
-      header: 'Término',
-      minWidth: 50,
-      defaultFlex: 2,
-    },
-    {
-      name: 'edit',
-      header: 'Editar',
-      maxWidth: 1000,
-      defaultFlex: 1,
-      render: (row: any) => <IconButton icon="edit" onClick={() => editData(row.data.id)} />,
-    },
-  ];
-
-  useEffect(() => {
-    async function getAppointments() {
-      const response = await fetchAllData('bookings');
-      const bookings: Appointment[] = response.data.map((item: Appointment) => {
-        return {
-          ...item,
-          start: timeDefaultToString(item.start as number),
-          end: timeDefaultToString(item.end as number),
-          date: formatDateBR(item.date as string),
-        };
-      });
-      setAppointments(bookings);
+  const handleEventClick = (arg: any) => {
+    const appointment = findAppointmentById(arg.event.id);
+    if (appointment) {
+      const appointmentEdit = BookingMap.normalizeToEdit(appointment);
+      setAppointment(appointmentEdit);
+      setEditMode(true);
+      setShowModal(true);
     }
+  };
 
-    getAppointments();
-  }, [fetchAllData]);
-
-  async function editData(id: string) {
-    setShowModalEdit(true);
-    setModeEdit(id);
-  }
+  const openModal = () => {
+    setAppointment(INITIAL_STATE_APPOINTMENT);
+    setShowModal(true);
+  };
 
   return (
     <>
-      <FormAppointment setShowModal={setShowModal} show={showModal} />
-      {modeEdit && <FormAppointment action="edit" id={modeEdit} setShowModal={setShowModalEdit} show={showModalEdit} />}
+      {<FormAppointment action={editMode ? 'edit' : 'create'} />}
 
-      <InsidePage loading={loading} title="Agenda">
-        <Button onClick={() => setShowModal(true)} type="button">
+      <InsidePage loading={queryAppointments.isLoading} title="Agenda">
+        <Button onClick={() => openModal()} type="button">
           Novo
         </Button>
 
-        <ReactDataGrid
-          style={gridStyle}
-          idProperty="id"
-          dataSource={appointments}
-          columns={columns}
-          defaultFilterValue={filterValue}
-          pagination={'local'}
-          pageSizes={[10]}
+        <FullCalendar
+          events={queryAppointments.data}
+          plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
+          initialView="dayGridMonth"
+          eventClick={handleEventClick}
+          displayEventTime={false}
+          locale={'pt-br'}
+          noEventsText="Sem Eventos"
+          buttonText={{
+            today: 'Hoje',
+            month: 'Mês',
+            day: 'Dia',
+          }}
+          headerToolbar={{
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridDay',
+          }}
+          views={{
+            listWeek: { buttonText: 'Lista' },
+          }}
         />
       </InsidePage>
     </>

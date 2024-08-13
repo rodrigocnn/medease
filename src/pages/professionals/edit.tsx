@@ -1,4 +1,4 @@
-import { InsidePage } from '../../components/insidePage';
+import { InsidePage } from '../../components/InsidePage';
 import { ProfessionalForm } from './form';
 
 export function ProfessionalsEdit() {

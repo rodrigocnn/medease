@@ -1,4 +1,4 @@
-import { Loading } from '../loading';
+import { Loading } from '../Loading';
 
 interface InsidePageProps {
   children: React.ReactNode;

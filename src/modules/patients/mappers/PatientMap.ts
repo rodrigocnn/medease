@@ -1,24 +1,19 @@
-interface Patient {
-  name?: string;
-  email?: string;
-  date_of_birth?: string;
-  phone?: string;
-  cpf?: string;
-  rg?: string;
-  gender?: string;
-  address?: string;
-  district?: string;
-  city?: string;
-  state?: string;
-  role?: string;
-}
+import { Patient } from '../../../interfaces';
 
 class PatientlMap {
+  handleBirthDate(date: string | Date) {
+    if (typeof date === 'string') {
+      return date;
+    } else {
+      return date.toISOString();
+    }
+  }
+
   toPersistent(patient: Patient) {
     let patientAux = Object.assign({});
     const patientPersist = { ...patient, ...patientAux };
-    patientPersist.role_id = patient.role;
-    delete patientPersist.role;
+    const originalBirth = patient.birth as Date;
+    patientPersist.birth = this.handleBirthDate(originalBirth);
     return patientPersist;
   }
 }

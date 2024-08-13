@@ -1,19 +1,25 @@
 import { useContext } from 'react';
 
-import { Input } from '../../components/input';
-import { Modal } from '../../components/modal';
-import { Loading } from '../../components/loading';
+import { Input } from '../../components/Input';
+import { Modal } from '../../components/Modal';
+import { Loading } from '../../components/Loading';
 import { useCreateRole } from '../../modules/roles/hooks/useCreateRole';
-import { ModalContext } from '../../shared/contexts/ModalContext';
+import { AppContext } from '../../shared/contexts/AppContext';
 
 export const CreateRole = () => {
-  const { onConfirm, role, loading, handleChange } = useCreateRole();
-  const { showModal, setShowModal } = useContext(ModalContext);
+  const { onConfirm, role, loading, handleChange, validations } = useCreateRole();
+  const { showModal, setShowModal } = useContext(AppContext);
 
   return (
     <Modal title="Cadastrar Cargo" confirm={onConfirm} setShowModal={setShowModal} show={showModal}>
       {loading && <Loading />}
-      <Input value={role?.name} onChange={handleChange} type="text" placeholder="Nome" />
+      <Input
+        error={validations.length > 0}
+        value={role?.name}
+        onChange={handleChange}
+        type="text"
+        placeholder="Nome"
+      />
     </Modal>
   );
 };
