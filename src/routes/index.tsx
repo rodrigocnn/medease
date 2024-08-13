@@ -16,8 +16,9 @@ import { AuthContext } from '../contexts/auth';
 
 import { Dashboard } from '../pages/dashboard';
 import { InsidePage } from '../components/inside-page';
-import { Admin } from '../components/admin';
+
 import { Loading } from '../components/loading';
+import { Admin } from '../components/admin';
 
 const router = [
   {
