@@ -46,14 +46,18 @@ export function Patients() {
       header: 'Editar',
       maxWidth: 1000,
       defaultFlex: 1,
-      render: ({ data }: any) => <IconButton icon="edit" onClick={() => navigate(`/pacientes/editar/${data.id}`)} />,
+      render: ({ data }: any) => (
+        <IconButton icon="edit" onClick={() => navigate(`/pacientes/editar/${data.id}`)} />
+      ),
     },
     {
       name: 'id',
       header: 'Excluir',
       maxWidth: 1000,
       defaultFlex: 1,
-      render: ({ data }: any) => <IconButton icon="delete" onClick={() => openDeleteConfirm(data.id)} />,
+      render: ({ data }: any) => (
+        <IconButton icon="delete" onClick={() => openDeleteConfirm(data.id)} />
+      ),
     },
   ];
 
@@ -72,7 +76,7 @@ export function Patients() {
 
   async function deleteItem() {
     const response = await api.delete('patients', rowIdSelected);
-    console.log(response);
+
     if (response.data) {
       toast('Registro Excluído com Sucesso', { type: 'success' });
       setShowDeleteConfirm(false);
