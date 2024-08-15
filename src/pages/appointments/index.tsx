@@ -46,6 +46,7 @@ export function Appointments() {
   const openModal = () => {
     setAppointment(INITIAL_STATE_APPOINTMENT);
     setShowModal(true);
+    setEditMode(false);
   };
 
   return (
