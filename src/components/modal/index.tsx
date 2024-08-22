@@ -25,7 +25,7 @@ export const Modal = ({ show, title, setShowModal, children, confirm }: ModalPro
             aria-hidden="true"
             className="fixed inset-0 z-50 flex items-center justify-center p-4"
           >
-            <div className="relative left-14 top-14 max-h-full w-full max-w-2xl">
+            <div className="relative  max-h-full w-full max-w-2xl">
               <div className="relative rounded-lg bg-white shadow dark:bg-gray-700">
                 <div className="flex items-start justify-between rounded-t border-b p-4 dark:border-gray-600">
                   <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{title}</h3>

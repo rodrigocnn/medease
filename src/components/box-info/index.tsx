@@ -5,12 +5,14 @@ export interface IBoxInfoProps {
   children: React.ReactNode;
 }
 
-export function BoxInfo({ title, number, color, children }: IBoxInfoProps ) {
+export function BoxInfo({ title, number, color, children }: IBoxInfoProps) {
   return (
-    <div className="w-screen bg-white md:col-span-2 lg:col-span-2 xl:col-span-1">
+    <div className="bg-white md:col-span-2 lg:col-span-2 lg:w-screen xl:col-span-1">
       <div className="relative w-full overflow-hidden  rounded-md  p-4 shadow dark:bg-slate-800">
         <div className="items-cente flex justify-between xl:gap-x-2">
-          <div className={`flex ${color} h-16 w-16 items-center justify-center rounded-full   text-2xl text-white`}>
+          <div
+            className={`flex ${color} h-16 w-16 items-center justify-center rounded-full   text-2xl text-white`}
+          >
             {children}
           </div>
           <div className="flex flex-col items-end justify-end ">

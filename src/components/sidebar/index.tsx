@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { MdDashboard } from 'react-icons/md';
 import { AiFillSchedule } from 'react-icons/ai';
@@ -8,7 +9,7 @@ import { BsFillPersonBadgeFill } from 'react-icons/bs';
 import { RiLogoutBoxFill } from 'react-icons/ri';
 
 import logo from './../../assets/logo.png';
-import { useContext } from 'react';
+
 import { AuthContext } from '../../contexts/auth';
 
 export function Sidebar() {
@@ -21,9 +22,6 @@ export function Sidebar() {
   return (
     <>
       <button
-        data-drawer-target="default-sidebar"
-        data-drawer-toggle="default-sidebar"
-        aria-controls="default-sidebar"
         type="button"
         className="ml-3 mt-2 inline-flex items-center rounded-lg p-2 text-sm text-gray-500
         hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 sm:hidden
@@ -44,85 +42,104 @@ export function Sidebar() {
           ></path>
         </svg>
       </button>
-      <aside
-        id="default-sidebar"
-        className=" left-0 top-0 z-40  h-screen -translate-x-full transition-transform sm:translate-x-0"
-        aria-label="Sidebar"
-      >
-        <div className="h-full  bg-white dark:bg-gray-800">
+
+      <aside className="z-40 h-screen" aria-label="Sidebar">
+        <div className="h-full  bg-lime-950 lg:bg-white dark:bg-gray-800">
           <div>
             <img alt="logo" width={'200px'} src={logo} />
           </div>
 
-          <ul className="ml-4 space-y-2 font-medium">
-            <li>
+          <ul className="  space-y-2 font-medium lg:ml-4">
+            <li className="flex justify-center lg:block">
               <Link
-                className="flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                className="lg: flex items-center rounded-lg p-2 lg:hover:bg-gray-100"
                 to="/dashboard"
               >
-                <MdDashboard className="h-6 w-6 flex-shrink-0 text-gray-500 transition " />
-
-                <span className="ml-3">Dashboard</span>
+                <MdDashboard
+                  title="Dashboard"
+                  className="h-6 w-6 flex-shrink-0 text-slate-400  transition lg:text-gray-500 "
+                />
+                <span className="ml-3 hidden lg:block">Dashboard</span>
               </Link>
             </li>
 
-            <li>
+            <li className="flex justify-center lg:block">
               <Link
-                className="flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                className="lg: flex items-center rounded-lg p-2 lg:hover:bg-gray-100"
                 to="/cargos"
               >
-                <BsFillPersonBadgeFill className="h-6 w-6 flex-shrink-0 text-gray-500 transition " />
-                <span className="ml-3 flex-1 whitespace-nowrap">Cargos</span>
+                <BsFillPersonBadgeFill
+                  title="Cargos"
+                  className="h-6 w-6 flex-shrink-0 text-slate-400  transition lg:text-gray-500 "
+                />
+                <span className="ml-3 hidden hidden flex-1 whitespace-nowrap lg:block lg:block">
+                  Cargos
+                </span>
               </Link>
             </li>
 
-            <li>
+            <li className="flex justify-center lg:block">
               <Link
-                className="flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                className="lg: flex items-center rounded-lg p-2 lg:hover:bg-gray-100"
                 to="/servicos"
               >
-                <MdMedicalServices className="h-6 w-6 flex-shrink-0 text-gray-500 transition " />
-                <span className="ml-3 flex-1 whitespace-nowrap">Serviços</span>
+                <MdMedicalServices
+                  title="Serviços"
+                  className="h-6 w-6 flex-shrink-0 text-slate-400  transition lg:text-gray-500 "
+                />
+                <span className="ml-3 hidden flex-1 whitespace-nowrap lg:block">Serviços</span>
               </Link>
             </li>
 
-            <li>
+            <li className="flex justify-center lg:block">
               <Link
-                className="flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                className="lg: flex items-center rounded-lg p-2 lg:hover:bg-gray-100"
                 to="/profissionais"
               >
-                <FaUserNurse className="h-6 w-6 flex-shrink-0 text-gray-500 transition " />
-                <span className="ml-3 flex-1 whitespace-nowrap">Profissionais</span>
+                <FaUserNurse
+                  title="Profissionais"
+                  className="h-6 w-6 flex-shrink-0 text-slate-400  transition lg:text-gray-500"
+                />
+                <span className="ml-3 hidden flex-1 whitespace-nowrap lg:block">Profissionais</span>
               </Link>
             </li>
-            <li>
+            <li className="flex justify-center lg:block">
               <Link
-                className="flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                className="lg: flex items-center rounded-lg p-2 lg:hover:bg-gray-100"
                 to="/pacientes"
               >
-                <FaHospitalUser className="h-6 w-6 flex-shrink-0 text-gray-500 transition " />
-                <span className="ml-3 flex-1 whitespace-nowrap">Pacientes</span>
+                <FaHospitalUser
+                  title="Pacientes"
+                  className="h-6 w-6 flex-shrink-0 text-slate-400  transition lg:text-gray-500 "
+                />
+                <span className="ml-3 hidden flex-1 whitespace-nowrap lg:block">Pacientes</span>
               </Link>
             </li>
 
-            <li>
+            <li className="flex justify-center lg:block">
               <Link
-                className="flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                className="lg: flex items-center rounded-lg p-2 lg:hover:bg-gray-100"
                 to="/agenda"
               >
-                <AiFillSchedule className="h-6 w-6 flex-shrink-0 text-gray-500 transition " />
-                <span className="ml-3 flex-1 whitespace-nowrap">Agenda</span>
+                <AiFillSchedule
+                  title="Agenda"
+                  className="h-6 w-6 flex-shrink-0 text-slate-400  transition lg:text-gray-500 "
+                />
+                <span className="ml-3 hidden flex-1 whitespace-nowrap lg:block">Agenda</span>
               </Link>
             </li>
 
-            <li>
+            <li className="flex justify-center lg:block">
               <a
                 onClick={handleLogout}
-                className="flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                className="lg: flex items-center rounded-lg p-2 lg:hover:bg-gray-100"
                 href="/"
               >
-                <RiLogoutBoxFill className="h-6 w-6 flex-shrink-0 text-gray-500 transition " />
-                <span className="ml-3 flex-1 whitespace-nowrap">Sair</span>
+                <RiLogoutBoxFill
+                  title="Sair"
+                  className="h-6 w-6 flex-shrink-0 text-slate-400  transition lg:text-gray-500 "
+                />
+                <span className="ml-3 hidden flex-1 whitespace-nowrap lg:block">Sair</span>
               </a>
             </li>
           </ul>
