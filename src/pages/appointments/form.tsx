@@ -68,7 +68,7 @@ export function FormAppointment({ action }: FormAppointmentProps) {
 
         <div className="mb-2 columns-3">
           <div className="static  mb-2">
-            <Label title="Data do Atendimento" />
+            <Label title="Data" />
             <DatePicker
               locale="ptBR"
               dateFormat="dd/MM/yyyy"

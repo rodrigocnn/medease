@@ -7,7 +7,7 @@ import { BoxInfo } from '../../components/box-info';
 export function Dashboard() {
   return (
     <div className="p-5">
-      <div className="flex gap-3">
+      <div className="flex flex-col gap-3  lg:flex-row">
         <BoxInfo title="Profissionais" number="10" color="bg-blue-400">
           <FaUserMd />
         </BoxInfo>
@@ -21,7 +21,7 @@ export function Dashboard() {
           <FaRegCalendarCheck />
         </BoxInfo>
       </div>
-      <div className="mt-5 flex gap-3">
+      <div className="mt-5 hidden   lg:flex  lg:gap-3 ">
         <div className="w-1/2 bg-white">
           <h2 className="m-3 font-semibold">Atendimentos</h2>
           <ReactApexChart
@@ -32,7 +32,6 @@ export function Dashboard() {
         </div>
         <div className="w-1/2 bg-white">
           <h2 className="m-3 font-semibold">Novos Pacientes</h2>
-
           <ReactApexChart options={chartData} series={chartData.series} />
         </div>
       </div>

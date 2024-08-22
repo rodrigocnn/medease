@@ -32,7 +32,7 @@ export function ProfessionalForm({ action = 'create' }: ProfessionalFormProps) {
 
       <DivisorTitleForm>Dados Pessoais</DivisorTitleForm>
 
-      <div className="mb-2 columns-2">
+      <div className="mb-2 flex  columns-1  flex-col gap-2 lg:columns-2 lg:flex-row">
         <Input
           error={validations?.fieldName === 'name' && !validations.validate}
           value={professional?.name}
@@ -51,7 +51,7 @@ export function ProfessionalForm({ action = 'create' }: ProfessionalFormProps) {
         />
       </div>
 
-      <div className="mb-2 columns-2">
+      <div className="mb-2 flex flex-col gap-2 lg:block lg:columns-2 lg:flex-row">
         <div className="container-datepicker">
           <DatePicker
             placeholderText="Data de Nascimento"
@@ -73,7 +73,7 @@ export function ProfessionalForm({ action = 'create' }: ProfessionalFormProps) {
         />
       </div>
 
-      <div className="mb-2 columns-3">
+      <div className="mb-2 flex columns-1 flex-col gap-2 lg:block lg:columns-3 lg:flex-row">
         <MaskedInput
           className="input-default"
           mask={Masks.cpf}
@@ -111,7 +111,7 @@ export function ProfessionalForm({ action = 'create' }: ProfessionalFormProps) {
         />
       </div>
 
-      <div className="mb-2 columns-3">
+      <div className="mb-2 flex columns-1 flex-col gap-2 lg:block lg:columns-3">
         <Input
           error={validations?.fieldName === 'district' && !validations.validate}
           value={professional?.district}

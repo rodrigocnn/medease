@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -24,10 +24,26 @@ const INITIAL_STATE_APPOINTMENT = {
   datepicker: new Date(),
 };
 
+const getInitialView = () => {
+  return window.innerWidth < 768 ? 'timeGridDay' : 'dayGridMonth';
+};
+
 export function Appointments() {
   const [editMode, setEditMode] = useState(false);
   const { setShowModal, setAppointment } = useContext(AppContext);
   const { queryAppointments } = useGetAppointments();
+  const [initialView, setInitialView] = useState(getInitialView);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setInitialView(getInitialView());
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const findAppointmentById = (id: number) => {
     return queryAppointments.data?.find(item => Number(item.id) === Number(id));
@@ -61,7 +77,7 @@ export function Appointments() {
         <FullCalendar
           events={queryAppointments.data}
           plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
-          initialView="dayGridMonth"
+          initialView={initialView}
           eventClick={handleEventClick}
           displayEventTime={false}
           locale={'pt-br'}
@@ -72,7 +88,7 @@ export function Appointments() {
             day: 'Dia',
           }}
           headerToolbar={{
-            left: 'prev,next today',
+            left: 'prev,next',
             center: 'title',
             right: 'dayGridMonth,timeGridDay',
           }}
